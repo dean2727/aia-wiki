@@ -1,0 +1,38 @@
+rss:
+  - name: Anthropic Blog
+    url: https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_news_rss.xml
+  - name: Google DeepMind Blog
+    url: https://deepmind.google/blog/rss.xml
+  - name: OpenAI Blog
+    url: https://openai.com/news/rss.xml
+  - name: Hugging Face Blog
+    url: https://huggingface.co/blog/feed.xml
+  - name: The Batch (Andrew Ng)
+    url: https://raw.githubusercontent.com/cnzhujie/ai-rss-feed/main/rss/deeplearning_the_batch_rss.xml
+  - name: Import AI (Jack Clark)
+    url: https://importai.substack.com/feed
+  - name: Ahead of AI (Sebastian Raschka)
+    url: https://magazine.sebastianraschka.com/feed
+
+# TODO: double check youtube IDs
+youtube:
+  max_per_run: 3              # max new videos per channel per run
+  lookback_days: 7            # only process videos from last N days
+  channels:
+    - name: Andrej Karpathy
+      id: UCBcRF18a7Qf58cCRy5xuWwQ
+    - name: Yannic Kilcher
+      id: UCZHmQk67mSJgfCCTn7xBfew
+    - name: Two Minute Papers
+      id: UCbfYPyITQ-7l4upoX8nvctg
+    - name: Google DeepMind
+      id: UCP7jMXSY2xbc3KCAE0MHQ-A
+    - name: AI Explained
+      id: UCNJ1Ymd5yFuUPtn21xtRbbw
+
+arxiv:
+  categories:
+    - cs.AI
+    - cs.LG
+  max_per_run: 5              # top N papers by Semantic Scholar attention score
+  lookback_days: 7
