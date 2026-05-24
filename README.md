@@ -24,76 +24,46 @@ A weekly pass runs deeper synthesis across topics, surfaces connections between 
 
 The approach is inspired by [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): let the LLM do the writing and maintenance, focus your own attention on sourcing and direction.
 
-## How it works
-
-The wiki lives in this repo and is updated through a recurring LLM-based 
-pipeline — no manual curation required.
-
-A nightly GitHub Actions workflow monitors a curated set of sources: RSS 
-feeds from AI research blogs, YouTube channels from researchers I follow, 
-ArXiv papers ranked by attention velocity, and a simple URL queue where I 
-drop links I don't have time to process myself. A separate local agent on 
-my machine syncs exports from my Cursor and Claude sessions into the 
-pipeline automatically.
-
-Everything that gets ingested passes through a triage step before it 
-touches the wiki. The LLM evaluates each piece against a strict signal 
-threshold — is this genuinely groundbreaking, does it have real 
-implications for how humans work with AI, or is it gaining significant 
-traction for a reason? Most content gets filtered out. What clears the bar 
-gets synthesized into a structured wiki page, cross-linked to related 
-topics, and committed here.
-
-Every page includes a **Dean-Relevance** section — an honest assessment of 
-how the development maps to my actual working style, comfort zone, and 
-tools. This is what separates it from a generic AI news aggregator. The 
-wiki isn't tracking everything; it's tracking what matters, filtered 
-through a specific lens.
-
-A weekly pass runs deeper synthesis across topics, surfaces connections 
-between recent developments, and keeps the index current. A 
-`Dean-Profile.md` in the private companion repo acts as the persistent 
-user model the pipeline references on every run — it's what makes the 
-relevance framing consistent over time.
-
-The approach is inspired by [Andrej Karpathy's LLM Wiki 
-pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
-): let the LLM do the writing and maintenance, focus your own attention on 
-sourcing and direction.
 
 ### Pipeline
-
+ 
 ```mermaid
 flowchart LR
   subgraph sources["Sources"]
-    A["RSS Feeds\n(Anthropic, DeepMind, OpenAI)"]
-    B["YouTube Channels\n(Karpathy, Kilcher, etc.)"]
-    C["ArXiv\n(cs.AI, cs.LG)"]
-    D["queue.txt\n(URL drop zone)"]
-    E["Cursor Logs\n(local LaunchAgent)"]
-    F["Claude Exports\n(monthly ZIP)"]
-    G["Notion\n(advancements tracker)"]
+    A["RSS Feeds"]
+    B["YouTube Channels"]
+    C["ArXiv"]
+    D["queue.txt"]
+    E["Cursor Logs"]
+    F["Claude Exports"]
+    G["Notion"]
   end
-
-  subgraph pipeline["Nightly Pipeline"]
-    L["Ingest"] --> M["Triage\n(signal filter)"]
-    M -->|"cleared"| N["Update Pass"]
-    N --> O["Consistency\n+ Cross-links"]
+ 
+  subgraph nightly["Nightly Pipeline"]
+    L["Ingest"]
+    M["Triage\nsignal filter"]
+    N["Update Pass"]
+    O["Consistency\nCross-links"]
+    L --> M
+    M -->|cleared| N
+    N --> O
   end
-
+ 
   subgraph weekly["Weekly Pipeline"]
-    P["Deep Synthesis"] --> Q["Profile Review"]
-    Q --> R["INDEX + Changelog"]
+    P["Deep Synthesis"]
+    Q["Profile Review"]
+    R["INDEX + Changelog"]
+    P --> Q --> R
   end
-
+ 
   sources --> L
-  O --> public["Public Wiki\n/wiki/"]
-  public --> P
-  public --> site["Quartz Site\n(GitHub Pages)"]
-` ``
-
-### Repository structure
-
+  O --> wiki["wiki/"]
+  wiki --> P
+  wiki --> site["Quartz Site\nGitHub Pages"]
+```
+ 
+## Repository structure
+ 
 ```
 dean-wiki/                        ← public repo (this one)
 ├── wiki/
@@ -113,7 +83,7 @@ dean-wiki/                        ← public repo (this one)
 ├── ABOUT.md                      ← the Karpathy-inspired approach
 ├── CHANGELOG.md                  ← auto-updated on every pipeline run
 └── README.md
-
+ 
 dean-wiki-private/                ← private repo (pipeline engine)
 ├── profile/
 │   ├── Dean-Profile.md           ← persistent user model
@@ -137,9 +107,10 @@ dean-wiki-private/                ← private repo (pipeline engine)
 │       ├── ingest_arxiv.py
 │       ├── ingest_notion.py
 │       ├── process_queue.py
-│       └── sync_public.py        ← commits /wiki/ to public repo
+│       └── sync_public.py        ← commits wiki/ to public repo
 ├── .github/workflows/
 │   ├── nightly.yml
 │   ├── weekly.yml
 │   └── monthly.yml
 └── sources.yml                   ← curated source list
+```
