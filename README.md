@@ -1,4 +1,4 @@
-# AI Advancements Wiki
+# Dean Wiki
 
 **A self-updating knowledge base (inspired by Andrej Karpathy's LLM Wiki pattern) that distills new and groundbreaking findings in AI - from new products and features, to new methodologies and tools for engineering, to research approaches/findings.**
 
@@ -65,52 +65,85 @@ flowchart LR
 ## Repository structure
  
 ```
-aia-wiki/                        ← public repo (this one)
+dean-wiki/
+│
+├── .github/
+│   └── workflows/
+│       ├── nightly.yml             ← runs every night: ingest → triage → update wiki
+│       ├── weekly.yml              ← runs every Sunday: deep synthesis + profile review
+│       └── monthly.yml             ← manual trigger: process Claude export ZIP
+│
+├── pipeline/
+│   ├── scripts/
+│   │   ├── ingest_notion.py        ← pulls advancements tracker + notes via Notion API
+│   │   ├── ingest_rss.py           ← fetches new posts from RSS feed list in sources.yml
+│   │   ├── ingest_youtube.py       ← pulls transcripts from curated channels
+│   │   ├── ingest_arxiv.py         ← fetches top cs.AI / cs.LG papers by attention score
+│   │   ├── ingest_queue.py         ← processes URLs dropped in private/sources/queue.txt
+│   │   ├── ingest_claude.py        ← parses monthly Claude export ZIP into markdown
+│   │   ├── triage.py               ← runs signal-threshold filter via Claude API
+│   │   ├── update_wiki.py          ← writes / updates wiki pages from cleared content
+│   │   ├── synthesize.py           ← weekly deep synthesis + cross-topic connections
+│   │   ├── review_profile.py       ← weekly: checks if Dean-Profile.md needs updating
+│   │   ├── update_index.py         ← regenerates INDEX.md + appends to CHANGELOG.md
+│   │   └── sync_private.py         ← pulls latest sources from private repo before run
+│   │
+│   └── prompts/                    ← LLM prompt templates (public or private — your call)
+│       ├── system.md               ← WikiMaster-Dean base identity + instructions
+│       ├── triage.md               ← signal threshold evaluation prompt
+│       ├── update.md               ← page write/update prompt
+│       ├── synthesis.md            ← weekly deep synthesis prompt
+│       └── profile_review.md       ← Dean-Profile review + refinement prompt
+│
 ├── wiki/
-│   ├── topics/                   ← individual model/tool/concept pages
+│   ├── topics/                     ← one page per model, tool, or concept
 │   │   ├── gemini-2-5-pro.md
+│   │   ├── claude-sonnet-4-5.md
 │   │   ├── mcp-protocol.md
+│   │   ├── reinforcement-learning-from-human-feedback.md
 │   │   └── ...
-│   ├── synthesis/                ← cross-topic trend analysis
+│   │
+│   ├── synthesis/                  ← cross-topic trend analysis and comparisons
 │   │   ├── reasoning-evolution.md
 │   │   ├── agent-architectures.md
+│   │   ├── frontier-model-comparison.md
 │   │   └── ...
-│   ├── tools/                    ← tool evaluations and comparisons
-│   │   ├── cursor-vs-claude-code.md
-│   │   └── ...
-│   └── INDEX.md
-├── ARCHITECTURE.md               ← how the pipeline works in detail
-├── ABOUT.md                      ← the Karpathy-inspired approach
-├── CHANGELOG.md                  ← auto-updated on every pipeline run
-└── README.md
+│   │
+│   └── tools/                      ← tool evaluations, comparisons, adoption notes
+│       ├── cursor-vs-claude-code.md
+│       ├── github-actions-for-ai-pipelines.md
+│       └── ...
+│
+├── sources.yml                     ← curated source list (RSS, YouTube, ArXiv config)
+├── requirements.txt                ← python deps for pipeline scripts
+├── INDEX.md                        ← auto-generated wiki index (updated weekly)
+├── CHANGELOG.md                    ← auto-appended on every pipeline run
+├── ARCHITECTURE.md                 ← deep-dive on how the pipeline works
+├── ABOUT.md                        ← the Karpathy-inspired philosophy
+└── README.md                       ← portfolio-facing overview + pipeline diagram
  
-dean-wiki-private/                ← private repo (pipeline engine)
+dean-wiki-private/
+│
 ├── profile/
-│   ├── Dean-Profile.md           ← persistent user model
-│   └── TELOS.md                  ← goals, beliefs, priorities
-├── sources/
-│   ├── notion-cache/             ← raw Notion pulls
-│   ├── cursor-logs/              ← Cursor chat exports
-│   ├── claude-exports/           ← monthly Claude ZIP processed here
-│   ├── inbox/                    ← forwarded newsletters (.txt)
-│   └── queue.txt                 ← drop URLs here, pipeline handles rest
-├── pipeline/
-│   ├── prompts/
-│   │   ├── system.md             ← WikiMaster-Dean base prompt
-│   │   ├── triage.md
-│   │   ├── update.md
-│   │   ├── synthesis.md
-│   │   └── profile-review.md
-│   └── scripts/
-│       ├── ingest_rss.py
-│       ├── ingest_youtube.py
-│       ├── ingest_arxiv.py
-│       ├── ingest_notion.py
-│       ├── process_queue.py
-│       └── sync_public.py        ← commits wiki/ to public repo
-├── .github/workflows/
-│   ├── nightly.yml
-│   ├── weekly.yml
-│   └── monthly.yml
-└── sources.yml                   ← curated source list
+│   ├── Dean-Profile.md             ← persistent user model (the central brain)
+│   └── TELOS.md                    ← goals, beliefs, mission, priorities
+│
+└── sources/
+    ├── queue.txt                   ← drop URLs here anytime, pipeline processes nightly
+    │
+    ├── notion-cache/               ← raw Notion API pulls (overwritten each run)
+    │   └── advancements.json
+    │
+    ├── cursor-logs/                ← synced by local LaunchAgent nightly
+    │   ├── 2026-05-20-praxis-backend.md
+    │   ├── 2026-05-21-docker-refactor.md
+    │   └── ...
+    │
+    ├── claude-exports/             ← processed from monthly Anthropic ZIP
+    │   ├── 2026-04.md
+    │   └── 2026-05.md
+    │
+    └── inbox/                      ← forwarded newsletters, stripped to .txt
+        ├── tldr-ai-2026-05-20.txt
+        └── ...
 ```
