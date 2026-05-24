@@ -1,0 +1,65 @@
+name: Monthly Claude Export Processing
+
+on:
+  workflow_dispatch:    # manual trigger only — run after dropping export ZIP
+    inputs:
+      export_filename:
+        description: 'Filename of the Claude export ZIP in private/sources/claude-exports/'
+        required: true
+        type: string
+
+jobs:
+  process-claude-export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout wiki (public)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.PRIVATE_REPO_NAME }}
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: private
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Process Claude export ZIP
+        run: python pipeline/scripts/ingest_claude.py
+        env:
+          PRIVATE_REPO_PATH: private
+          EXPORT_FILENAME: ${{ inputs.export_filename }}
+
+      - name: Run Claude Code — integrate Claude conversation insights
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: '--max-turns 40 --model claude-opus-4-5'
+          prompt: |
+            Process this month's Claude conversation export for aia-wiki.
+
+            The conversations have been extracted to private/sources/claude-exports/current/.
+
+            1. Read private/profile/Dean-Profile.md to load Dean's user model.
+            2. Read the extracted conversation files.
+            3. Identify: any AI tools, models, or concepts Dean explored that aren't yet
+               in the wiki and score 7+ on the signal threshold.
+            4. Identify: any clear shifts in Dean's thinking, working patterns, or
+               preferences not reflected in his profile. Document these in CHANGELOG.md
+               under "Profile observations from Claude export" — do NOT edit Dean-Profile.md
+               directly.
+            5. Create or update wiki pages for anything worth adding.
+            6. Append a summary entry to CHANGELOG.md.
+
+            Follow all guidelines in CLAUDE.md exactly.

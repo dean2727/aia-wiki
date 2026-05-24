@@ -1,0 +1,86 @@
+name: Weekly Wiki Synthesis
+ 
+on:
+  schedule:
+    - cron: '0 3 * * 0'   # 3am UTC every Sunday
+  workflow_dispatch:
+ 
+jobs:
+  weekly-synthesis:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+ 
+    steps:
+      - name: Checkout wiki (public)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+ 
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.PRIVATE_REPO_NAME }}
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: private
+ 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+ 
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+ 
+      - name: Fetch RSS feeds
+        run: python pipeline/scripts/ingest_rss.py
+        env:
+          PRIVATE_REPO_PATH: private
+ 
+      - name: Fetch YouTube transcripts
+        run: python pipeline/scripts/ingest_youtube.py
+        env:
+          PRIVATE_REPO_PATH: private
+ 
+      - name: Fetch Notion personal notes
+        run: python pipeline/scripts/ingest_notion.py
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          PRIVATE_REPO_PATH: private
+ 
+      - name: Process URL queue
+        run: python pipeline/scripts/ingest_queue.py
+        env:
+          PRIVATE_REPO_PATH: private
+ 
+      - name: Fetch ArXiv papers
+        run: python pipeline/scripts/ingest_arxiv.py
+        env:
+          PRIVATE_REPO_PATH: private
+ 
+      - name: Run Claude Code — deep synthesis + profile review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: '--max-turns 60 --model claude-opus-4-5'
+          prompt: |
+            Perform the weekly deep synthesis pass for aia-wiki.
+ 
+            1. Read private/profile/Dean-Profile.md to load Dean's user model.
+            2. Read all files in private/sources/staging/ and triage as in the nightly run.
+               Create or update wiki pages for anything scoring 7+.
+            3. Review all wiki/synthesis/ pages. Identify connections between developments
+               from the past 7 days. Create or update synthesis pages where meaningful
+               cross-topic patterns have emerged. Do not force connections — only write
+               synthesis pages when the insight is genuine.
+            4. Review private/sources/cursor-logs/ for recent entries. Note any shifts in
+               Dean's tools, problems, or working patterns that aren't reflected in
+               private/profile/Dean-Profile.md. If meaningful updates are warranted,
+               describe them clearly in CHANGELOG.md under a "Profile observations" section
+               — do NOT write to Dean-Profile.md directly (that file is managed separately).
+            5. Regenerate INDEX.md completely with the current wiki state.
+            6. Append a detailed weekly summary entry to CHANGELOG.md.
+ 
+            This is the deepest reasoning pass of the week. Take time to find genuine
+            connections. Follow all guidelines in CLAUDE.md exactly.

@@ -1,0 +1,76 @@
+name: Nightly Wiki Update
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # 2am UTC every night
+  workflow_dispatch:        # allow manual trigger
+
+jobs:
+  update-wiki:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout wiki (public)
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.PRIVATE_REPO_NAME }}
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: private
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch RSS feeds
+        run: python pipeline/scripts/ingest_rss.py
+        env:
+          PRIVATE_REPO_PATH: private
+
+      - name: Fetch YouTube transcripts
+        run: python pipeline/scripts/ingest_youtube.py
+        env:
+          PRIVATE_REPO_PATH: private
+
+      - name: Fetch Notion personal notes
+        run: python pipeline/scripts/ingest_notion.py
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          PRIVATE_REPO_PATH: private
+
+      - name: Process URL queue
+        run: python pipeline/scripts/ingest_queue.py
+        env:
+          PRIVATE_REPO_PATH: private
+
+      - name: Run Claude Code — triage and update wiki
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: '--max-turns 30 --model claude-sonnet-4-6'
+          prompt: |
+            Perform the nightly wiki update for aia-wiki.
+
+            1. Read private/profile/Dean-Profile.md to load Dean's user model.
+            2. Read all files in private/sources/staging/ — these are today's ingested sources.
+            3. Triage each source using the signal threshold in CLAUDE.md. Score each 1–10.
+            4. For each source scoring 7 or above:
+               - Create a new wiki page OR update the existing relevant page
+               - Place it in wiki/topics/, wiki/synthesis/, or wiki/tools/ as appropriate
+               - Include a Dean-Relevance section referencing his current profile
+            5. Update CHANGELOG.md with a dated entry listing created, updated, and skipped items.
+            6. Do NOT regenerate INDEX.md — that runs weekly.
+            7. Do NOT touch any files in private/ — read only.
+
+            Follow all guidelines in CLAUDE.md exactly.
