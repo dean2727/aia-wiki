@@ -1,0 +1,50 @@
+---
+description: Rules for the dean-wiki pipeline project
+globs: ["pipeline/**", ".github/**", "*.yml", "*.md"]
+---
+
+# Dean Wiki Pipeline Rules
+
+## Project Overview
+This is a self-updating AI knowledge wiki. The pipeline ingests 
+sources, filters them through a signal threshold, and writes 
+synthesized Markdown pages to wiki/.
+
+## Code Style
+- Python 3.13
+- Use uv for dependency management (not pip)
+- All scripts must be runnable standalone AND importable as modules
+- Use environment variables for all secrets — never hardcode
+- Use pathlib.Path, not os.path
+- Type hints on all functions
+- Docstrings on all public functions
+
+## File Conventions
+- Wiki pages live in wiki/topics/, wiki/synthesis/, wiki/tools/ only
+- Source cache files go to ../dean-wiki-private/sources/ — never 
+  commit raw source content to this repo
+- Prompt templates are Markdown files in pipeline/prompts/
+- All scripts log to stdout with timestamps
+
+## Pipeline Conventions
+- Every script prints a summary at the end: files processed, 
+  files written, files skipped
+- Scripts exit with code 1 on failure, 0 on success
+- Triage threshold is 7/10 — do not change without updating 
+  pipeline/prompts/triage.md to match
+- Always load Dean-Profile.md before any Claude API call that 
+  writes wiki content
+
+## Claude API Usage
+- Model: claude-sonnet-4-5 for triage and updates
+- Model: claude-opus-4 for weekly synthesis only
+- Max tokens: 4096 for triage, 8192 for updates
+- Always include Dean-Profile.md content in system prompt context
+- Parse --- FILE: path/to/file.md --- blocks from responses
+
+## What Not To Do
+- Do not write files outside wiki/, pipeline/, or .github/
+- Do not modify CHANGELOG.md manually — update_index.py owns it
+- Do not commit anything from ../dean-wiki-private/
+- Do not add dependencies without adding to requirements.txt
+- Do not make Claude API calls without the Dean-Profile context
