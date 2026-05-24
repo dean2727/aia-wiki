@@ -65,7 +65,7 @@ flowchart LR
 ## Repository structure
  
 ```
-dean-wiki/
+aia-wiki/
 │
 ├── .github/
 │   └── workflows/
