@@ -65,7 +65,7 @@ flowchart LR
 ## Repository structure
  
 ```
-dean-wiki/                        ← public repo (this one)
+aia-wiki/                        ← public repo (this one)
 ├── wiki/
 │   ├── topics/                   ← individual model/tool/concept pages
 │   │   ├── gemini-2-5-pro.md
