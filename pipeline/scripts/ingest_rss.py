@@ -11,6 +11,7 @@ from pathlib import Path
 from time import struct_time
 from typing import Any
 
+from bs4 import BeautifulSoup
 from dateutil import parser as date_parser
 import feedparser
 import requests
@@ -25,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 SOURCES_FILE = REPO_ROOT / "sources.yml"
-PRIVATE_REPO_PATH = Path(os.environ.get("PRIVATE_REPO_PATH", "../aia-wiki-private"))
+PRIVATE_REPO_PATH = Path(os.environ.get("PRIVATE_REPO_PATH", "../dean-wiki-private"))
 STAGING_DIR = PRIVATE_REPO_PATH / "sources" / "staging"
 SEEN_URLS_FILE = PRIVATE_REPO_PATH / "sources" / ".seen_urls.txt"
 USER_AGENT = "aia-wiki-bot/1.0"
@@ -86,7 +87,7 @@ def entry_datetime(entry: Any) -> datetime | None:
     return parsed_date.astimezone(UTC)
 
 
-def entry_content(entry: Any) -> str:
+def rss_entry_content(entry: Any) -> str | None:
     summary = getattr(entry, "summary", None)
     if summary:
         return str(summary)
@@ -98,7 +99,53 @@ def entry_content(entry: Any) -> str:
         if value:
             return str(value)
 
-    return str(getattr(entry, "title", "Untitled"))
+    return None
+
+
+def extract_article_text(html: str) -> str:
+    soup = BeautifulSoup(html, "html.parser")
+
+    for tag in soup(["script", "style", "noscript", "svg", "nav", "footer", "header", "form"]):
+        tag.decompose()
+
+    article = soup.find("article") or soup.find("main") or soup.body
+    if article is None:
+        return ""
+
+    lines = [line.strip() for line in article.get_text("\n").splitlines()]
+    return "\n".join(line for line in lines if line)
+
+
+def fetch_article_content(url: str) -> str | None:
+    response = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=10)
+    response.raise_for_status()
+
+    text = extract_article_text(response.text)
+    return text or None
+
+
+def entry_content(entry: Any) -> str:
+    content = rss_entry_content(entry)
+    if content:
+        return content
+
+    title = str(getattr(entry, "title", "Untitled"))
+    link = getattr(entry, "link", None)
+    if not link:
+        return title
+
+    try:
+        article_content = fetch_article_content(str(link))
+    except requests.RequestException as error:
+        logger.warning("Failed to fetch full article content for %s: %s", link, error)
+        return title
+
+    if article_content:
+        logger.info("Fetched full article content for: %s", title)
+        return article_content
+
+    logger.warning("Article page had no extractable text, falling back to title: %s", title)
+    return title
 
 
 def unique_output_path(feed_name: str, title: str, fetched_at: datetime) -> Path:
