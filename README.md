@@ -111,18 +111,18 @@ aia-wiki/                           ← public repo (this one)
 ├── ABOUT.md
 └── README.md
 
-aia-wiki-private/                   ← private repo (data only, no code)
+dean-wiki-private/                   ← private repo (data only, no code)
 │
 ├── profile/
 │   ├── Dean-Profile.md             ← persistent user model
 │   └── TELOS.md
 │
 └── sources/
-    ├── queue.txt                   ← drop URLs here, processed nightly
+    ├── queue.txt                   ← ad-hox URLs that interest Dean, not included in the other data
     ├── staging/                    ← ingestion landing zone (cleared each run)
-    ├── notion-cache/
+    ├── notion-cache/               ← data from cursor chats. collected from a .py script
     ├── cursor-logs/                ← synced by local LaunchAgent
-    ├── claude-exports/
+    ├── claude-exports/             ← claude chats - the monthly diff
     └── inbox/
 ```
 
