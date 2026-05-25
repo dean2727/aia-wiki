@@ -132,7 +132,7 @@ dean-wiki-private/                   ← private repo (data only, no code)
 | Secret | Description |
 |---|---|
 | `ANTHROPIC_API_KEY` | Anthropic API key for Claude Code Action |
-| `PRIVATE_REPO_TOKEN` | PAT with read access to aia-wiki-private |
-| `PRIVATE_REPO_NAME` | Full name of private repo (e.g. `yourusername/aia-wiki-private`) |
+| `PRIVATE_REPO_TOKEN` | PAT with read access to dean-wiki-private |
+| `PRIVATE_REPO_NAME` | Full name of private repo (e.g. `yourusername/dean-wiki-private`) |
 | `NOTION_API_KEY` | Notion integration token |
 | `NOTION_DATABASE_ID` | ID of the personal notes database |

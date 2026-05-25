@@ -4,8 +4,15 @@ version = "0.1.0"
 description = "Automated ingestion and update pipeline for aia-wiki."
 requires-python = ">=3.13"
 dependencies = [
+    "beautifulsoup4",
     "feedparser",
     "python-dateutil",
     "pyyaml",
     "requests",
+    "tqdm",
+]
+
+[dependency-groups]
+dev = [
+    "pip",
 ]
