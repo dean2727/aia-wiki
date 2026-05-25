@@ -13,6 +13,39 @@ rss:
     url: https://importai.substack.com/feed
   - name: Ahead of AI (Sebastian Raschka)
     url: https://magazine.sebastianraschka.com/feed
+  - name: Hacker News
+    url: https://news.ycombinator.com/rss
+
+# For seeing the wikis
+notion:
+  # These pages feed Dean-Profile context only
+  # Agent reads them to understand Dean's baseline knowledge
+  # No wiki pages generated from these
+  knowledge_base:
+    - id: "2850ac21-e10b-45d8-8585-515b52163fc1"  # The Transformer
+    - id: "ba489485-b27f-41d6-a425-2137d40087e7"  # RAG (parent)
+    - id: "e90fee5f-3b26-42be-aa12-9085abdea224"  # Prompt Engineering
+    - id: "64981670-ba0b-4f39-a3fc-760ab6a62365"  # Fine Tuning
+
+  # These pages are wiki candidates — run through normal triage
+  # Agent decides if content is advancement-worthy
+  wiki_candidates:
+    - id: "12d2c51a-264f-8041-bca3-cea866dc08df"  # Agents (parent)
+    - id: "26c2c51a-264f-80b6-a890-d6c7dc39d9d3"  # Vibe coding
+    - id: "2572c51a-264f-8019-a67ad592f3237652"    # LLM/Agent Evaluation
+    - id: "2c52c51a-264f-80a5-9200-fec3cd2a27c8"  # Synthetic Data
+    - id: "2d52c51a-264f-8084-b12d-e12264f225d2"  # Mixture of Experts
+    - id: "3272c51a-264f-800b-8e71-c247621b67f9"  # Deep Research Systems
+    - id: "33e2c51a-264f-80eb-91ff-d8cea6853ced"  # AI Guardrails
+    - id: "23c2c51a-264f-80ac-a2ec-ca4b5d46186e"  # Context engineering
+    - id: "25d08af8-4975-4635-b064-f95c03ba5cb5"  # Advanced RAG techniques
+    - id: "2432c51a-264f-80b0-892dd2fc25c1e769"   # Model Compression
+    - id: "1e12c51a-264f-8016-9132-dae1713aedb3"  # MCP and A2A
+    - id: "2762c51a-264f-802d-94d7-fb9d2b8dadf9"  # Self-Improving AI Agents
+
+  # Runs nightly — your live advancements tracker
+  live_feed:
+    - id: "..."  # AI Advancements Tracker
 
 # TODO: double check youtube IDs
 youtube:
