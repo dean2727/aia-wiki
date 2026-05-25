@@ -27,42 +27,45 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.13'
  
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: uv sync --locked
  
       - name: Fetch RSS feeds
-        run: python pipeline/scripts/ingest_rss.py
+        run: uv run python pipeline/scripts/ingest_rss.py
         env:
           PRIVATE_REPO_PATH: private
  
       - name: Fetch YouTube transcripts
-        run: python pipeline/scripts/ingest_youtube.py
+        run: uv run python pipeline/scripts/ingest_youtube.py
         env:
           PRIVATE_REPO_PATH: private
  
       - name: Fetch Notion personal notes
-        run: python pipeline/scripts/ingest_notion.py
+        run: uv run python pipeline/scripts/ingest_notion.py
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
           PRIVATE_REPO_PATH: private
  
       - name: Process URL queue
-        run: python pipeline/scripts/ingest_queue.py
+        run: uv run python pipeline/scripts/ingest_queue.py
         env:
           PRIVATE_REPO_PATH: private
  
       - name: Fetch ArXiv papers
-        run: python pipeline/scripts/ingest_arxiv.py
+        run: uv run python pipeline/scripts/ingest_arxiv.py
         env:
           PRIVATE_REPO_PATH: private
  
       - name: Run Claude Code — deep synthesis + profile review
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           claude_args: '--max-turns 60 --model claude-opus-4-5'
           prompt: |
             Perform the weekly deep synthesis pass for aia-wiki.

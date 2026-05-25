@@ -104,7 +104,8 @@ aia-wiki/                           ← public repo (this one)
 │
 ├── CLAUDE.md                       ← agent instructions (replaces all prompt files)
 ├── sources.yml                     ← curated source list
-├── requirements.txt
+├── pyproject.toml                   ← Python project + dependency definitions
+├── uv.lock                          ← locked Python dependencies
 ├── INDEX.md                        ← auto-regenerated weekly
 ├── CHANGELOG.md                    ← auto-appended every run
 ├── ARCHITECTURE.md

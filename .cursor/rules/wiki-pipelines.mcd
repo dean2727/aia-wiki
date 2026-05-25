@@ -46,5 +46,5 @@ synthesized Markdown pages to wiki/.
 - Do not write files outside wiki/, pipeline/, or .github/
 - Do not modify CHANGELOG.md manually — update_index.py owns it
 - Do not commit anything from ../dean-wiki-private/
-- Do not add dependencies without adding to requirements.txt
+- Do not add dependencies without adding them to pyproject.toml and refreshing uv.lock
 - Do not make Claude API calls without the Dean-Profile context

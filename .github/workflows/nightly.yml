@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout wiki (public)
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout private repo
         uses: actions/checkout@v4
@@ -27,38 +25,48 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.13'
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: uv sync --locked
 
       - name: Fetch RSS feeds
-        run: python pipeline/scripts/ingest_rss.py
+        run: |
+          echo "::group::RSS Ingestion"
+          trap 'echo "::endgroup::"' EXIT
+          uv run python pipeline/scripts/ingest_rss.py
         env:
           PRIVATE_REPO_PATH: private
 
-      - name: Fetch YouTube transcripts
-        run: python pipeline/scripts/ingest_youtube.py
-        env:
-          PRIVATE_REPO_PATH: private
+      # TODO: We implement a new fetch, then test locally, then enable it in workflow (with PR review)
+      # - name: Fetch YouTube transcripts
+      #   run: uv run python pipeline/scripts/ingest_youtube.py
+      #   env:
+      #     PRIVATE_REPO_PATH: private
 
-      - name: Fetch Notion personal notes
-        run: python pipeline/scripts/ingest_notion.py
-        env:
-          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-          PRIVATE_REPO_PATH: private
+      # - name: Fetch Notion personal notes
+      #   run: uv run python pipeline/scripts/ingest_notion.py
+      #   env:
+      #     NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+      #     NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+      #     PRIVATE_REPO_PATH: private
 
-      - name: Process URL queue
-        run: python pipeline/scripts/ingest_queue.py
-        env:
-          PRIVATE_REPO_PATH: private
+      # - name: Process URL queue
+      #   run: uv run python pipeline/scripts/ingest_queue.py
+      #   env:
+      #     PRIVATE_REPO_PATH: private
 
       - name: Run Claude Code — triage and update wiki
         uses: anthropics/claude-code-action@v1
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
-          claude_args: '--max-turns 30 --model claude-sonnet-4-6'
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          claude_args: |
+            --max-turns 30
+            --model claude-sonnet-4-6
+            --verbose
           prompt: |
             Perform the nightly wiki update for aia-wiki.
 
@@ -74,3 +82,16 @@ jobs:
             7. Do NOT touch any files in private/ — read only.
 
             Follow all guidelines in CLAUDE.md exactly.
+
+      - name: Write run summary
+        if: always()
+        run: |
+          echo "## Nightly Wiki Run — $(date '+%Y-%m-%d')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Ingestion" >> $GITHUB_STEP_SUMMARY
+          cat private/sources/staging/.run-summary >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No summary written" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Wiki Changes" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          git diff --name-only HEAD~1 HEAD >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No previous commit to compare" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
