@@ -1,9 +1,9 @@
 ---
 name: Notion wiki seeding
-overview: "Scope: `seed_from_notion.py` only — backfill wiki_candidates to staging/, knowledge_base to notion-knowledge/ AND a managed section in Dean-Profile.md. Block conversion handles tables; images downloaded locally. Nightly ingest deferred."
+overview: "Scope: `seed_from_notion.py` only — backfill wiki_candidates to staging/, knowledge_base to sources/notion/seed/dean-foundational-knowledge/ AND a managed section in Dean-Profile.md. Block conversion handles tables; images downloaded locally. Nightly ingest deferred."
 todos:
   - id: seed-notion-core
-    content: "seed_from_notion.py: ingest from sources.yml, block→markdown (tables + images), wiki→staging, KB→notion-knowledge/"
+    content: "seed_from_notion.py: ingest from sources.yml, block→markdown (tables + images), wiki→staging, KB→sources/notion/seed/dean-foundational-knowledge/"
     status: completed
   - id: seed-profile-update
     content: "After KB fetch, deterministically rebuild <!-- notion-knowledge-baseline --> section in Dean-Profile.md from KB markdown"
@@ -35,7 +35,7 @@ isProject: false
 flowchart TB
   yml["sources.yml"]
   seed["seed_from_notion.py"]
-  nk["notion-knowledge/*.md\n+ assets/"]
+  nk["sources/notion/seed/dean-foundational-knowledge/*.md\n+ assets/"]
   profile["profile/Dean-Profile.md\nmanaged baseline section"]
   st["staging/notion-*.md"]
 
@@ -61,7 +61,7 @@ flowchart TB
 
 | Output | Path | Purpose |
 |--------|------|---------|
-| **Raw archive** | `dean-wiki-private/sources/notion-knowledge/{slug}.md` | Full fetched notes + local images; agent can drill in |
+| **Raw archive** | `dean-wiki-private/sources/notion/seed/dean-foundational-knowledge/{slug}.md` | Full fetched notes; agent can drill in |
 | **Profile baseline** | [`dean-wiki-private/profile/Dean-Profile.md`](dean-wiki-private/profile/Dean-Profile.md) | Curated “what Dean already knows” for wiki triage/synthesis |
 
 Wiki candidates still go to **`staging/` only** (no profile update).
@@ -93,7 +93,7 @@ Add marker pair to Dean-Profile (once, if missing):
 
 | Topic | Notion source | Depth signal |
 | --- | --- | --- |
-| The Transformer | notion-knowledge/the-transformer.md | H2: Attention, Embeddings, … |
+| The Transformer | sources/notion/seed/dean-foundational-knowledge/the-transformer.md | H2: Attention, Embeddings, … |
 
 ### Per-topic summaries
 
@@ -105,7 +105,7 @@ Add marker pair to Dean-Profile (once, if missing):
 
 ### How content is produced (**deterministic, no LLM in seed**)
 
-After KB pages are fetched to `notion-knowledge/`:
+After KB pages are fetched to `sources/notion/seed/dean-foundational-knowledge/`:
 
 1. Parse each file’s markdown (headings, lists, first ~500 chars of body text)
 2. Build topic table (title, local file link, top headings as “depth signal”)
@@ -141,12 +141,12 @@ Notion-hosted file URLs **expire** (~1 hour). External URLs may be stable but sh
 | Step | Behavior |
 |------|----------|
 | Detect | `image` blocks (`file` or `external`) |
-| Download | `GET` image URL → `notion-knowledge/assets/{page_slug}/{block_id}.{ext}` |
+| Download | `GET` image URL → `sources/notion/seed/dean-foundational-knowledge/assets/{page_slug}/{block_id}.{ext}` |
 | Markdown | `![caption](assets/{page_slug}/{block_id}.png)` (relative path) |
 | Failure | Fallback: `*[Image unavailable — see Notion page]({notion_page_url})*` |
 | Scope | Download for **knowledge_base + wiki_candidates** (both land under private repo) |
 
-Wiki staging files reference the same relative asset paths if images appear on wiki-candidate pages (assets colocated under `notion-knowledge/assets/` or shared `notion-assets/` — pick one dir in implementation).
+Wiki staging files reference the same relative asset paths if images appear on wiki-candidate pages (assets colocated under `sources/notion/seed/dean-foundational-knowledge/assets/` or shared `notion-assets/` — pick one dir in implementation).
 
 ### Other block types (v1)
 
@@ -167,7 +167,7 @@ Wiki staging files reference the same relative asset paths if images appear on w
 2. Resolve page IDs (wiki: expand subtrees via cache or live DFS)
 3. For each page (tqdm): fetch blocks → markdown (+ assets)
 4. Write wiki → `staging/notion-{date}-{slug}.md`
-5. Write KB → `notion-knowledge/{slug}.md`
+5. Write KB → `sources/notion/seed/dean-foundational-knowledge/{slug}.md`
 6. **Rebuild Dean-Profile baseline section** from all KB markdown files
 7. Log summary (pages written, images saved, profile updated)
 
@@ -192,7 +192,7 @@ New functions: `blocks_to_markdown()`, `download_image()`, `table_rows_to_markdo
 
 ## Implementation order
 
-1. Block→markdown with table + image support; dual write paths (staging / notion-knowledge)
+1. Block→markdown with table + image support; dual write paths (staging / sources/notion/seed/dean-foundational-knowledge)
 2. Profile marker splice + deterministic baseline builder from KB files
 3. Flip default `main()` to ingest; `--export-structure` for JSON tree
 4. Local run with `.env`
@@ -219,7 +219,7 @@ sequenceDiagram
   participant Wiki as aia-wiki/wiki
 
   You->>Seed: uv run python seed_from_notion.py
-  Seed->>Private: notion-knowledge/*.md, staging/notion-*.md, profile §10 stub
+  Seed->>Private: sources/notion/seed/dean-foundational-knowledge/*.md, staging/notion-*.md, profile §10 stub
   You->>Claude: one-time backfill prompt
   Claude->>Private: enrich Dean-Profile.md
   Claude->>Wiki: create/update wiki pages
@@ -230,7 +230,7 @@ sequenceDiagram
 
 | Artifact | LLM uses it to… |
 |----------|------------------|
-| `notion-knowledge/*.md` | Understand Dean’s foundational AI notes in full |
+| `sources/notion/seed/dean-foundational-knowledge/*.md` | Understand Dean’s foundational AI notes in full |
 | `profile/Dean-Profile.md` §10 (markers) | Mechanical inventory — **LLM rewrites this into readable prose** |
 | `staging/notion-*.md` | Source material for **wiki pages** (triage each file) |
 
@@ -262,7 +262,7 @@ uv run python seed_from_notion.py
 **Reads:**
 
 - `dean-wiki-private/profile/Dean-Profile.md` (full file)
-- All `dean-wiki-private/sources/notion-knowledge/*.md`
+- All `dean-wiki-private/sources/notion/seed/dean-foundational-knowledge/*.md`
 
 **Writes:**
 
@@ -283,7 +283,7 @@ uv run python seed_from_notion.py
 **Writes (per [`CLAUDE.md`](aia-wiki/CLAUDE.md)):**
 
 - Triage each file 1–10; **expect most Notion backfill to score 7+** (these are pre-curated wiki candidates)
-- Create/update pages in `wiki/topics/`, `wiki/synthesis/`, or `wiki/tools/`
+- Create/update pages in `wiki/technical/` and `wiki/world/` (and update `wiki/overview.md` when it materially changes)
 - Full page template including **Dean-Relevance**
 - Append **`CHANGELOG.md`** with created/updated/skipped
 - **`INDEX.md`**: regenerate once at end of backfill (nightly skips this; weekly normally does — do it here for first seed)
@@ -291,7 +291,7 @@ uv run python seed_from_notion.py
 **Rules:**
 
 - Do not paste raw Notion markdown into wiki — synthesize
-- Use `notion-knowledge/` only to **calibrate depth** (don’t re-explain basics Dean already documented)
+- Use `sources/notion/seed/dean-foundational-knowledge/` only to **calibrate depth** (don’t re-explain basics Dean already documented)
 - Skip duplicating a topic if an existing wiki page already covers it — update instead
 
 ---
@@ -322,4 +322,4 @@ Keeps long wiki backfill off your laptop and documents the one-time process.
 ### Deliverable to add when implementing Phase 2
 
 - [`prompts/notion-seed-llm.md`](aia-wiki/prompts/notion-seed-llm.md) — copy-paste prompt for Cursor or workflow
-- Short pointer in [`CLAUDE.md`](aia-wiki/CLAUDE.md): `notion-knowledge/` = profile context; `staging/notion-*` = wiki triage; §10 markers = seed inventory, LLM polishes
+- Short pointer in [`CLAUDE.md`](aia-wiki/CLAUDE.md): `sources/notion/seed/dean-foundational-knowledge/` = profile context; `staging/notion-*` = wiki triage; §10 markers = seed inventory, LLM polishes

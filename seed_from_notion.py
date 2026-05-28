@@ -1,7 +1,7 @@
 """Seed the wiki from Notion pages listed in sources.yml.
 
 Default behavior:
-  - knowledge_base pages -> private/sources/notion-knowledge/
+  - knowledge_base pages -> private/sources/notion/seed/dean-foundational-knowledge/
   - wiki_candidates pages + all descendants -> private/sources/staging/
   - rebuilds a managed AI knowledge baseline section in Dean-Profile.md
 
@@ -42,10 +42,11 @@ REPO_ROOT = Path(__file__).resolve().parent
 SOURCES_FILE = REPO_ROOT / "sources.yml"
 PRIVATE_REPO_PATH = Path(os.environ.get("PRIVATE_REPO_PATH", REPO_ROOT.parent / "dean-wiki-private"))
 STAGING_DIR = PRIVATE_REPO_PATH / "sources" / "staging"
-NOTION_KNOWLEDGE_DIR = PRIVATE_REPO_PATH / "sources" / "notion-knowledge"
-PAGES_WITH_IMAGES_FILE = NOTION_KNOWLEDGE_DIR / "pages_with_images.txt"
-NOTION_CACHE_DIR = PRIVATE_REPO_PATH / "sources" / "notion-cache"
-DEFAULT_STRUCTURE_PATH = NOTION_CACHE_DIR / "page-structure.json"
+NOTION_DIR = PRIVATE_REPO_PATH / "sources" / "notion"
+NOTION_SEED_DIR = NOTION_DIR / "seed"
+NOTION_KNOWLEDGE_DIR = NOTION_SEED_DIR / "dean-foundational-knowledge"
+PAGES_WITH_IMAGES_FILE = NOTION_SEED_DIR / "pages_with_images.txt"
+DEFAULT_STRUCTURE_PATH = NOTION_SEED_DIR / "page-structure.json"
 DEAN_PROFILE_PATH = PRIVATE_REPO_PATH / "profile" / "Dean-Profile.md"
 
 PROFILE_START_MARKER = "<!-- notion-knowledge-baseline:start -->"
@@ -661,7 +662,7 @@ def update_dean_profile(written_pages: list[WrittenPage], seeded_at: datetime) -
 
 
 def write_pages_with_images_report(pages_with_images: set[tuple[str, str, str]]) -> None:
-    NOTION_KNOWLEDGE_DIR.mkdir(parents=True, exist_ok=True)
+    NOTION_SEED_DIR.mkdir(parents=True, exist_ok=True)
     lines = [
         "# Pages with Notion image blocks",
         "",

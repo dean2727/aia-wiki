@@ -98,9 +98,34 @@ aia-wiki/                           ← public repo (this one)
 │       └── ingest_claude.py
 │
 ├── wiki/
-│   ├── topics/                     ← one page per model, tool, or concept
-│   ├── synthesis/                  ← cross-topic trend analysis and comparisons
-│   └── tools/                      ← tool evaluations, comparisons, adoption notes
+│   ├── technical/
+│   │   ├── synthesis.md              ← living "this year in tech" doc,
+│   │   │                               themes across technical advancements,
+│   │   │                               research methods and breakthroughs
+│   │   │                               that redefined how something works (weekly update)
+│   │   ├── models/                   ← transformer, VLA, MoE architectures
+│   │   ├── algorithms/               ← research-origin findings
+│   │   │                               (verifiers, RLHF, test-time compute)
+│   │   ├── tools/                    ← software tool evaluations
+│   │   └── engineering-approaches/   ← practitioner-origin methods
+│   │                                   (spec-driven dev, RAG patterns,
+│   │                                    parallel agents)
+│   │
+│   ├── world/
+│   │   ├── synthesis.md              ← living "this year in the world" doc,
+│   │   │                               how AI is manifesting in products,
+│   │   │                               culture, and society — themes across
+│   │   │                               what shipped, what changed, and what
+│   │   │                               it means for people and careers (weekly update)
+│   │   ├── products/                 ← new products and devices
+│   │   ├── features/                 ← capability updates worth attention
+│   │   └── signals/                  ← evolving topics with career/human
+│   │                                   implications (layoffs, education,
+│   │                                   human growth, future of engineering)
+│   │
+│   └── overview.md                   ← quarterly synthesis connecting
+│                                       technical breakthroughs to
+│                                       world-facing implications
 │
 ├── CLAUDE.md                       ← agent instructions (replaces all prompt files)
 ├── sources.yml                     ← curated source list
@@ -119,9 +144,13 @@ dean-wiki-private/                   ← private repo (data only, no code)
 │   └── TELOS.md
 │
 └── sources/
-    ├── queue.txt                   ← ad-hox URLs that interest Dean, not included in the other data
-    ├── staging/                    ← ingestion landing zone (cleared each run)
-    ├── notion-cache/               ← data from cursor chats. collected from a .py script
+    ├── queue.txt                   ← ad-hoc URLs that interest Dean, not included in the other data
+    ├── staging/                    ← ingestion landing zone for nightly/weekly runs (cleared each run)
+    ├── notion/
+    │   ├── seed/                   ← one-time Notion seed dump (wiki candidates + foundational KB)
+    │   │   ├── notion-YYYY-MM-DD-*.md
+    │   │   └── dean-foundational-knowledge/  ← Notion `knowledge_base` pages (calibration context)
+    │   └── new-notes/              ← later: incremental Notion pulls (if enabled)
     ├── cursor-logs/                ← synced by local LaunchAgent
     ├── claude-exports/             ← claude chats - the monthly diff
     └── inbox/

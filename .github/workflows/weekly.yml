@@ -73,7 +73,7 @@ jobs:
             1. Read private/profile/Dean-Profile.md to load Dean's user model.
             2. Read all files in private/sources/staging/ and triage as in the nightly run.
                Create or update wiki pages for anything scoring 7+.
-            3. Review all wiki/synthesis/ pages. Identify connections between developments
+            3. Review `wiki/technical/synthesis.md`, `wiki/world/synthesis.md`, and `wiki/overview.md`. Identify connections between developments
                from the past 7 days. Create or update synthesis pages where meaningful
                cross-topic patterns have emerged. Do not force connections — only write
                synthesis pages when the insight is genuine.

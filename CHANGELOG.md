@@ -65,7 +65,7 @@ Processed all 15 lecture PDFs from the Stanford self-improving-agents course (st
 ### Topics — Score 7–8 (frontier · status: active)
 - **Created**: `wiki/topics/test-time-compute-scaling.md` — Large Language Monkeys, pass@k vs Maj@k, generation–verification gap, compute-optimal scaling, Archon/ITAS; all reachable via his OpenRouter stack (fit 7)
 - **Created**: `wiki/topics/llm-memory-architectures.md` — MemGPT, Cartridges, LMCache, CacheBlend, MLA; KV cache as memory; maps to his self-updating-KB ✅ zone (fit 7)
-- **Created**: `wiki/topics/agentic-evals-and-long-horizon-tasks.md` — METR time horizon, GDPval, DeepScholar-Bench; reliability gap calibration; closing reflection ≈ Crafted/Praxis human-growth thesis (fit 7)
+- **Created**: `wiki/topics/agentic-evals-and-long-horizon-tasks.md` — METR time horizon, GDPval, DeepScholar-Bench; reliability gap calibration; closing reflection ≈ Praxis human-growth thesis (fit 7)
 - **Created**: `wiki/topics/agentic-rl-exploration.md` — policy gradient as the fundamental equation, 3 unsolved problems, exploration ladder, RL²/AdA/Algorithm Distillation; zone-of-proximal-development ≈ Praxis thesis (fit 7)
 
 ### Topics — Score 5 (conceptual leverage · status: active)
@@ -78,3 +78,37 @@ Processed all 15 lecture PDFs from the Stanford self-improving-agents course (st
 - `llm-memory-architectures.md` chosen over the suggested `llm-memory-and-learning.md` to avoid duplicating the existing `agent-memory-learning-from-experience.md` (systems/architecture vs. learned-retrieval-policy); the two are cross-linked.
 - Reasoning (Denny Zhou), post-training eras (Melvin Johnson), AI-for-math/neuro-symbolic (Thang Luong), and learning-from-feedback (ReAct/RLEF/Constitutional AI) were folded into the synthesis rather than given standalone pages — rich but best read as connective arc, not isolated topics.
 - **Profile**: No changes
+
+## [2026-05-27] Wiki Restructure — Understanding-First Taxonomy
+
+Refactored the wiki from a **content-type filing system** to an **understanding-building structure**.
+
+The previous layout was organized around *what a page is*:
+- `topics/` = a concept
+- `synthesis/` = multiple topics combined
+- `tools/` = software
+- (implicitly) workflows/patterns = “method pages”
+
+That scheme is tidy for storage, but it doesn’t reflect how understanding compounds.
+
+The new layout is organized around *how reality unfolds*:
+- `wiki/technical/` = what researchers and engineers are discovering (methods, algorithms, architectures, engineering approaches)
+- `wiki/world/` = how those discoveries are manifesting in shipped products, capabilities, and society
+- `wiki/overview.md` = the connector: quarterly synthesis from technical breakthroughs → world-facing implications
+
+In essence: **this structure optimizes for building understanding, not merely storing knowledge.**
+
+### Updated
+- **Updated**: `README.md` — documented the new `wiki/` tree
+- **Updated**: `CLAUDE.md` — updated allowed wiki locations + index guidance to match the new taxonomy
+- **Updated**: `.github/workflows/nightly.yml` — nightly prompt now targets `wiki/technical/` / `wiki/world/`
+- **Updated**: `.github/workflows/weekly.yml` — weekly prompt now reviews `technical/synthesis.md`, `world/synthesis.md`, and `overview.md`
+- **Updated**: `specs/notion_wiki_seeding.plan.md` — updated write targets to match the new wiki layout
+- **Updated**: `.cursor/rules/wiki-pipelines.mcd` — updated wiki location conventions
+
+### Created
+- **Created**: `wiki/world/synthesis.md` — world-facing weekly synthesis placeholder
+- **Created**: `wiki/overview.md` — quarterly connector placeholder
+
+### Moved
+- **Moved**: all wiki pages into `wiki/technical/...` and `wiki/world/...` (and removed the now-empty legacy directories)

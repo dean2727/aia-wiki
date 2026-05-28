@@ -75,7 +75,6 @@ Use mermaid diagrams where they genuinely clarify something.
 
 ## Dean-Relevance
 
-**Fit score**: X/10
 **Adoption path**: immediate | experimental | watch | skip
 **Why**: Honest 2–3 sentence assessment mapped directly to Dean's profile and current work.
 **Analogy**: One analogy or cross-domain bridge that makes this click faster for Dean.
@@ -96,6 +95,21 @@ Use mermaid diagrams where they genuinely clarify something.
 - Write how Dean thinks: scan-friendly structure, analogy-driven, implication-first
 - Never pad pages with obvious information or boilerplate headers with nothing under them
 
+### Engineering approaches rule
+
+`wiki/technical/engineering-approaches/` is reserved for **genuinely AI-native workflows** — things that only exist (or are meaningfully different) because of how AI coding agents work.
+
+**Inclusion test**: did AI *fundamentally change the methodology*, or did AI merely *speed up* a pre-existing software practice?
+
+- If AI fundamentally changed it (new workflow shape, new failure modes, new coordination patterns), it belongs in `wiki/technical/engineering-approaches/`.
+- If it's standard software engineering wrapped in AI tooling (tests/coverage/deps/docs hygiene, phase rituals, etc.), skip it (or place it outside the wiki).
+
+In here, we shall also include any approaches engineering teams took to build something innovative (if the source you're ingesting is about an engineering story, let's say). Open to any innovative approach, if that approach led to something groundbreaking.
+
+### Technical tools rule (tool evaluations only)
+
+`wiki/technical/tools/` is reserved for **software tool evaluations** (libraries, frameworks, open-source repos, infra, platforms) — adoption notes, trade-offs, and benefits offered. Dean is oepn to learning anything here.
+
 ---
 
 ## Step 4: Update INDEX.md and CHANGELOG.md
@@ -108,15 +122,15 @@ Regenerated fully on every weekly run. Format:
 # Wiki Index
 _Last updated: YYYY-MM-DD_
 
-## Topics
+## Technical
 | Page | Description | Updated |
 |---|---|---|
 | [[page-name]] | One-line description | YYYY-MM-DD |
 
-## Synthesis
+## World
 ...
 
-## Tools
+## Overview
 ...
 ```
 
@@ -126,8 +140,8 @@ Append only. Never rewrite history. Each run adds one entry:
 
 ```markdown
 ## [YYYY-MM-DD] Nightly Run
-- **Created**: `wiki/topics/page-name.md` — reason in one line
-- **Updated**: `wiki/topics/other-page.md` — what changed
+- **Created**: `wiki/technical/...` or `wiki/world/...` — reason in one line
+- **Updated**: `wiki/technical/...` or `wiki/world/...` — what changed
 - **Skipped**: 7 items below signal threshold
 - **Profile**: No changes | [description of any profile update]
 ```
@@ -136,7 +150,7 @@ Append only. Never rewrite history. Each run adds one entry:
 
 ## File & Repo Rules
 
-- Wiki content lives in `wiki/topics/`, `wiki/synthesis/`, `wiki/tools/` only
+- Wiki content lives in `wiki/technical/`, `wiki/world/`, and `wiki/overview.md` only
 - `INDEX.md` and `CHANGELOG.md` are the only root-level files you modify
 - **Never commit anything from `private/`** — that repo is data only
 - **Never modify pipeline scripts or workflow files**
@@ -152,4 +166,4 @@ Append only. Never rewrite history. Each run adds one entry:
 - Do not write in a formal academic tone — write like a sharp, knowledgeable colleague
 - Do not add AI-generated filler or transition phrases
 - Do not commit private repo content to this repo
-- Do not create pages in locations other than `wiki/topics/`, `wiki/synthesis/`, or `wiki/tools/`
+- Do not create pages outside `wiki/technical/`, `wiki/world/`, or `wiki/overview.md`

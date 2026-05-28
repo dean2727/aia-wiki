@@ -20,7 +20,7 @@ synthesized Markdown pages to wiki/.
 - Docstrings on all public functions
 
 ## File Conventions
-- Wiki pages live in wiki/topics/, wiki/synthesis/, wiki/tools/ only
+- Wiki pages live in `wiki/technical/`, `wiki/world/`, and `wiki/overview.md` only
 - Source cache files go to ../dean-wiki-private/sources/ — never 
   commit raw source content to this repo
 - Prompt templates are Markdown files in pipeline/prompts/
