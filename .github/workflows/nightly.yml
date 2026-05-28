@@ -1,8 +1,8 @@
 name: Nightly Wiki Update
 
 on:
-  schedule:
-    - cron: '0 2 * * *'   # 2am UTC every night
+  # schedule:
+  #   - cron: '0 2 * * *'   # 2am UTC every night
   workflow_dispatch:        # allow manual trigger
 
 jobs:
@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
 
     steps:
       - name: Checkout wiki (public)
