@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import os
+import argparse
 import re
 import sys
 from datetime import UTC, datetime, timedelta
@@ -195,8 +196,18 @@ def fetch_feed(feed: dict[str, str]) -> Any:
     response.raise_for_status()
     return feedparser.parse(response.text)
 
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Fetch RSS sources and write new entries to staging.")
+    parser.add_argument(
+        "--backfill",
+        action="store_true",
+        help="If set, widen the date window to the last 3 months (~90 days). Default is last 24 hours.",
+    )
+    return parser.parse_args(argv)
 
-def main() -> int:
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(sys.argv[1:] if argv is None else argv)
     try:
         STAGING_DIR.mkdir(parents=True, exist_ok=True)
     except OSError as error:
@@ -209,7 +220,9 @@ def main() -> int:
     except (OSError, ValueError):
         return 1
 
-    cutoff = datetime.now(UTC) - timedelta(hours=24)
+    now = datetime.now(UTC)
+    cutoff = now - (timedelta(days=90) if args.backfill else timedelta(hours=24))
+    logger.info("RSS window: %s → %s (backfill=%s)", cutoff.isoformat(), now.isoformat(), args.backfill)
     fetched = 0
     skipped_seen = 0
     skipped_old = 0
