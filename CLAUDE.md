@@ -73,12 +73,26 @@ What changes because this exists. Implications for the field and for AI engineer
 Technical depth appropriate to the topic.
 Use mermaid diagrams where they genuinely clarify something.
 
+## Dean-Relevance files
+
+Never include a Dean-Relevance section in public wiki pages.
+
+For every wiki page you write, create a corresponding sidecar file at:
+private/relevance/{same path as wiki page}
+
+Sidecar format:
+---
+wiki_page: wiki/technical/algorithms/verifiers.md
+updated: YYYY-MM-DD
+---
+
 ## Dean-Relevance
 
 **Adoption path**: immediate | experimental | watch | skip
-**Why**: Honest 2–3 sentence assessment mapped directly to Dean's profile and current work.
-**Analogy**: One analogy or cross-domain bridge that makes this click faster for Dean.
-**Suggested next step**: One concrete action if adoption path is immediate or experimental.
+**Why**: honest assessment mapped to Dean's profile
+**Analogy**: cross-domain bridge
+**Suggested next step**: one concrete action
+**Private notes**: anything too personal for the public wiki
 
 ## Related
 
