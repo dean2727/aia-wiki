@@ -1,5 +1,31 @@
 # Changelog
 
+## [2026-05-28] HF Backfill Expansion
+
+Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
+
+### Created
+- **Created**: `wiki/technical/engineering-approaches/embeddings-and-rerankers.md` — open Apache-2.0 embedders/rerankers that beat larger models + now-cheap recipes to fine-tune your own. Sources: `introducing-the-ettin-reranker-family`, `granite-embedding-multilingual-r2`, `multimodal-embedding-reranker-models-with-sentence-transform`, `training-and-finetuning-multimodal-embedding-reranker-models`, `build-a-domain-specific-embedding-model-in-under-a-day`, `paddleocr-3-5` (ingestion).
+- **Created**: `wiki/technical/tools/rl-post-training-libraries.md` — the open-source RL post-training software layer + the async-disaggregation lesson. Sources: `keep-the-tokens-flowing-lessons-from-16-open-source-rl-libra`, `trl-v1-0-post-training-library`.
+- **Created**: `wiki/technical/algorithms/verifiable-rl-environments.md` — code-computed rewards + adaptive-difficulty environments (Ecom-RLVE). Source: `ecom-rlve-adaptive-verifiable-environments-for-e-commerce-co`.
+- **Created**: `wiki/technical/algorithms/llm-inference-serving-internals.md` — continuous batching, vLLM RL correctness, parallel/diffusion decoding. Sources: `unlocking-asynchronicity-in-continuous-batching`, `vllm-v0-to-v1-correctness-before-corrections-in-rl`, `towards-speed-of-light-text-generation-with-nemotron-labs-di`.
+- **Created**: `wiki/technical/algorithms/training-at-scale-infrastructure.md` — FM training building blocks, Ulysses sequence parallelism, trillion-param delta-weight sync, HF storage buckets. Sources: `building-blocks-for-foundation-model-training-and-inference`, `ulysses-sequence-parallelism`, `shipping-a-trillion-parameters-with-a-hub-bucket-delta-weigh`, `introducing-storage-buckets-on-the-hugging-face-hub`.
+- **Created**: `wiki/technical/models/open-model-releases-spring-2026.md` — catalog of four open releases. Sources: `granite-4-1-llms-how-they-re-built`, `granite-4-0-3b-vision`, `introducing-nvidia-nemotron-3-nano-omni`, `falcon-perception`.
+- **Created**: `wiki/world/open-source-ai-state-spring-2026.md` — open-source ecosystem state + openness-as-security argument. Sources: `state-of-open-source-on-hugging-face-spring-2026`, `ai-and-the-future-of-cybersecurity-why-openness-matters`.
+- **Created**: `wiki/technical/engineering-approaches/specialization-beats-scale.md` — distributional alignment over parameter count. Source: `specialization-beats-scale-a-strategic-variable-most-ai-proc`.
+- **Created**: `wiki/technical/engineering-approaches/agent-evaluation-and-failure-modes.md` — agent failure taxonomy + voice-agent eval + eval integrity. Sources: `inside-vakra-reasoning-tool-use-and-failure-modes-of-agents`, `a-new-framework-for-evaluating-voice-agents-eva`, `adding-benchmaxxer-repellant-to-the-open-asr-leaderboard`.
+- **Created**: `wiki/technical/engineering-approaches/client-side-and-web-ml.md` — where ML inference lives in a web app (browser / edge backend / PII redaction). Sources: `how-to-use-transformers-js-in-a-chrome-extension`, `any-custom-frontend-with-gradio-s-backend`, `how-to-build-scalable-web-apps-with-openai-s-privacy-filter`.
+
+### Created — periphery (status: watching, transferable-pattern only)
+- **Created**: `wiki/world/embodied-ai-tooling-spring-2026.md` — robotics tooling tracked only for software-transferable patterns (local inference, experience-data capture). Sources: `lerobot-v0-5-0`, `bringing-robotics-ai-to-embedded-platforms-dataset-recording`, `reachy-mini-goes-fully-local`.
+- **Created**: `wiki/world/generative-media-tooling.md` — diffusion tooling tracked for the composable-pipeline design pattern + training cost-compression. Sources: `introducing-modular-diffusers`, `prx-part-3-training-a-text-to-image-model-in-24h`.
+
+### Skipped — edge / true periphery (no reusable method for Dean)
+- `qimma-a-quality-first-arabic-llm-leaderboard` — region/language-specific leaderboard; no method Dean would reuse.
+- `training-mrna-language-models-across-25-species-for-165` — domain-specific bio LM; no bridge to Dean's stack.
+
+- **Profile**: No changes
+
 ## [2026-05-28] Nightly Run
 
 315 staged RSS items triaged (the day's fetch: Anthropic, OpenAI, Google DeepMind, Hugging Face, Import AI, The Batch, Hacker News). The overwhelming majority were headline-only stubs (title + URL + one-line summary) with no synthesizable body. Wrote pages only for high-signal items that scored ≥7 **and** carried enough real content to synthesize without fabrication — quality over completeness, per the signal threshold.
