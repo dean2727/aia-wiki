@@ -67,14 +67,6 @@ Conversational G-Eval, conversation efficiency (info-gathering), engagement (int
 
 See [[advanced-rag-techniques]] and [[agentic-rag]] for the pipelines these score.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: His Qdrant + OpenRouter RAG and multi-agent Praxis build are exactly what the RAG-component and task-completion/tool-correctness metrics target — and the eval-driven fast-model-upgrade payoff matters given he swaps Claude/Gemini via OpenRouter.
-**Analogy**: Contextual precision vs. recall = "are the big fish ranked first" vs. "did we catch all the fish in the pool."
-**Suggested next step**: Wire faithfulness + contextual precision/recall (DeepEval or hand-rolled LLM-judge) onto his Qdrant retrieval, and a task-completion judge on the agent layer, so model swaps are decided by numbers not vibes.
-**Watch for**: Cheap, reliable LLM-judge models making continuous online eval affordable per-request rather than sampled — would let him score production traffic, not just test sets.
-
 ## Related
 - [[building-agents-best-practices]]
 - [[agentic-errors]]

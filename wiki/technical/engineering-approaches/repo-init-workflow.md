@@ -35,14 +35,6 @@ Ten `// turbo` analysis passes → one synthesized doc:
 
 Output `AGENTS.md` covers: overview, dev guidelines, tooling/workflow, agent-specific instructions, quick reference, troubleshooting, integration points, perf/security.
 
-## Dean-Relevance
-
-**Adoption path**: immediate
-**Why**: It's the one-shot way to produce the project context doc he writes by hand when kicking off Praxis work, and it matches his plan-first, low-friction style.
-**Analogy**: A codebase MRI — one scan and you get the full chart instead of poking around for symptoms.
-**Suggested next step**: Run it against an existing Praxis repo and diff the generated `AGENTS.md` against the hand-written one to find blind spots.
-**Watch for**: If a coding agent's built-in `/init` produces an `AGENTS.md` this thorough, the custom workflow becomes redundant.
-
 ## Related
 - [[project-rules-example]]
 - [[starting-a-project-vibe-coding]]

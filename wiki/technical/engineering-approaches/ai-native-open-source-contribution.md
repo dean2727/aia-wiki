@@ -51,13 +51,6 @@ flowchart TD
 
 **The ownership rule.** The Skill won't open a PR until the contributor accepts the results, and the PR always discloses it was agent-assisted. The explicit norm: *own the code, be ready to iterate with reviewers, and never hand reviewer comments straight back to an agent* — LLMs double down, go on tangents, and don't push back effectively. Once review starts, it's a person-to-person conversation.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: This sits at the intersection of two things Dean is actively building — disciplined AI-assisted engineering and [[skills-rules-subagents|Skills/rules]] — and it's the cleanest articulation yet that *the value of a Skill is consistency + auditability + encoded judgment*, not automation. The "agent produces the artifact, a separate non-agentic harness produces the trust" split is a strong pattern for Praxis: anywhere an agent's self-reported success can't be taken at face value, build a dumb, reproducible verifier beside it. It also reframes contribution quality as *reviewer-load reduction*, which maps to how Dean already thinks about clean repos and low-friction collaboration.
-**Analogy**: The Skill is a flight checklist — it doesn't fly the plane, it stops an experienced pilot from skipping the step that crashes it. The non-agentic test harness is the black-box recorder: independent of the pilot's account of what happened, so the investigation (review) doesn't rest on self-report. And "don't hand reviewer comments back to the agent" is the rule that the pilot, not the autopilot, talks to the control tower.
-**Suggested next step**: Pick one recurring, judgment-heavy task in Praxis (or a repo Dean contributes to) and write a Skill that encodes both the technical checks *and* the review conventions — then pair it with a tiny standalone verifier script that reproduces the key results without the agent in the loop. The discipline of separating "agent did the work" from "an independent harness proved it" is the transferable part.
-
 ## Related
 - [[skills-rules-subagents]]
 - [[harness-and-scaffolding]]

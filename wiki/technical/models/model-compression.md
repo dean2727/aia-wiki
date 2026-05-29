@@ -40,14 +40,6 @@ When to reach for distillation over (or with) other compression:
 
 The tradeoff is an extra training pass for cheap, durable inference. Prune/quantize for incremental wins on an existing architecture; distill when you need a fundamentally smaller model that keeps most of the accuracy. [[grok-4-20]] is the local MoE landmark here — sparse activation as a complementary "compression" lever (serve a fraction of params per token).
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: Dean consumes frontier models via OpenRouter and doesn't self-host or train, so this is landscape literacy — useful for reasoning about *why* a given open model behaves as it does, not a daily lever.
-**Analogy**: A mentor distilling the gist of each step to you so you can execute at the right level without carrying all the underlying detail.
-**Suggested next step**: —
-**Watch for**: Practical on-device / distilled-small-model tooling good enough to run a personalization model for Praxis locally — that would flip this to experimental.
-
 ## Related
 - [[grok-4-20]]
 - [[synthetic-data]]

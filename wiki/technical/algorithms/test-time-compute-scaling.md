@@ -75,14 +75,6 @@ flowchart LR
 
 The selection/composition of inference-time moves (how many samples, which ranker, fusion, verification cascade) is itself a search space. **Archon** treats "inference-time architecture search" (ITAS) as an optimization problem and uses Bayesian optimization (the same family as **MIPRO / DSPy** prompt optimizers) to find a good inference pipeline per task — a meta-layer on top of all the above.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Dean calls Claude/Gemini through OpenRouter, so every technique here is reachable *without training infra* — best-of-N, self-consistency, and verifier-gated sampling are pure orchestration. Archon/ITAS is conceptually the same move as the DSPy/MIPRO prompt optimization that fits his Jinja2-templated pipelines, and the "compute as a deploy-time dial" framing matches a builder who wants to tune quality without swapping models.
-**Analogy**: Rolling dice for a 20. One die rarely hits; ten dice almost always *contain* a 20 — but only if you can read the dice afterward. The reader (the verifier) is the whole game, not the rolling.
-**Suggested next step**: On one hard, checkable task in Praxis (e.g. structured extraction with a schema), wire best-of-N + a cheap LLM-judge or schema-validator as the selector, and compare to single-shot — that's the generation–verification gap measured on his own traffic.
-**Watch for**: Cheaper reasoning models making large-N sampling economical per-request rather than reserved for hard queries — that flips test-time scaling from "special case" to default.
-
 ## Related
 - [[verifiers-in-llm-reasoning]]
 - [[train-time-rl-scaling]]

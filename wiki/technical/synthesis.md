@@ -155,14 +155,6 @@ Reading all 15 together, five threads run through everything:
 4. **Exploration is the unsolved frontier.** RL works now, but LLMs explore weakly (best-of-N); real discovery needs the deep-RL ideas (curriculum, meta-RL) ported over. → [[agentic-rl-exploration]]
 5. **Reward hacking and reliability are the persistent dangers.** From RLHF's reward hacking to AI Scientist misinterpreting its own results to DGM's safety guardrails — autonomy raises the stakes on the verifier being honest.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: The course is a systems-level map of where AI capability is going, which suits a pattern-first systems thinker — and three of its pillars are directly buildable on Dean's API-based stack *without* training infra: verifier/eval design ([[verifiers-in-llm-reasoning]] + [[llm-agent-evaluation]]), test-time selection ([[test-time-compute-scaling]]), and evolutionary loops over scored artifacts ([[evolutionary-search-self-improving-agents]]). The deepest resonance is conceptual: the **generate→verify→train loop with a shrinking human role** is the abstract form of his "director-not-operator" ambition, and the **curriculum / zone-of-proximal-development** framing in [[agentic-rl-exploration]] is the Praxis human-growth thesis stated in RL terms.
-**Analogy**: The whole field is a student who got good at *grading their own homework*. Once the answer key is trustworthy, they can practice endlessly without a teacher — and the only question that matters is how honest the answer key is.
-**Suggested next step**: Treat "build a reliable verifier" as the highest-leverage move for Praxis — start with a Weaver-style multi-judge fusion on one output type, then layer best-of-N selection on top of it. The loop only compounds once the verifier is trustworthy; everything else is downstream of that.
-**Watch for**: A genuine exploration method that works on LLMs (beyond best-of-N). That's the field's stated bottleneck and the leading indicator that agents shift from *recalling and recombining* to *discovering*.
-
 ## Related
 - [[test-time-compute-scaling]]
 - [[train-time-rl-scaling]]

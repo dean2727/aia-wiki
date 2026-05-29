@@ -53,14 +53,6 @@ Internal app (crawl) → limited external group (walk) → all customers (run) �
 
 Good metrics each surfaced a distinct real failure: **LLM-call error rate** → partial approvals on mid-analysis API failures (fix: state rollback); **task completion rate** → claims marked complete missing verifications (fix: mandatory checklists); **# human requests** → agent handling cases beyond its competence (fix: escalation protocols); **token usage per interaction** → unnecessary PHI in working memory (fix: data minimization). Metrics-driven optimization must align with business objectives.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: The eval-as-product framing, test-case generation with a separate model, and crawl-walk-run map directly onto how he'd harden Praxis agents — even though the Bedrock specifics (SessionState, action groups) don't apply to his FastAPI/OpenRouter stack.
-**Analogy**: Crawl-walk-run is canary deploys for behavior, not just traffic.
-**Suggested next step**: Stand up a small ground-truth eval set for his agents and wire one automated metric (task completion via LLM-as-judge) into CI before the next prompt change.
-**Watch for**: Eval tooling (DeepEval-style) that augments the eval set automatically from production traces — closes the loop without manual labeling.
-
 ## Related
 - [[agentic-patterns]]
 - [[llm-agent-evaluation]]

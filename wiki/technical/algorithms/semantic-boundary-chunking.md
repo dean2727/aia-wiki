@@ -31,14 +31,6 @@ Fragmented chunks produce fragmented retrieval: a chunk that cuts a drug name fr
 
 **Hard limit**: this keeps related info together *within* a source but cannot bridge facts distributed *across* multiple documents. When the answer requires cross-document synthesis, reach for [[graph-rag]] instead.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Praxis content (human-growth notes/journaling) is less entity-dense than legal/medical, but topic-shift-aware boundaries could still cut distractors in his Qdrant retrieval.
-**Analogy**: Don't tear a recipe in half mid-ingredient — cut between recipes, never between an ingredient and its quantity.
-**Suggested next step**: A/B a semantic chunker (topic-shift boundaries) against current fixed/recursive chunking on the RAG triad before committing the extra ingest cost.
-**Watch for**: Cheap, fast LLM-based agentic chunkers that make entity-preserving boundary detection negligible-cost at ingest time.
-
 ## Related
 - [[pre-retrieval]]
 - [[advanced-rag-techniques]]

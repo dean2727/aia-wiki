@@ -42,14 +42,6 @@ Broad vs. narrow usage matters: products like Claude Code and Codex call the *wh
 
 **Training-side terms** (relevant if you train, not just deploy): **RL environment** (stateful thing actions mutate), **trainer** (runs episodes, scores, updates weights — e.g. TRL's GRPOTrainer), **rollout / trajectory / trace** (one full run start to finish — the raw data RL learns from), **reward** (verifiable vs. learned; sparse vs. dense; rubrics break it into weighted dimensions). An **eval harness** is the same loop pattern but records metrics at a checkpoint instead of updating weights.
 
-## Dean-Relevance
-
-**Adoption path**: immediate
-**Why**: Dean builds on and inside harnesses (Claude Code, custom agent loops in Praxis); this vocabulary is the precise language for reasoning about which layer owns a behavior, and it's converging right now.
-**Analogy**: The model is the engine; the harness is the drivetrain, pedals, and the driver's decision of when to brake; the scaffold is the dashboard and the rules of the road the driver reads. A Ferrari engine in a go-kart chassis is a different car — same as a frontier model in a thin harness.
-**Suggested next step**: Adopt "model / harness / scaffold / policy" as working vocabulary when designing Crafted's agent loops — when something misbehaves, first ask which layer owns it before reaching for a model swap or a prompt tweak.
-**Watch for**: Convergence (or further fragmentation) of these definitions across frameworks, and "harness engineering" maturing into named patterns/benchmarks — that's when this graduates from vocabulary to a methodology page.
-
 ## Related
 - [[context-engineering]]
 - [[skills-rules-subagents]]

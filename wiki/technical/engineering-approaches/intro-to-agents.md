@@ -30,14 +30,6 @@ This is the framing for the core build/skip decision. Collaborative agents commu
 
 Data privacy (agents touch sensitive data), technical complexity, poor generalization to unforeseen scenarios without retraining, compute cost, and ethical/bias/transparency concerns. Human oversight remains important even as capability improves.
 
-## Dean-Relevance
-
-**Adoption path**: skip
-**Why**: This is foundational framing he operates well past daily — the only live takeaway is the "simplest solution first" discipline against over-agenticizing Praxis.
-**Analogy**: Model → compound system → agent is like function → pipeline → autonomous worker that decides its own pipeline.
-**Suggested next step**: —
-**Watch for**: Nothing here moves toward active — it's settled substrate; the frontier lives in the sibling pages.
-
 ## Related
 - [[agentic-patterns]]
 - [[building-agents-best-practices]]

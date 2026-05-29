@@ -35,14 +35,6 @@ Most RAG quality problems are retrieval problems, not generation problems. Distr
 
 **Evaluation — the RAG triad**: score query→context relevance, context→answer relevance, and answer groundedness. Build a small validation set (~10 queries to start, grow until conclusive) with ideal answers and a superset of expected source docs. Ragas / TruLens / MLflow.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: This is the substrate behind Praxis retrieval over Qdrant — hybrid + RRF + cross-encoder rerank is the most likely concrete upgrade to his current dual-collection setup.
-**Analogy**: Bi-encoder = big net; cross-encoder = the fisherman sorting the catch. Cast wide, then sort precisely.
-**Suggested next step**: Add a cross-encoder rerank stage over Qdrant top-N and measure the RAG triad on a 10-query validation set before/after.
-**Watch for**: Long-context models eating the "stuff more context" rationale — but retrieval precision (distractor suppression) stays load-bearing regardless of window size.
-
 ## Related
 - [[pre-retrieval]]
 - [[semantic-boundary-chunking]]

@@ -90,13 +90,6 @@ Results: **68.0 Macro-F1 on SA-Co vs 62.3 for SAM 3.** The gap *widens with prom
 
 **Falcon OCR (0.3B)**: the same early-fusion backbone trained *from scratch* (no distillation — glyph-level features differ too much from object-level ones) purely for OCR. Scores 80.3 on olmOCR (within 1.7 pts of the top system) and 88.64 on OmniDocBench (ahead of DeepSeek OCR v2, GPT 5.2, Mistral OCR 3), leading on multi-column and tables — at ~3× smaller than 0.9B-class OCR VLMs, with the highest open-source OCR throughput. Ships with a paged-inference engine (FlexAttention, paged KV cache, continuous batching, CUDA graph capture) plus a **vLLM Docker server and MLX integration for Apple Silicon**.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: This batch is the clearest signal yet that open models have caught — and on document/perception/extraction workloads, passed — the closed frontier, while shrinking to sizes you can self-host. Praxis currently leans on hosted OpenRouter Claude/Gemini and OpenAI embeddings; nothing here replaces a reasoning agent. But two are *directly* slot-in evaluable: Granite 4.0 3B Vision / Falcon OCR for any document or chart ingestion path (cheaper, self-hostable, no per-token API bill, no data leaving your infra), and Granite 4.1's published training recipe is a reference for *how* a disciplined small-model pipeline is built. The MLX/NVFP4 sizing makes the local/on-device frontier you track cautiously suddenly practical rather than hypothetical.
-**Analogy**: Think of the closed frontier as ordering from a Michelin kitchen — superb, but you pay per plate and the recipe stays secret. This batch is more like four chefs publishing their cookbooks *and* selling you a countertop appliance that makes the dish at home: Granite 4.1 hands you the full recipe (every pretraining phase, every RL stage), and Falcon/Granite-Vision hand you a 0.3-0.6B appliance small enough to run on your own counter (Apple Silicon, a single 24GB card). The win isn't a better dish — it's owning the kitchen.
-**Suggested next step**: If any Praxis pipeline ingests PDFs, forms, or charts (content prerequisites, source documents), spin up **Falcon OCR (0.3B)** via its vLLM/MLX path or **Granite 4.0 3B Vision + Docling** on a single GPU and benchmark extraction accuracy + cost against your current hosted-model call. That's a low-risk, self-contained experiment that tests the whole "open + local for narrow tasks" thesis on a real workload.
-
 ## Sources
 
 - Hugging Face / IBM Granite, *"Granite 4.1 LLMs: How They're Built"* (2026-04-29)

@@ -45,13 +45,6 @@ A "speedrun" stacking the tricks that survived earlier ablations, under a hard 3
 
 Schedule: 512px for 100k steps, then sharpen at 1024px for 20k. Result is "clearly usable," with remaining flaws looking like undertraining, not structural — i.e. the recipe scales predictably. Code is open-sourced.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: Periphery — Dean builds text/conversational AI, not image generation, so the diffusion craft is noise to him. The signal is the **composable-pipeline architecture**: a clean, real-world instance of self-describing stages behind a uniform interface, which is exactly the design tension in any multi-stage RAG/agent pipeline he'd build for Praxis. The PRX cost-compression is a useful data point on how fast from-scratch training economics are falling, but not actionable for him today.
-**Analogy**: Modular Diffusers is Lego for inference pipelines — every brick has the same standardized studs, so any brick snaps to any other, you can pull one out and use it alone, and a machine can read the studs and build the instructions for you. The value isn't the bricks; it's the studs (the shared interface contract).
-**Suggested next step**: Carry the design pattern, not the tool: when structuring a Praxis pipeline, define each stage as a self-describing unit with a declared inputs/outputs/components contract and let composition be data-driven (match outputs to inputs) rather than a hardcoded call order. That's what makes stages swappable and independently testable.
-
 ## Sources
 
 - Hugging Face, *"Introducing Modular Diffusers — Composable Building Blocks for Diffusion Pipelines"* (2026-03-05).

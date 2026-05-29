@@ -114,13 +114,6 @@ Whole thing: under a day on one A100/H100 (most of it hands-off), ~2–3 hrs for
 
 Retrieval quality is capped by ingestion quality: "the hard part often starts before the LLM." PaddleOCR 3.5 turns PDFs, scans, screenshots, tables, charts, formulas, and complex layouts into structured data — and now runs with **Hugging Face Transformers as an inference backend** (`engine="transformers"`), so its OCR (PP-OCRv5) and document-parsing (PaddleOCR-VL 1.5) models slot into a PyTorch/Transformers stack with less integration friction (`engine_config` for dtype/device/attention). For raw throughput, the default `paddle_static` backend is still recommended. Note the alternative for image-heavy docs: VDR (section 3) skips OCR entirely by embedding page *images* directly.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Praxis runs retrieval on Qdrant with OpenAI `text-embedding-3-large` (API-only, no fine-tuning, and notably it scores *below* the 97M Granite model on multilingual retrieval, 50.7 vs 60.3). Two moves are directly actionable: (1) add a reranker stage — a 17M/150M Ettin cross-encoder is a near-free quality lever on top of your existing Qdrant retrieval; (2) the NeMo/Sentence-Transformers fine-tuning recipes mean a Praxis-specific embedder trained on your growth-content corpus is now a one-GPU, one-day project, not an ML-team effort — and the Atlassian +26% Recall result shows the payoff is real on proprietary data.
-**Analogy**: Your embedder is a fast librarian who grabs the 100 likeliest books off the shelf by their spines; the reranker is the subject expert who actually opens each one and ranks them properly. Today you only have the librarian. Adding a cross-encoder is hiring the expert — and the expert is now cheap enough (17M params) to keep on staff. Fine-tuning is sending that librarian to study *your* collection until she stops confusing "metformin dosage" with "metformin side effects."
-**Suggested next step**: Wire a `cross-encoder/ettin-reranker-150m-v1` rerank stage after your Qdrant top-K (start K≈50–100) on a held-out Praxis query set, and measure NDCG@10 before/after — same two-stage shape as section 1. If retrieval relevance is the binding constraint, follow with the NeMo SDG + hard-negative recipe to fine-tune a domain embedder on your content corpus.
-
 ## Sources
 - `hugging-face-blog-2026-05-28-introducing-the-ettin-reranker-family.md`
 - `hugging-face-blog-2026-05-28-granite-embedding-multilingual-r2-open-apache-2-0-multilingu.md`

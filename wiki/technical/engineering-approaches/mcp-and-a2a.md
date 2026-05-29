@@ -38,13 +38,6 @@ Protocol standardization is what turns a pile of custom integrations into an eco
 
 **Tradeoff:** whether to adopt MCP/A2A depends on mission-criticality, desired user control, and how much bespoke integration you'd otherwise carry — user-centered design drives the call.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: MCP is directly usable in Dean's tooling (Cursor/Claude) and relevant to wiring Crafted into data sources; A2A matters as the multi-agent interop story — but these are established protocols he already understands, not new signal.
-**Watch for** (what upgrades to active): A2A reaching real adoption beyond Google's orbit (interop across the frameworks Dean uses), or an MCP capability that meaningfully changes how he connects Praxis to Supabase/Qdrant.
-**Suggested next step**: —
-
 ## Related
 - [[agentic-mesh]]
 - [[skills-rules-subagents]]

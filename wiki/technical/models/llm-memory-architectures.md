@@ -70,14 +70,6 @@ GPU HBM  →  CPU RAM  →  local SSD  →  remote object store (S3)
 
 Related model-side trick: **DeepSeek's MLA** (Multi-head Latent Attention) shrinks the KV cache itself by compressing keys/values into a latent space — attacking the same cost from the architecture side.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Praxis is built on accumulating per-user context, and "self-updating knowledge base" is explicitly in Dean's ✅ zone — MemGPT's paging pattern and Cartridges' "compile a corpus into reusable memory" map directly onto a system that should remember a user across sessions. He's API-based so he can't control the server KV cache (LMCache/CacheBlend are for whoever *serves* the model), but prefix-caching discounts on his OpenRouter/Claude calls are worth structuring prompts around, and MemGPT-style memory functions are buildable today on top of Qdrant + Supabase.
-**Analogy**: MemGPT is an operating system giving a forgetful worker a desk (RAM), filing cabinet (recall storage), and reference library (archival) plus the discipline to shuttle paper between them. Cartridges is handing that worker a pre-read, highlighted summary instead of the whole library each morning.
-**Suggested next step**: Prototype a MemGPT-style memory layer for one Praxis user journey — Qdrant as archival storage, Supabase as recall storage, and explicit "save_fact / load_context" tool calls — so the agent pages a user's history in on demand instead of stuffing it all into every prompt.
-**Watch for**: Composable cartridge-style cached knowledge becoming a first-class API feature (upload a corpus, get a reusable cache handle) — that would turn his self-updating-KB ambition into a config rather than an engineering project.
-
 ## Related
 - [[agent-memory-learning-from-experience]]
 - [[context-engineering]]

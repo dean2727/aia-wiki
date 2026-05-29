@@ -67,14 +67,6 @@ An agent that runs the **full research cycle** in three phases — **idea genera
 - **v1 limitations**: restricted to a given domain, needs codebase templates, generates very similar ideas across runs/models, fails to implement a significant fraction of ideas, **hallucinates** details (hardware/library versions), sometimes **misinterprets results** (framed a KL-divergence increase as an improvement), struggles to cite relevant papers.
 - **v2** adds **tree-based experimentation** run by an **Experiment Manager Agent** (preliminary investigation → hyperparameter tuning → research-agenda execution → ablation studies) and a **parallelized agentic tree search**: each node generates a plan + code; errors → "buggy," successes → take notes, plot, and **verify with a VLM**; best-first search branches buggy nodes to debug and non-buggy nodes to improve; an LLM judges which nodes advance. (Papers still weren't accept-to-conference level.)
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: This is Dean's automation/"director-not-operator" thesis in its strongest form — define the objective + evaluator, let the system discover the *how*. The AlphaEvolve loop (archive + LLM-proposed diffs + parallel evaluators) is buildable today on his stack for any task with a programmatic scorer, and **OpenEvolve** is a concrete on-ramp. The DGM "agent that improves its own tooling" pattern is the shape of the leverage he wants; the AI Scientist's honest failure modes (hallucination, result misinterpretation) are a useful reality check on how far unattended agent pipelines can be trusted.
-**Analogy**: Selective breeding for code. You don't design the prize-winning orchid — you keep crossing the best plants and culling the rest, and the *evaluator* (which blossom counts as best) is what makes the whole garden converge instead of drift.
-**Suggested next step**: Pick one Praxis component with a cheap automatic scorer (e.g. a prompt template scored by an eval, or a retrieval config scored on recall) and stand up a minimal AlphaEvolve loop with OpenEvolve — archive of candidates, LLM-proposed diffs, parallel evaluation — to feel the evolve-don't-handcraft workflow on his own problem.
-**Watch for**: Self-modifying-agent frameworks (DGM-style) becoming safe/packaged enough to point at a real repo — that's the moment "agent that improves its own tooling" stops being a research demo.
-
 ## Related
 - [[test-time-compute-scaling]]
 - [[verifiers-in-llm-reasoning]]

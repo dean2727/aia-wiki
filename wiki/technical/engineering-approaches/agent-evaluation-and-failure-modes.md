@@ -124,13 +124,6 @@ The defenses they applied generalize to *any* agent eval, including conversation
 
 The deeper point for Dean: an agent eval is a *measure under adversarial pressure*. The pressure can be a vendor gaming a leaderboard — or your own optimization loop quietly overfitting to your test conversations. Holding out unseen scenarios, refusing to expose per-slice scores you'd be tempted to tune to, and re-executing rather than trusting reported traces (the VAKRA move) are the same instinct: **protect the measure so it keeps telling the truth.**
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: This is dead-center in Dean's strongest frontier zone — agent failure modes, tool-use reliability, conversational metrics, and eval integrity — and it's directly operational for Praxis. VAKRA's stage-wise taxonomy is a ready-made debugging frame for Praxis's tool calls; EVA's two-axis split (task-correct vs. good-to-converse-with) is exactly the tension a growth-conversation agent lives in; the ASR piece is a guard against Praxis's own eval overfitting as Dean iterates on prompts.
-**Analogy**: VAKRA's stage isolation is a fault tree in reliability engineering — you don't say "the plane failed," you trace to the *first* component that broke and stop there, so the categories stay disjoint and the fix is targeted. EVA's accuracy-experience tradeoff is the conversational analog of a Pareto frontier: you can't push both to 1.0 at once, so you must *choose your point on the curve deliberately* rather than discover it by accident.
-**Suggested next step**: Build a tiny EVA-style harness for Praxis: 10–20 reproducible growth-conversation scenarios, each with a user-goal decision tree, a persona (patience/style), and a deterministic end-state to check. Score two axes separately — **task/faithfulness** (did it ground advice in the user's actual context, no fabricated claims?) and **experience** (conciseness, progression, not re-asking what the user already said) — and report pass^k across 3 runs to expose *consistency*, not just best-case. Hold a slice of scenarios private from your prompt-tuning loop so you can detect when you're benchmaxxing your own agent.
-
 ## Sources
 
 - IBM Research, *"Inside VAKRA: Reasoning, Tool Use, and Failure Modes of Agents"*, Hugging Face Blog (2026-04-15).

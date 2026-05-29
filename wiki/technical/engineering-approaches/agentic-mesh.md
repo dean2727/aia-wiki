@@ -36,14 +36,6 @@ Purposeful, accountable, trustworthy, autonomous, discoverable, intelligent. Pur
 - **Agent plane** — how agents interact with each other.
 - **Operator plane** — operational concerns of running agents.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: It's an enterprise/ecosystem vision well above Praxis's current scope, where his agents are internal and centrally owned — relevant only if he ever exposes agents to third parties.
-**Analogy**: DNS + a registry + an app store, but for agents instead of websites.
-**Suggested next step**: —
-**Watch for**: A2A / agent-identity standards getting real adoption — that turns the mesh from a 2024 think-piece into something he'd integrate against. See [[mcp-and-a2a]].
-
 ## Related
 - [[mcp-and-a2a]]
 - [[agentic-patterns]]

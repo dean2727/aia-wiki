@@ -43,14 +43,6 @@ flow bot express greeting
 
 As bots grow, control flow matters: `start_new_flow_instance` spins up a fresh instance even while another runs (handles overlapping/repeated user actions where plain `activate` would misbehave); `deactivate` stops a flow no longer needed (resource management, avoids unwanted responses); the `@override` decorator replaces or extends an existing flow without rewriting it — useful for customizing imported/standard-library flows.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: NeMo/Colang dialog scripting is heavier than his FastAPI + Jinja2 + OpenRouter setup needs — but the modern "strong system prompt + output validators + hard stops only" division is exactly the lightweight pattern that fits Praxis.
-**Analogy**: Colang hard-coded `bot` strings are like writing every error message by hand; LLM-native guardrails are exception handlers that let the model speak but bound it.
-**Suggested next step**: —
-**Watch for**: Robust programmatic output validators (typed/schema + safety) maturing enough to replace dialog scripting entirely — which would make NeMo-style frameworks unnecessary for his use case.
-
 ## Related
 - [[building-agents-best-practices]]
 - [[agentic-errors]]

@@ -42,14 +42,6 @@ For engineers, synthetic data is the lever for evaluation and edge-case coverage
 
 This is where synthetic data meets [[llm-agent-evaluation]] — generated eval sets need the same realism/utility/privacy scrutiny — and [[advanced-rag-techniques]], where synthetic query/doc pairs power HyDE and embedding-adapter training.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Generating synthetic eval sets and seed personalization data for Praxis is plausibly useful, and the privacy/bias audit discipline maps directly to building on user growth data.
-**Analogy**: Building a dataset from a recipe — declare the ingredients (distributions) and ratios (mean/variance), combine into repeatable structured data.
-**Suggested next step**: When building eval sets for Praxis, generate synthetic user scenarios with an LLM and validate utility by scoring a model on held-out real interactions before trusting them.
-**Watch for**: LLM-based synthetic data pipelines with built-in privacy/distance auditing maturing into a standard tool — that turns the audit step from manual to default.
-
 ## Related
 - [[llm-agent-evaluation]]
 - [[advanced-rag-techniques]]

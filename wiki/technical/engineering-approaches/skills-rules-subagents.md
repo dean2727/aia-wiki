@@ -33,13 +33,6 @@ These are the levers for the real bottleneck in agent coding: context. Skills gi
 
 **Subagent heuristics:** use for context isolation, parallelism, specialized multi-step work, or independent verification; overkill for a simple single-purpose task (use a skill). Foreground for sequential output you need; background for long/parallel work. Cursor's built-in Explore subagent runs many parallel searches in its own context with a faster model.
 
-## Dean-Relevance
-
-**Adoption path**: immediate
-**Why**: Dean uses Cursor/Claude Code daily and is formalizing AI-assisted dev into discipline — skills/rules/subagents are the concrete mechanisms for the rules-and-workflows habit he already maintains.
-**Watch for** (what upgrades to active): cross-tool standardization of skills (portable packages via skills.sh / agentskills.io) maturing into a real ecosystem — that would make skills a durable asset rather than per-tool config.
-**Suggested next step**: —
-
 ## Related
 - [[spec-driven-development]]
 - [[harness-and-scaffolding]]

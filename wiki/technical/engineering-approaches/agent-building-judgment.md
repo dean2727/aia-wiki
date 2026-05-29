@@ -32,13 +32,6 @@ Most teams' bottleneck isn't capability, it's judgment: they over-engineer, post
 
 **Advice:** always have a way to measure results; never build in a vacuum. Design products that benefit *as models improve* rather than betting on current limitations.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: This is the judgment layer over everything Dean builds — especially "start evals ugly and early" and "agent vs. workflow," which directly shape how he scopes Praxis features.
-**Watch for** (what upgrades to active): updated heuristics as the landscape shifts — e.g. long-context and [[grok-4-20]]-style in-model agency invalidating today's "just use a workflow" defaults. This is a living page; refresh it when the lego bricks change.
-**Suggested next step**: —
-
 ## Related
 - [[agentic-patterns]]
 - [[building-agents-best-practices]]

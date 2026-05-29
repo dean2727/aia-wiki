@@ -76,14 +76,6 @@ These are the methods that *worked at scale* in deep RL and look most LM-feasibl
 
 Replace the high-variance return with an **advantage** (how much better an action is than typical). If a task is too easy or always-solved, advantage → 0 and there's no signal — so **sample tasks at the frontier of ability**. Exactly the zone of proximal development: too easy or way-over-your-head both teach little; progress lives at the edge, in micro-steps.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: This is the most *conceptually load-bearing* lecture for a systems-thinker — it explains *why* current agents are limited to best-of-N and what the unlock looks like. More pointedly for Dean: the curriculum / **zone-of-proximal-development** framing and the curiosity-as-growth analogy ("face your fear, go into the unknown, maximize the reward") are essentially the **Praxis human-growth thesis stated in RL terms** — task-directed exploration at the edge of ability is what good human learning *is*. The RL²/algorithm-distillation idea ("learn to learn in context, not imitate") is also a sharp lens on agent design.
-**Analogy**: A toddler learning to walk *uses the skill of crawling* to bootstrap — and a good coach keeps drills just past current ability, never trivially easy or impossibly hard. That's curriculum + task-directed exploration; it's also how Praxis should sequence a human's growth.
-**Suggested next step**: — (foundational/conceptual). When designing Praxis learning loops, borrow the curriculum principle explicitly: select the next challenge at the *frontier* of the user's demonstrated ability (where "advantage" is non-zero), not random or far-beyond.
-**Watch for**: A credible exploration method that works on LLMs (beyond best-of-N) — that would be a genuine capability jump and is the field's stated bottleneck; worth tracking as a leading indicator of "discovering" agents.
-
 ## Related
 - [[verifiers-in-llm-reasoning]]
 - [[train-time-rl-scaling]]

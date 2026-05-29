@@ -147,16 +147,6 @@ SmartRedact Paste shows *why* `gradio.Server` (vs. pure Gradio Blocks) matters h
 
 **The cost lever:** redaction with a 50M-active model at the edge is nearly free, and it lets you strip PII *before* spending an expensive hosted-LLM call — privacy and cost improve together.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-
-**Why**: This is exactly his actual stack (Next.js App Router frontend + FastAPI backend) meeting his flagged frontier zone — client-side browser ML, where he's "interested, cautious about perf cost." All three patterns are directly portable: `gradio.Server` is FastAPI underneath, so the `@server.api` queuing trick maps onto how he already thinks about backend endpoints; the Privacy Filter pattern is a concrete, near-free way to redact PII at the edge *before* Praxis spends an OpenRouter/Claude call — a privacy *and* cost win on infrastructure he already runs. The Transformers.js path is the genuinely cautious one: real perf cost (model download, WebGPU dependency, small models only), so it's a "know it exists, prototype if a privacy or offline requirement appears" rather than a default.
-
-**Analogy**: Inference placement is like deciding where to do food prep in a restaurant. In-browser ML is handing each diner ingredients and a burner at their own table — maximally private, zero load on your kitchen, but limited to dishes a diner can cook themselves (small models). The Gradio edge backend is one shared kitchen with a ticket rail (`@server.api` = the queue) so orders don't collide on a single stove (the GPU). Edge PII redaction is the prep cook who removes allergens *before* the expensive dish goes to the specialist chef — cheap, upstream, and it protects everything downstream.
-
-**Suggested next step**: Prototype an edge PII-redaction step in Praxis's FastAPI backend: run Privacy Filter once over user input to swap PII for `<CATEGORY>` placeholders *before* the text hits OpenRouter, and surface the detected spans to the Next.js frontend for an optional "review what we redacted" view. It's a contained, high-signal experiment — measure the added latency of the single forward pass against the privacy/cost benefit of never sending raw PII to a hosted model.
-
 ## Sources
 
 - Hugging Face Blog, *How to Use Transformers.js in a Chrome Extension* (Nico Martin, 2026-04-23) — `huggingface.co/blog/transformersjs-chrome-extension`

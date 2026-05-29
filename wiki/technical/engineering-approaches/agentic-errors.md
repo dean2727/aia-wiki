@@ -46,14 +46,6 @@ Causes compound: a planning error can drive repeated tool misuse; a memory lapse
 
 A robust agent runner distinguishes transient failures from terminal ones. **Retryable**: network/timeout classes (`httpx.TimeoutException`, `ConnectError`, `APIConnectionError`, `APITimeoutError`) and retryable HTTP statuses / rate limits — back off (`min(10, 2**attempt)`) and retry the same agent. **Non-retryable**: client/config errors (`BadRequestError` 400, `UnprocessableEntityError` 422, `AuthenticationError` 401, `PermissionDeniedError` 403, `NotFoundError` 404) — don't retry the same agent/model; move on. Always re-raise `asyncio.CancelledError`. Cap retries per agent (e.g. 3) and fall through to the next agent on exhaustion.
 
-## Dean-Relevance
-
-**Adoption path**: immediate
-**Why**: His `generate_reply` already implements exactly this retryable/non-retryable split with per-agent retry caps and fallthrough — this page is the rationale behind code he runs in Praxis.
-**Analogy**: An agent loop with no exit check is a `while True` that forgot its `break` — and the prompt is the loop condition you actually edit.
-**Suggested next step**: Add a per-iteration completion check + max-iter forced-answer to any agent that currently relies only on the network-level safety timeout.
-**Watch for**: Models that self-report "stuck" / declare done reliably without prompt scaffolding — would shift exit-criteria work from engineering to model behavior.
-
 ## Related
 - [[agentic-patterns]]
 - [[building-agents-best-practices]]

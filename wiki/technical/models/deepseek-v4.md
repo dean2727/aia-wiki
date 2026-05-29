@@ -66,13 +66,6 @@ Knowledge/reasoning numbers are competitive, not leading. The *agent* numbers se
 
 The instruct models offer three reasoning modes — Non-think, Think High, Think Max (needs ≥384K context). Recommended sampling: `temperature=1.0, top_p=1.0`.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: This is squarely Dean's frontier zone — model architecture that changes *practical* agent capability, not a leaderboard headline. Praxis runs long agentic loops on OpenRouter; the lesson here ("your context window is a lie until you cost out the per-step KV cache") is directly actionable when reasoning about why long agent traces get expensive or flaky. V4 is also a genuinely open option to evaluate against the Claude/Gemini defaults if context cost ever becomes the binding constraint.
-**Analogy**: Most context windows are like a huge warehouse with a single narrow loading dock — the floor space is impressive, but everything still bottlenecks at the door each time you fetch something. V4 widens the *dock*, not the floor: CSA/HCA make the cost of re-reading the whole warehouse on every step collapse. The interleaved-thinking change is the agent keeping a running notebook instead of re-deriving its plan every time the user interrupts.
-**Suggested next step**: When profiling a long Praxis agent run, separate the two cost drivers V4 names — per-step FLOPs vs. accumulated KV cache — and check which one actually grows your latency/bill as the trace lengthens. That diagnosis frame is useful regardless of which model you run.
-
 ## Related
 - [[gemma-4]]
 - [[decoupled-diloco]]

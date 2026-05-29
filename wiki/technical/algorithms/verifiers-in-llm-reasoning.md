@@ -66,14 +66,6 @@ flowchart TD
 
 A theme threaded through [[self-improving-ai-agents|the whole field]]: many systems work by **exploiting the gap** between how hard a problem is to *solve* and how easy it is to *check*. Code (run the tests), math (check the proof in Lean), CUDA kernels (compile + benchmark) all have near-perfect verifiers — which is exactly why self-improvement works best there and stalls in subjective domains where the verifier is itself an LLM that can be reward-hacked.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Verifiers are the most *application-layer* idea in the self-improvement stack — Dean can't retrain Claude, but he can build a better judge over his RAG and agent outputs, which is the same machinery as [[llm-agent-evaluation]]. The weak-verifier-ensemble pattern (fuse several cheap LLM judges into one reliable signal, then distill) is a concrete, training-free upgrade for Praxis quality gates, and the Math-Shepherd "value a step by how often it leads to success" trick is a clean way to grade multi-step agent trajectories.
-**Analogy**: A grader for a hard exam. One TA is noisy; a panel of TAs whose biases you've measured gives a grade you can trust — and once you trust the panel, you can train a single fast grader to imitate it.
-**Suggested next step**: Replace the single LLM-judge in one Praxis eval with a 3-judge Weaver-style fusion (estimate each judge's agreement with a small gold set, then weight), and measure judge reliability before trusting any best-of-N selection built on top of it.
-**Watch for**: Cheap, calibrated reward models released as endpoints — a reliable hosted PRM would let him add step-level verification to agent loops without building one.
-
 ## Related
 - [[test-time-compute-scaling]]
 - [[train-time-rl-scaling]]

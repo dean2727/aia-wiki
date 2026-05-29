@@ -72,14 +72,6 @@ flowchart LR
 
 External validity is the open question — and all three still need validation against humans who can actually solve the tasks.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: Dean builds agents, so the long-horizon *reliability* gap (80% success ≈ only 4–10 min tasks) is the single most important calibration for what to trust an agent with vs. keep a human in the loop — and the GDPval finding that under-specified context tanks performance is a direct argument for the context-engineering discipline he already values. The closing reflection ("what makes humans valuable and distinct, and how they use AI to reach greater heights") is almost a restatement of the Praxis human-growth thesis.
-**Analogy**: METR is a stopwatch on a worker (how long a job before they lose the thread); GDPval is a blind taste-test against a pro; DeepScholar is asking whether the intern's literature review is actually trustworthy. A model can be fast and still serve a dish no one wants.
-**Suggested next step**: When scoping a Praxis agent feature, sanity-check it against METR's 80%-reliability horizon (minutes, not hours) — design the agent to checkpoint and hand off rather than run unattended for long stretches, and add a GDPval-style pairwise "better than a human draft?" judge to one output type.
-**Watch for**: METR/GDPval results on the next model generation — if the 80% (reliable) horizon starts doubling as fast as the 50% horizon, the case for longer unattended agent runs changes materially.
-
 ## Related
 - [[llm-agent-evaluation]]
 - [[agentic-errors]]

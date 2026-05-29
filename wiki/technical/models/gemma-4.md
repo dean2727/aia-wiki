@@ -62,13 +62,6 @@ flowchart LR
 
 Multimodal capabilities work out of the box (OCR, speech-to-text, object detection, GUI element pointing — natively returning JSON bounding boxes on a 1000×1000 reference grid), plus function calling, reasoning, and code tasks. Small variants ship multi-token-prediction drafters for faster decoding.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: On-device / local-inference and client-side ML are Dean's "curious, cautious" zone — Gemma 4 is the most credible reason yet to actually try it, because the quality is frontier-ish and the deployment story (MLX on a Mac, WebGPU in the browser) is real and Apache-2 licensed. For Praxis, a quantized local Gemma 4 is a plausible option for privacy-sensitive or cost-sensitive paths (e.g. classification, embedding-adjacent pre-processing, on-device personalization) without an API round-trip.
-**Analogy**: PLE is like giving each floor of a building its own mail slot instead of forcing every package for the whole building through one lobby desk at the entrance — information arrives where and when it's needed rather than all up front. Shared KV cache is carpooling: the last few layers ride along on K/V someone already computed.
-**Suggested next step**: Run E4B locally via MLX (Dean's on a Mac) and test it on one concrete Praxis sub-task — e.g. structured extraction or a classification step currently hitting an API — to feel the latency/quality/cost trade vs. the cloud default before committing to anything.
-
 ## Related
 - [[deepseek-v4]]
 - [[decoupled-diloco]]

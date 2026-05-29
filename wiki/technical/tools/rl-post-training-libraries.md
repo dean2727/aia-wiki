@@ -103,16 +103,6 @@ TRL's release is philosophically the opposite of the survey's deep-systems focus
 
 TRL's positioning vs. the survey libraries: it's the **general-purpose, low-infrastructure, broadly-integrated** option (single GPU, standard stack, full HF Hub integration, any experiment tracker). It explicitly does *not* compete with verl on 671B-scale throughput or PipelineRL on async generation — those are the specialist tools the survey covers. TRL is where you start.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-
-**Why**: This is squarely in your "understand the landscape" frontier zone — RL for agents, reward design, training methodology — but it's not hands-on for you. Praxis is built on hosted models via OpenRouter (Claude/Gemini); you don't own model weights to post-train, and almost everything you want from a Praxis agent today is reachable through prompt engineering, context engineering, and verifiable scaffolding rather than RL fine-tuning. The honest trigger for crossing from *watch* to *experimental* is narrow: you'd need (a) a task where verifiable reward signals exist (your growth-zone scoring is *exactly* the kind of deterministic check RLVR feeds on), (b) a small open model you control, and (c) evidence that no amount of prompting closes the gap. Until then this is a map, not a tool — but it's a map worth holding, because it tells you *what RL post-training costs* before you ever consider it, which is the systems-level judgment you actually use.
-
-**Analogy**: The async-RL architecture is a restaurant kitchen that stopped making the waiters wait. The synchronous version: one cook takes an order, cooks the whole dish, plates it, *then* takes the next order — everyone else stands idle. Disaggregation puts a line of cooks (inference GPUs) plating continuously onto a pass (the rollout buffer), while the head chef (the trainer) tastes and adjusts the recipe (weights) and slips updated recipe cards back to the line *without stopping service*. "Staleness" is a cook still working off last week's recipe card; "Keep Routing" is two cooks who read the same recipe but reach for different spice jars and quietly ruin the dish. TRL's design philosophy is the opposite move — refusing to build a fancy universal kitchen for a menu that changes every season, and instead writing each recipe out longhand so any one can be rewritten without breaking the others.
-
-**Suggested next step**: None hands-on — keep this as your landscape map. If Praxis ever hits a wall where a hosted model *structurally* can't be steered to your growth-pedagogy via prompting, the first experiment is the cheap one: TRL's stable `GRPOTrainer` on a small open model with your growth-zone scorer as the verifiable reward, single GPU, no Ray. That's the lowest-friction on-ramp the ecosystem offers, and this page tells you it exists before you'd need to go looking.
-
 ## Sources
 
 - Hugging Face Blog, *"Keep the Tokens Flowing: Lessons from 16 Open-Source RL Libraries"* (2026-03-10) — Dirhoussi, Gallouédec, Rasul, Tunstall, Beeching, et al.

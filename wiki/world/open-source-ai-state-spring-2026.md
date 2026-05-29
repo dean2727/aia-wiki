@@ -71,16 +71,6 @@ This is a distinct argument, not a continuation of the data. Its spine:
 
 The unifying claim across both pieces: **the future is decided by the ecosystem around the model, not the model.** Security as a distributed, open, four-stage speed race; capability as a system recipe; value as a derivative tree. Same shape, three domains.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-
-**Why**: This is squarely in Dean's frontier zone — the open-vs-closed dynamic and ecosystem trends, read as a *system* rather than a feed of releases. It connects directly to his open/local-inference curiosity and his bias toward foundational, cross-domain implications over trend trivia. There's nothing to install; the value is a sharper mental model for build/buy decisions on Praxis (where to specialize a small open model vs. lean on OpenRouter's closed defaults) and for reasoning about *why* openness is structurally, not just economically, advantageous.
-
-**Analogy**: Open-source AI is behaving like an **ecosystem, not a marketplace** — and Dean's native Meadows/*Thinking in Systems* lens fits it exactly. A base model is a keystone species; its real impact is the food web of 100k+ derivatives that grow on it (Qwen as the oak that an entire forest depends on). The security argument is the immune-system version of the same idea: a *monoculture* (one closed vendor owning detection→patch end to end) is efficient until one pathogen finds the single point of failure and sweeps through; a *diverse, distributed* population fails gracefully because detection and response are spread across many independent agents. Closed = monoculture; open = biodiversity. Resilience is an emergent property of distribution, not a feature you bolt on.
-
-**Suggested next step**: Carry one heuristic into Praxis design reviews — **"capability is jagged; the system beats the model."** Concretely: before reaching for a frontier closed model for any agentic subtask, ask whether a *smaller open model + better scaffolding/retrieval/guardrails* clears the bar, given that median real-world deployment is ~406M params and gaps close fast under specialization. Treat the model as one component in a system you can inspect and audit — not the system itself. That framing also future-proofs against the "6-week engagement half-life": build the scaffolding to be model-swappable rather than betting the architecture on any single checkpoint.
-
 ## Sources
 
 - Hugging Face — *State of Open Source on Hugging Face: Spring 2026* (Ghosh, Kaffee, Jernite, Solaiman; 2026-03-17)

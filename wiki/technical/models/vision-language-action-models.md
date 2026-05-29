@@ -54,14 +54,6 @@ Two insights got robotics past the wall:
 
 Robotics is "in its infancy" on data; little inference-time compute is used; high-level→sub-task decomposition is underexplored; and there's a big disconnect between **computer-vision benchmarks** and what CV can actually do *in* robotics. The bottleneck is data diversity, not (yet) algorithms.
 
-## Dean-Relevance
-
-**Adoption path**: skip (watch the transferable methods)
-**Why**: Robotics is outside Dean's work (Praxis, web/AI-engineering) and his stack — so the *domain* is skip. But the **methods are dual-use**: action chunking is a general "commit to a plan, execute open-loop" pattern for any agent; **knowledge insulation** is a clean template for adding a skill without wrecking a base model's general ability (relevant if he ever specializes a model); and the co-training **data-mixture** discipline is the same problem in any fine-tune. Worth *knowing exists* as a marker that robotics is hitting its foundation-model inflection, not worth building on.
-**Analogy**: Action chunking is a dancer who learns a phrase and performs it as one fluid motion, rather than deciding each footfall mid-step. Knowledge insulation is teaching someone a new instrument without letting the practice erase their native language.
-**Suggested next step**: — (out of zone). If he ever fine-tunes a specialized model, revisit Knowledge Insulation's "stop-gradient + co-train general data" recipe as the anti-catastrophic-forgetting move.
-**Watch for**: A VLA reaching reliable, dexterous open-world tasks at consumer scale — that's the "robotics GPT-3.5 moment" and the cue that this jumps from curiosity to consequential.
-
 ## Related
 - [[evolutionary-search-self-improving-agents]]
 - [[self-improving-ai-agents]]

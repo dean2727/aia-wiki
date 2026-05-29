@@ -26,14 +26,6 @@ This is the connective tissue between "I have an idea" and a maintainable codeba
 | 4. Codify workflows | Compound the conventions | Every "do it like this" goes straight into `AGENTS.md`/`WORKFLOWS.md`/`RULES.md`; periodically have the model re-read the repo and propose refined workflows |
 | 5. Guardrails | Protect future speed | Minimal CI: lint/format + key integration tests + smoke test; rule: no merging waves without green smoke tests |
 
-## Dean-Relevance
-
-**Adoption path**: immediate
-**Why**: This is the literal kickoff procedure for Praxis-style projects on his exact stack (Next.js + FastAPI + Supabase, uv, docker-compose).
-**Analogy**: Waves are git-flow for the AI era — each one a sprint with a plan in, tests out, and a merge gate.
-**Suggested next step**: Template a reusable `PLAN.md` + per-part `AGENTS.md` starter so wave 1 of the next project is a copy-paste.
-**Watch for**: A coding agent shipping first-class native "wave" / multi-plan orchestration would turn this hand-rolled recipe into a built-in mode.
-
 ## Related
 - [[vibe-coding]]
 - [[spec-driven-development]]

@@ -89,14 +89,6 @@ Naive GRPO stalls and collapses entropy. **DAPO** adds four targeted fixes (AIME
 
 **Open problems**: stable exploration (entropy collapse), credit assignment over long trajectories, and reward design — all of which are the bottlenecks elaborated in [[agentic-rl-exploration]].
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: Dean builds on API models (OpenRouter), not custom training, so GRPO/DAPO aren't tools he'll run — but "**RL elicits, it doesn't expand**" is a load-bearing mental model for *choosing* and *prompting* reasoning models, and the STaR bootstrap loop is the cleanest template for any future self-improvement pipeline he might run on a small open model. Local LLM training sits in his 🟡 curious-but-cautious zone, so this is knowledge-to-have, not build-now.
-**Analogy**: RL fine-tuning is a coach, not a tutor. It doesn't teach the athlete new moves they couldn't physically do — it drills them until the best move comes out under pressure instead of one-in-ten times.
-**Suggested next step**: — (conceptual; revisit if he ever fine-tunes a small open model with a verifier-gated loop).
-**Watch for**: Turnkey hosted RL/GRPO services (à la "fine-tune with a reward function") that remove the infra barrier — that would move this from watch to experimental for a verifier-rich task.
-
 ## Related
 - [[test-time-compute-scaling]]
 - [[verifiers-in-llm-reasoning]]

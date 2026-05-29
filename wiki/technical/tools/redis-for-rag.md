@@ -26,14 +26,6 @@ Build flow: stand up Redis configured for vectors → use RedisVL (or a framewor
 
 **Where it fits vs. Dean's stack**: Dean already runs Qdrant for vector search, so Redis-as-vector-DB is redundant. The non-overlapping wins are the *semantic cache* and *session memory* layers, which Qdrant doesn't cover and which complement any pipeline from [[advanced-rag-techniques]] / [[agentic-rag]].
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Qdrant already owns vector search, but a Redis semantic-cache + session layer in front of Praxis would cut OpenRouter cost/latency on repeat queries without touching the retrieval stack.
-**Analogy**: A semantic cache is a barista who remembers your order — near-identical request, instant answer, no re-brewing.
-**Suggested next step**: Prototype a RedisVL semantic cache (cosine threshold for "close enough") in front of the existing Qdrant pipeline and measure cache-hit rate + cost delta on real query logs.
-**Watch for**: Provider-side prompt/response caching (e.g. OpenRouter/Anthropic caching) maturing enough to make a self-hosted semantic cache unnecessary.
-
 ## Related
 - [[advanced-rag-techniques]]
 - [[pre-retrieval]]

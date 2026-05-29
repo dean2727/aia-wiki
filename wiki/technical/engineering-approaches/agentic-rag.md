@@ -34,14 +34,6 @@ Agentic-specific retrieval capabilities vs. vanilla RAG:
 
 Frameworks: LangChain/LangGraph, LlamaIndex, DSPy, Letta, CrewAI — see [[agent-frameworks]].
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Praxis already uses OpenRouter (Claude/Gemini) with function calling — wrapping Qdrant retrieval in a retrieve-evaluate-reformulate loop is a natural, incremental upgrade over the current static pipeline.
-**Analogy**: Static RAG is a vending machine (one query, one fixed dispense); agentic RAG is a research assistant who checks whether the answer's even there and goes back for more if not.
-**Suggested next step**: Add a retrieval-evaluation step — let the agent grade Qdrant results and reformulate once before answering; measure against the [[llm-agent-evaluation]] / RAG-triad baseline.
-**Watch for**: Models with strong native "search reflexes" (Deep-Research-style) that make hand-built retrieve-evaluate loops redundant.
-
 ## Related
 - [[advanced-rag-techniques]]
 - [[pre-retrieval]]

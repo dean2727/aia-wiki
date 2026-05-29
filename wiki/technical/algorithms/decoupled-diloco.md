@@ -54,13 +54,6 @@ flowchart TD
 
 The reframing in the post is worth keeping: increasingly the gains come less from any single layer (hardware, software, research) and more from **rethinking how the layers fit together** — Decoupled DiLoCo is a systems-level rather than a model-level win.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: Dean won't be pre-training frontier models, so this isn't hands-on — but it's a textbook *systems-thinking* result, which is his native lens. It's a clean case study in turning a tightly-coupled, failure-amplifying system into a loosely-coupled, failure-isolating one by introducing asynchrony and removing global barriers — the same move that shows up in distributed software, microservices, and resilient product architecture. The "overlap communication with computation instead of blocking on it" principle generalizes directly to agent and data-pipeline design.
-**Analogy**: Conventional training is a rowing eight — if one rower catches a crab, the whole boat lurches. Decoupled DiLoCo is a flotilla of small boats heading the same way, occasionally shouting coordinates to each other: lose a boat and the rest sail on, and it rejoins when it's seaworthy again. The bandwidth trick is shouting *summaries* across the water, not narrating every stroke.
-**Suggested next step**: None hands-on. Keep the pattern — *isolate failure domains, communicate asynchronously, overlap coordination with work* — as a reusable architectural heuristic for Praxis's pipelines and any multi-agent orchestration where one slow/failed component currently blocks the rest.
-
 ## Related
 - [[gemma-4]]
 - [[deepseek-v4]]

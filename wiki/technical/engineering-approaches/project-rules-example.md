@@ -31,14 +31,6 @@ Sections worth lifting as patterns:
 | Mock-patching / known-broken notes | Document lazy-import patch targets, soft-delete sentinels, and tests to `--ignore` |
 | Kubernetes ops rule | Trigger→action: if a rollout stalls >30s, immediately pull logs — don't wait |
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: It's a battle-tested blueprint for the `AGENTS.md` files he writes per-part when [[starting-a-project-vibe-coding]], on a near-identical stack.
-**Analogy**: A senior engineer's onboarding doc, except the new hire is the agent and it never forgets.
-**Suggested next step**: Lift the Makefile-target table and uv/pre-commit rule blocks into a reusable `AGENTS.md` skeleton for Praxis.
-**Watch for**: A shared org-wide `AGENTS.md` standard at Dell would turn this from a borrowed example into an enforced template.
-
 ## Related
 - [[skills-rules-subagents]]
 - [[repo-init-workflow]]

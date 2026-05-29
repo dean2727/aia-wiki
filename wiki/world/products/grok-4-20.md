@@ -56,14 +56,6 @@ flowchart TD
 
 **Where conventional multi-agent still wins:** private-domain control via RAG, hard business constraints/guardrails injected as orchestration code, mixing model families per task, and upgrading one component without retraining a frontier model. The honest trade: external systems are bounded by their weakest piece (usually the planner/router) and can't "train away" pathologies — you detect them with evals and patch with prompts/code.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Dean builds custom multi-agent systems (Praxis personalization, Dell work) the "agents outside" way — this is the sharpest available articulation of what that architecture buys and costs, and a frontier model worth tracking directly.
-**Analogy**: Conducting an orchestra of contractors you brief, cue, and reconcile (external multi-agent) vs. a single virtuoso who has internalized every instrument and switches mid-phrase. The virtuoso has zero coordination overhead — but you can't hand them your private sheet music the way you can brief a contractor.
-**Suggested next step**: Audit one Crafted multi-agent flow against the inside/outside table — which failures are coordination accidents (would vanish under a stronger single model) vs. genuine domain/constraint needs (that justify the orchestration)? Let that decide where to invest in eval/telemetry vs. where to simplify.
-**Watch for**: Independent confirmation of the four-agent architecture and benchmarks; any API surfacing the internal debate traces; and the broader signal of frontier models absorbing orchestration — which would push this from experimental to a core design assumption.
-
 ## Related
 - [[context-engineering]]
 - [[agentic-patterns]]

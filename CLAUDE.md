@@ -70,7 +70,7 @@ These are often real content but low priority for Dean unless the article yields
 - Domain-specific bio LMs (e.g. mRNA, protein) with no bridge to Dean’s stack
 - Regional or language-specific leaderboards (Arabic ASR, etc.) unless they introduce a method Dean would reuse
 
-When you include periphery content, set **Adoption path: watch** (or **skip** in Dean-Relevance with a clear “why”) and keep the page short — extract the transferable pattern, not the vertical domain.
+When you include periphery content, keep the page short — extract the transferable pattern, not the vertical domain — and set **Adoption path: watch** (or **skip**, with a clear “why”) in its private relevance section.
 
 **Scoring adjustment for substantial bodies**
 
@@ -143,32 +143,45 @@ What changes because this exists. Implications for the field and for AI engineer
 Technical depth appropriate to the topic.
 Use mermaid diagrams where they genuinely clarify something.
 
-## Dean-Relevance files
+## Sources
 
-Never include a Dean-Relevance section in public wiki pages.
-
-For every wiki page you write, create a corresponding sidecar file at:
-private/relevance/{same path as wiki page}
-
-Sidecar format:
----
-wiki_page: wiki/technical/algorithms/verifiers.md
-updated: YYYY-MM-DD
----
-
-## Dean-Relevance
-
-**Adoption path**: immediate | experimental | watch | skip
-**Why**: honest assessment mapped to Dean's profile
-**Analogy**: cross-domain bridge
-**Suggested next step**: one concrete action
-**Private notes**: anything too personal for the public wiki
+(Only on grouped/backfill pages that merge multiple sources — a bullet list of the staged source filenames or URLs.)
 
 ## Related
 
 - [[Related Topic 1]]
 - [[Related Topic 2]]
 ```
+
+**Public wiki pages never contain a Dean-Relevance section.** Dean-Relevance is personal; it lives only in the private repo, in one file per calendar quarter (see below).
+
+### Dean-Relevance — private, quarterly
+
+Record every page's Dean-Relevance assessment in the **private repo**, in the current quarter's file:
+
+`private/relevance/<season>-<year>.md`  — e.g. `private/relevance/spring-2026.md`
+
+| Season | Months | File-name year |
+|---|---|---|
+| spring | March–May | that calendar year |
+| summer | June–August | that calendar year |
+| fall | September–November | that calendar year |
+| winter | December–February | the year of the **December** (so Dec 2026–Feb 2027 → `winter-2026.md`) |
+
+Pick the file from the current date; if this is the first page of a new quarter, create that file. Add one `##` section per wiki page, keyed by the page title with its wiki path on the next line:
+
+```markdown
+## [Topic Name]
+`wiki/technical/.../page-slug.md`
+
+**Adoption path**: immediate | experimental | watch | skip
+**Why**: honest 2–3 sentence assessment mapped to Dean's profile and current work
+**Analogy**: one analogy or cross-domain bridge
+**Suggested next step**: one concrete action if adoption path is immediate or experimental
+**Private notes**: anything too personal for the public wiki (optional)
+```
+
+Whenever you create or materially update a wiki page, add or update its section in the current quarter's relevance file. Never duplicate this content into the public page.
 
 ### Writing rules
 
@@ -236,6 +249,7 @@ Append only. Never rewrite history. Each run adds one entry:
 
 - Wiki content lives in `wiki/technical/`, `wiki/world/`, and `wiki/overview.md` only
 - `INDEX.md` and `CHANGELOG.md` are the only root-level files you modify
+- Dean-Relevance assessments live in `private/relevance/<season>-<year>.md` (private repo, quarterly) — never in public pages
 - **Never commit anything from `private/`** — that repo is data only
 - **Never modify pipeline scripts or workflow files**
 - **Never rename a page without finding and updating all `[[WikiLinks]]` that reference it**
@@ -252,3 +266,4 @@ Append only. Never rewrite history. Each run adds one entry:
 - Do not add AI-generated filler or transition phrases
 - Do not commit private repo content to this repo
 - Do not create pages outside `wiki/technical/`, `wiki/world/`, or `wiki/overview.md`
+- Do not put a Dean-Relevance section in a public wiki page — it goes in the private quarterly relevance file (`private/relevance/<season>-<year>.md`)

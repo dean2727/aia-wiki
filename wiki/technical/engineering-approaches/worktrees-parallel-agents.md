@@ -31,14 +31,6 @@ Naming: stage branches `stage/<name>`, features `feature/<name>`, dirs `.worktre
 
 **Parallel pattern:** "Piece A → worktree A; Piece B → worktree B" — agent runs them concurrently only if scopes are separated, else sequences. A tmux config (smart splits, Option+arrow pane nav) and a `tmux4.sh` four-pane launcher are kept in `~/` for driving several streams at once.
 
-## Dean-Relevance
-
-**Adoption path**: immediate
-**Why**: The worktree paths and Supabase/`.env` notes are written for his actual Crafted layout — this is his current parallel-agent practice, not theory.
-**Analogy**: Worktrees are separate kitchens sharing one pantry (the repo + migrations) — cooks don't collide, but they must label their dishes (distinct migration timestamps).
-**Suggested next step**: Keep `tmux4.sh` + `.tmux.conf` in `~/` and standardize the `.worktrees/` convention across all Praxis repos.
-**Watch for**: A coding agent that natively manages worktrees + per-tree env setup would replace the manual `npm install`/`.env` copy steps.
-
 ## Related
 - [[starting-a-project-vibe-coding]]
 - [[vibe-coding]]

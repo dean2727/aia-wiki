@@ -28,13 +28,6 @@ The dual-use lessons, stripped of robot context:
 
 **Reachy Mini fully local — a swap-able cascade behind a stable protocol.** The whole stack runs with no cloud and no API keys: `llama.cpp` serving [[gemma-4]], Silero VAD, Parakeet-TDT STT, Qwen3-TTS. The key design move is the **Responses-API boundary**: the LLM "brain" lives in its own process, and you point the voice loop at it over HTTP — local MLX/llama.cpp/vLLM or a hosted endpoint, identical client either way. A practical latency note that generalizes: they disable the model's `<think>` channel for conversation because *every reasoning token is silence the user hears* — thinking budget is a UX cost, not just a compute cost.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: Periphery. Robotics hardware is outside Dean's zone and nothing here touches Praxis directly. It earns a page only because the underlying patterns — local/decoupled inference behind a stable protocol, and disciplined capture of experience data (especially recovery cases) — are the same problems he faces building agents, just wearing a robot costume.
-**Analogy**: The Responses-API boundary is a wall socket. The robot's voice loop is the appliance; the LLM is the power station. Because the plug shape (the protocol) is fixed, you can run off a local battery, the grid next door, or a remote plant without rewiring the appliance — swap the source, never the socket. That's the decoupling worth stealing for any agent.
-**Suggested next step**: Carry one pattern, not a build: when designing Praxis agent loops, put the model behind a Responses-API-style boundary so local vs. hosted is a config change — and when capturing trajectories to learn from, deliberately log the *recovery* paths (where the agent got stuck and recovered), not just clean successes.
-
 ## Sources
 
 - Hugging Face, *LeRobot v0.5.0: Scaling Every Dimension* (2026-03-09)

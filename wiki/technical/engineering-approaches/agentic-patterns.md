@@ -45,14 +45,6 @@ Orchestrator routing strategies: LLM-based dynamic routing, rule-based, hierarch
 
 The Microsoft "primary patterns" naming maps onto the above: Sequential (chaining), Concurrent (parallelization), Magentic (dynamic specialization routing), Group Chat (shared-context collaboration), Handoff (explicit control transfer).
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: His Praxis multi-agent build with `generate_reply` retry-across-agents is a coordinator-manager-with-handoff hybrid — this is the catalog his architecture instantiates.
-**Analogy**: Patterns are to agents what GoF design patterns were to OOP — vocabulary, not religion.
-**Suggested next step**: Audit his agent flow and tag each hop with its pattern; flag any multi-agent hop that's really just routing and could collapse to a workflow.
-**Watch for**: Framework-native orchestration (LangGraph/ADK/Agents SDK) absorbing these patterns as first-class primitives, shifting the choice from "implement" to "configure."
-
 ## Related
 - [[building-agents-best-practices]]
 - [[agentic-errors]]

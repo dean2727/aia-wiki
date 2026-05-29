@@ -22,14 +22,6 @@ The core tradeoff: high-agency frameworks are fast to stand up but hard to steer
 | Repeatable, scalable, controllable flows | LangGraph-style (explicit graph) |
 | Standard patterns (routing, reflection, tools) | Any major framework now supports them |
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: Useful framing for picking an orchestration layer in Praxis agent features, but his current work leans on the [[harness-and-scaffolding]] of coding agents rather than a heavyweight framework.
-**Analogy**: AutoGen vs LangGraph is improv vs a score — both make music, one is reproducible.
-**Suggested next step**: —
-**Watch for**: A concrete need for repeatable multi-step agent flows in Praxis would make LangGraph-style structure worth adopting.
-
 ## Related
 - [[agentic-patterns]]
 - [[agentic-rag]]

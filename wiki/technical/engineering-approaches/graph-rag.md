@@ -34,14 +34,6 @@ flowchart LR
 
 The depth knob is the central cost/quality tradeoff: more communities explored means broader synthesis but linearly more LLM calls.
 
-## Dean-Relevance
-
-**Adoption path**: watch
-**Why**: Praxis retrieval is local/factoid over Qdrant, not corpus-level QFS — GraphRAG's indexing cost isn't justified unless a "summarize across all of a user's data" feature emerges.
-**Analogy**: Vector RAG finds the right paragraph; GraphRAG reads the table of contents and chapter summaries to tell you what the whole book is about.
-**Suggested next step**: —
-**Watch for**: A Crafted feature requiring cross-document synthesis (e.g. "what are the recurring patterns across my entire journal?") — that's the trigger to prototype GraphRAG.
-
 ## Related
 - [[advanced-rag-techniques]]
 - [[semantic-boundary-chunking]]

@@ -36,14 +36,6 @@ Efficiency heuristics: include only essential data (not whole docs); prefer dyna
 
 The synthesis position: it's not either/or. A "context engineer" agent can coordinate top-level work and spin up temporary sub-agents where parallelization genuinely helps — but meticulous context management underpins *every* agent, single or multi.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: Squarely Dean's frontier zone (single-vs-multi-agent, token cost, traceability) and directly informs how he architects Praxis flows — but the content here is a known summary, not new signal.
-**Analogy**: A manager handed a magical book that always flips to the exact page needed for the current task — vs. hiring 20 interns and hoping each reads the right chapter.
-**Watch for** (what upgrades this to active): a concrete, benchmarked context-engineering methodology or tool that quantifies the single-vs-multi tradeoff, or [[grok-4-20]]-style "context handled in-model" results that settle the debate empirically.
-**Suggested next step**: —
-
 ## Related
 - [[grok-4-20]]
 - [[harness-and-scaffolding]]

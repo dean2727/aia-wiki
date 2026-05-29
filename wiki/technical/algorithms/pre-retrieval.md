@@ -54,14 +54,6 @@ Index the same document under multiple representations (summary embeddings + raw
 
 **Routing — vector vs. LLM classifier**: semantic routers (embedding similarity to synthetic queries) win on latency, cost, determinism, locality. LLM classifiers win on ambiguous/overlapping intents, novel phrasing, and explainability. Production verdict: hybrid — fast vector first pass (route if cosine > ~0.85), fall back to LLM classifier only for low-confidence cases.
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: MRI (separate semantic + entity indexes) and HyDE/multi-query map directly onto Praxis's Qdrant + dual-collection setup and his Jinja2 prompt builders for query rewriting.
-**Analogy**: A well-optimized query is a laser pointer; a raw query is a flashlight — same light, wildly different precision.
-**Suggested next step**: Try HyDE (generate hypothetical answer with Sonnet, embed via text-embedding-3-large) on his hardest ambiguous queries and compare retrieval against the raw query.
-**Watch for**: Embedding models trained natively for query/answer asymmetry that close the gap HyDE exploits, making the extra LLM call unnecessary.
-
 ## Related
 - [[advanced-rag-techniques]]
 - [[semantic-boundary-chunking]]

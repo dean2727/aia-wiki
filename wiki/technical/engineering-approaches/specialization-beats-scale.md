@@ -74,13 +74,6 @@ The post reframes the buy as three questions, not one purchase:
 2. Is benchmark leadership alone sufficient evidence? (In this domain, no.)
 3. Given that alignment compounds, what's the right *starting* model — and should the org build a specialization ecosystem rather than chase one universal model?
 
-## Dean-Relevance
-
-**Adoption path**: experimental
-**Why**: This is a strategic principle with universal-feeling implications — exactly the cross-domain, "this illuminates several things at once" idea Dean optimizes for, and it directly validates how he already builds. Praxis is a deliberate bet on *specialized, from-scratch* systems — growth-zone scoring, centroid personalization, cognitive-friction modeling — over off-the-shelf generality. This paper is the rigorous, cost-measured version of his instinct: a narrow system aligned to its task can beat a bigger general one on the dimensions that matter. It also sharpens *when* the bet pays: the win came from successive alignment steps, not size, which is an argument for the kind of custom pipeline Dean prefers over a black-box frontier API.
-**Analogy**: A frontier model is a brilliant generalist doctor; a specialized model is the surgeon who does only this one operation, four times a day, for ten years. For a routine appendectomy you don't want the smartest person in the building — you want the one whose entire training history has been moved closest to *this exact cut*. Scale buys breadth of competence; alignment buys depth on the one thing you're actually deploying. And like surgical skill, it *compounds* — the resident who already specialized in abdominal surgery gains more from the same fellowship than one coming from general practice.
-**Suggested next step**: Adopt the decision heuristic for Praxis (and pitch it at Dell): before defaulting to the biggest OpenRouter model for a given task, ask *"how far is this model's training history from this specific task, and can I move it closer cheaper than I can buy more scale?"* For any high-volume, narrow Praxis sub-task (e.g. growth-zone classification), this is an explicit prompt to evaluate a small specialized/fine-tuned model on a representative workload — not the public benchmark — and weigh per-call cost at real volume, since alignment can win on quality *and* cost simultaneously.
-
 ## Sources
 
 - Erick Lachmann & Gabriel Pimenta de Freitas Cardoso (Dharma-AI), *"Specialization Beats Scale: A Strategic Variable Most AI Procurement Decisions Overlook"*, Hugging Face Blog, 2026-05-22.

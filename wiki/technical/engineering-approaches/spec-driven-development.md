@@ -31,13 +31,6 @@ Without a spec: vague requirements, no validation reference, costly iteration cy
 
 Bootstrap via `/init` to generate a CLAUDE.md template (see [[repo-init-workflow]]), or have a model draft it from a project summary (often after a deep-research chat). Checklist: stack matches reality, principles appropriate, standards enforceable, phases session-aware, no assumptions of continuous context. Rules grow as the project does — distill recurring corrections into new standards.
 
-## Dean-Relevance
-
-**Adoption path**: immediate
-**Why**: SDD matches Dean's native working style (extensive planner, plans as source-of-truth, low tolerance for chaotic iteration) and governs his repos via CLAUDE.md/AGENTS.md — current daily practice, not aspiration.
-**Watch for** (what upgrades to active): tooling that makes specs *executable/verifiable* (spec → tests / automated conformance) rather than static docs — that would turn SDD from discipline into infrastructure.
-**Suggested next step**: —
-
 ## Related
 - [[vibe-coding]]
 - [[skills-rules-subagents]]
