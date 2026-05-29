@@ -18,9 +18,9 @@ A nightly GitHub Actions workflow monitors a curated set of sources: RSS feeds f
 
 Everything that gets ingested passes through a triage step before it touches the wiki. The LLM evaluates each piece against a strict signal threshold — is this genuinely groundbreaking, does it have real implications for how humans work with AI, or is it gaining significant traction for a reason? Most content gets filtered out. What clears the bar gets synthesized into a structured wiki page, cross-linked to related topics, and committed here.
 
-Each page gets a **Dean-Relevance** assessment — an honest take on how the development maps to my actual working style, comfort zone, and tools — kept in a private companion file (one per quarter) rather than on the public page. This is what separates it from a generic AI news aggregator. The wiki isn't tracking everything; it's tracking what matters, filtered through a specific lens.
-
 A weekly pass runs deeper synthesis across topics, surfaces connections between recent developments, and keeps the index current. A `Dean-Profile.md` in the private companion repo acts as the persistent user model the pipeline references on every run — it's what makes the relevance framing consistent over time.
+
+Every page includes a **Dean-Relevance** section, in the private wiki repo, so I can read quarter-by-quarter markdown files with brief sections on why each piece of new content hitting the wiki matters to my career, goals, learning, and knowledge. I can read this before or after a given wiki entry, as I drink my coffee.
 
 The approach is inspired by [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): let the LLM do the writing and maintenance, focus your own attention on sourcing and direction.
 
@@ -127,12 +127,12 @@ aia-wiki/                           ← public repo (this one)
 │   ├── overview.md                   ← quarterly synthesis connecting
 │   │                                   technical breakthroughs to
 │   │                                   world-facing implications
-│   └── index.md                      ← landing page for the Quartz site
+│   └── index.md                      ← Quartz site landing page
 │
 ├── site/                            ← Quartz 5 static-site generator (publishes wiki/ to GitHub Pages)
-│   ├── content → ../wiki            ← symlink: pages are edited in wiki/, never here
+│   ├── content → ../wiki            ← symlink: edit pages in wiki/, never here
 │   ├── quartz.config.yaml           ← site config (title, baseUrl, plugins)
-│   ├── install-plugins.mjs          ← community-plugin installer (build step)
+│   ├── install-plugins.mjs          ← community-plugin installer (workaround for Quartz 5.0.0 bug)
 │   ├── quartz/                       ← Quartz framework source
 │   └── public/                       ← generated output (gitignored)
 │
@@ -152,8 +152,8 @@ dean-wiki-private/                   ← private repo (data only, no code)
 │   ├── Dean-Profile.md             ← persistent user model
 │   └── TELOS.md
 │
-├── relevance/                     ← Dean-Relevance notes, one file per quarter
-│   └── spring-2026.md             ← summer-2026.md, fall-2026.md, … as quarters pass
+├── relevance/                     ← Dean-Relevance notes (quarterly)
+│   └── spring-2026.md             ← one file per quarter; next: summer-2026.md, fall-2026.md, …
 │
 └── sources/
     ├── queue.txt                   ← ad-hoc URLs that interest Dean, not included in the other data
