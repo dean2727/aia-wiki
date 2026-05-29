@@ -1,0 +1,65 @@
+name: Deploy Quartz site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wiki/**"
+      - "site/**"
+      - ".github/workflows/deploy-quartz.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so Quartz can read page git dates
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Quartz community plugins
+        # Uses the local workaround (Quartz 5.0.0's bundled install-plugins
+        # crashes on a .scss import under tsx); see site/install-plugins.mjs.
+        run: npx tsx install-plugins.mjs
+
+      - name: Build site
+        # Content is the `content` symlink -> ../wiki
+        run: npx quartz build
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
