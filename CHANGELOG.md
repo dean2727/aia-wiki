@@ -1,5 +1,34 @@
 # Changelog
 
+## [2026-05-28] Nightly Run
+
+315 staged RSS items triaged (the day's fetch: Anthropic, OpenAI, Google DeepMind, Hugging Face, Import AI, The Batch, Hacker News). The overwhelming majority were headline-only stubs (title + URL + one-line summary) with no synthesizable body. Wrote pages only for high-signal items that scored ≥7 **and** carried enough real content to synthesize without fabrication — quality over completeness, per the signal threshold.
+
+### Created
+- **Created**: `wiki/technical/models/deepseek-v4.md` — open MoE (1.6T/49B + 284B/13B) whose real advance is *cheap* 1M-token context for agents: hybrid CSA/HCA attention (~2% of GQA's KV cache), interleaved thinking across tool calls, XML/`|DSML|` tool schema, DSec RL sandbox. **Score 9.** Source: HF, 2026-04-24.
+- **Created**: `wiki/technical/models/gemma-4.md` — truly-open (Apache 2) multimodal-incl-audio family from on-device (E2B/E4B) to 31B/26B-MoE; frontier arena scores via deliberate reuse (PLE, shared KV cache, alternating attention) rather than new tricks. **Score 8.** Source: HF, 2026-04-02.
+- **Created**: `wiki/technical/algorithms/decoupled-diloco.md` — resilient distributed training across distant data centers via async "islands"; self-healing under injected failures, 12B trained across 4 US regions on 2–5 Gbps >20× faster than sync. **Score 8.** Source: Google DeepMind, 2026-04-23.
+- **Created**: `wiki/technical/engineering-approaches/ai-native-open-source-contribution.md` — the maintainer-bottleneck inversion when everyone has a coding agent; Skill-as-encoded-judgment + deliberately non-agentic test harness for trust (HF `transformers-to-mlx`). **Score 8.** Source: HF, 2026-04-16.
+
+### Skipped — high signal but not writeable from source
+These cleared the signal bar but the staged item was a headline-only stub with no body to synthesize (writing a full page would mean fabricating post-cutoff specifics). Logged as seen; revisit if a substantive source lands.
+- Frontier model launches (headline-only): `Introducing GPT-5.5`, `Introducing GPT-5.4` (+mini/nano), `Gemini 3.5: frontier intelligence with action`, Gemini 3.1 family (Flash-Lite / Flash-Live / Flash-TTS), `Introducing Claude Opus 4.7`, `GPT-Rosalind`, `ChatGPT Images 2.0`, `Lyria 3 Pro`, `Gemini Omni`, `Gemini Robotics-ER 1.6`.
+- DeepMind science (headline-only): `AlphaEvolve` impact, `Co-Scientist` multi-agent partner (+ aging/ALS/liver/infectious-disease application stubs), `Gemini for Science`, `Measuring progress toward AGI: a cognitive framework`.
+- Architecture explainers (Sebastian Raschka, stubs — substance folded into deepseek-v4 / gemma-4 pages): `Recent Developments in LLM Architectures: KV Sharing, mHC, Compressed Attention`, `A Visual Guide to Attention Variants`, `Components of a Coding Agent`, `My Workflow for Understanding LLM Architectures`.
+
+### Skipped — already covered
+- `Harness, Scaffold, and the AI Agent Terms Worth Getting Right` (HF) — already synthesized in `wiki/technical/engineering-approaches/harness-and-scaffolding.md` (2026-05-25); re-fetched, no new content.
+
+### Skipped — below signal threshold (score ≤6)
+- ~120 OpenAI items: Codex enterprise/customer stories (NVIDIA, Ramp, Cisco, Virgin Atlantic, Dell, Databricks…), ChatGPT Academy how-tos, enterprise/partnership/funding announcements, safety/policy/cyber posts, ads/commerce, education/health programs.
+- ~30 Anthropic items: partnerships (KPMG, PwC, Gates Foundation, SpaceX), Korea/Glasswing, small-business/design product notes.
+- ~15 Google DeepMind items: national partnerships, content provenance, WeatherNext, AI pointer, Project Genie.
+- The Batch (Andrew Ng) issues 342–354 and Import AI (Jack Clark) 447–458 — newsletter digests, no single synthesizable advance.
+- ~50 Hacker News items — general tech/news, off-topic for this wiki.
+- Remaining substantial HF blogs (rerankers, embedding/multimodal-embedding training, RL libraries, vLLM/inference internals, robotics datasets, diffusers) — real content but incremental/niche relative to the ≥7 bar; not groundbreaking for Dean's current frontier zone.
+
+- **Profile**: No changes
+
 ## [2026-05-25] Backfill Run — Wiki Seed
 
 One-time backfill seeding the empty wiki from staged sources. Triaged 37 staged files; wrote a page for every file scoring ≥3 (34 pages). Three files scoring 1–2 were skipped (no extractable content). INDEX.md intentionally left untouched.
