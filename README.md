@@ -18,7 +18,7 @@ A nightly GitHub Actions workflow monitors a curated set of sources: RSS feeds f
 
 Everything that gets ingested passes through a triage step before it touches the wiki. The LLM evaluates each piece against a strict signal threshold — is this genuinely groundbreaking, does it have real implications for how humans work with AI, or is it gaining significant traction for a reason? Most content gets filtered out. What clears the bar gets synthesized into a structured wiki page, cross-linked to related topics, and committed here.
 
-Every page includes a **Dean-Relevance** section — an honest assessment of how the development maps to my actual working style, comfort zone, and tools. This is what separates it from a generic AI news aggregator. The wiki isn't tracking everything; it's tracking what matters, filtered through a specific lens.
+Each page gets a **Dean-Relevance** assessment — an honest take on how the development maps to my actual working style, comfort zone, and tools — kept in a private companion file (one per quarter) rather than on the public page. This is what separates it from a generic AI news aggregator. The wiki isn't tracking everything; it's tracking what matters, filtered through a specific lens.
 
 A weekly pass runs deeper synthesis across topics, surfaces connections between recent developments, and keeps the index current. A `Dean-Profile.md` in the private companion repo acts as the persistent user model the pipeline references on every run — it's what makes the relevance framing consistent over time.
 
@@ -86,7 +86,8 @@ aia-wiki/                           ← public repo (this one)
 │   └── workflows/
 │       ├── nightly.yml             ← fetch → Claude Code (triage + update)
 │       ├── weekly.yml              ← fetch → Claude Code (synthesis + profile review)
-│       └── monthly.yml             ← manual: process Claude export ZIP
+│       ├── monthly.yml             ← manual: process Claude export ZIP
+│       └── deploy-quartz.yml       ← build + deploy Quartz site to GitHub Pages
 │
 ├── pipeline/
 │   └── scripts/                    ← data fetching only (no LLM calls)
@@ -123,9 +124,17 @@ aia-wiki/                           ← public repo (this one)
 │   │                                   implications (layoffs, education,
 │   │                                   human growth, future of engineering)
 │   │
-│   └── overview.md                   ← quarterly synthesis connecting
-│                                       technical breakthroughs to
-│                                       world-facing implications
+│   ├── overview.md                   ← quarterly synthesis connecting
+│   │                                   technical breakthroughs to
+│   │                                   world-facing implications
+│   └── index.md                      ← landing page for the Quartz site
+│
+├── site/                            ← Quartz 5 static-site generator (publishes wiki/ to GitHub Pages)
+│   ├── content → ../wiki            ← symlink: pages are edited in wiki/, never here
+│   ├── quartz.config.yaml           ← site config (title, baseUrl, plugins)
+│   ├── install-plugins.mjs          ← community-plugin installer (build step)
+│   ├── quartz/                       ← Quartz framework source
+│   └── public/                       ← generated output (gitignored)
 │
 ├── CLAUDE.md                       ← agent instructions (replaces all prompt files)
 ├── sources.yml                     ← curated source list
@@ -142,6 +151,9 @@ dean-wiki-private/                   ← private repo (data only, no code)
 ├── profile/
 │   ├── Dean-Profile.md             ← persistent user model
 │   └── TELOS.md
+│
+├── relevance/                     ← Dean-Relevance notes, one file per quarter
+│   └── spring-2026.md             ← summer-2026.md, fall-2026.md, … as quarters pass
 │
 └── sources/
     ├── queue.txt                   ← ad-hoc URLs that interest Dean, not included in the other data
