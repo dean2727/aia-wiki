@@ -14,3 +14,9 @@ htmlcov/
 .env
 .env.*
 !.env.example
+
+# Quartz site (generated / fetched artifacts)
+site/node_modules/
+site/public/
+site/.quartz/
+site/.quartz-cache/
