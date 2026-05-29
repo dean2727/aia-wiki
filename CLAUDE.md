@@ -36,12 +36,82 @@ Evaluate every piece of staged content before writing anything. Score 1–10:
 | 10 | Paradigm-shifting. Changes how AI fundamentally works or is used. | Write immediately |
 | 8–9 | Genuinely groundbreaking. Major release, breakthrough method, or rapidly gaining traction. | Write |
 | 7 | Solidly significant. Clear implications for how engineers or people work with AI. | Write |
-| 5–6 | Interesting but not wiki-worthy. | Log as seen, skip |
+| 5–6 | Interesting but not wiki-worthy on its own. | See **edge cases** below — do not auto-skip substantial articles |
 | 1–4 | Noise. | Ignore completely |
 
 **The triage question**: Would Dean want to know this exists? Would it change something about how he works or thinks? If the answer is no, skip it — even if it's technically interesting.
 
+**Do not confuse “not paradigm-shifting” with “not wiki-worthy.”** Headline-only stubs (title + URL + one-line summary) should still be skipped or logged for revisit. A **substantial article with a full body** is different: it may score 6 on groundbreaking-ness but still deserve a page, a merged page, or a `watch`-status entry.
+
 Log all skipped items in CHANGELOG.md with a one-line reason.
+
+### Edge cases — substantial but not headline-grabbing
+
+Use this when staged content has **enough real text to synthesize** (not a stub) but feels incremental, niche, or outside Dean’s core comfort zone.
+
+**Bias toward inclusion when the topic touches Dean’s frontier zone** (from `Dean-Profile.md`):
+
+- Agents, harnesses/scaffolds, tool use, orchestration, multi-agent patterns
+- RAG / retrieval / embeddings / reranking / graph or entity-aware retrieval
+- RL for agents, eval harnesses, benchmarks, reward design
+- Training and inference infrastructure (vLLM, KV cache, long context, MoE routing) when it changes *practical* agent or product cost
+- Open models and local/client-side deployment when the deployment story is real
+- Context engineering, spec-driven dev, AI-native engineering workflows
+- Model architecture explainers that clarify something Dean is actively building on (e.g. Praxis, pipelines, Dell work)
+
+**Do not dismiss Hugging Face (or similar) long-form engineering blogs** as “incremental” just because they are not a frontier model launch. If the post teaches a reusable pattern, names a library others will adopt, or changes how you’d build/evaluate agents or RAG, score it **7+** or include it in a grouped page (below).
+
+**True periphery — default skip unless dual-use insight exists**
+
+These are often real content but low priority for Dean unless the article yields a **generalizable** lesson for agents, RAG, eval, or AI engineering (not domain trivia):
+
+- Robotics hardware, manipulation datasets, VLA product launches (unless the *method* — action chunking, flow matching, knowledge insulation — is the takeaway; then one dual-use page, not a robotics catalog)
+- Pure diffusion / image / video generation tooling with no agent or product implication
+- Domain-specific bio LMs (e.g. mRNA, protein) with no bridge to Dean’s stack
+- Regional or language-specific leaderboards (Arabic ASR, etc.) unless they introduce a method Dean would reuse
+
+When you include periphery content, set **Adoption path: watch** (or **skip** in Dean-Relevance with a clear “why”) and keep the page short — extract the transferable pattern, not the vertical domain.
+
+**Scoring adjustment for substantial bodies**
+
+| Situation | Typical score | Action |
+|---|---|---|
+| Paradigm launch or major open weights | 8–10 | Standalone page, `active` |
+| Substantial HF/engineering blog in frontier zone | 7–8 | Standalone page or lead section in a grouped page |
+| Substantial but incremental in frontier zone | 6–7 | Grouped page, or standalone with `watch` |
+| Substantial but true periphery, no dual-use lesson | 5–6 | Skip with reason, or one line under **Skipped — edge** in CHANGELOG |
+| Headline-only stub | ≤5 | Skip — **Skipped — not writeable from source** |
+
+Never write: “skipped as incremental/niche” for a **full article** in retrieval, RL, agents, or inference without checking dual-use and grouped-page options first.
+
+### Backfill and bulk runs — “all, grouped smartly”
+
+When the run is a **backfill** (many staged files, empty wiki seed, or the user explicitly wants broad coverage — e.g. “reconsider those HF blogs”), use this mode instead of minimizing page count.
+
+**Goal**: Cover every **substantial** staged item without duplicate-file bloat.
+
+1. **Include** every staged file that has a synthesizable body (same bar as above — not headline stubs).
+2. **Group near-duplicates** into one wiki page when they share the same conceptual bucket, for example:
+   - Multiple embedding / reranker / multimodal-embedding training posts → one page (e.g. `embedding-and-reranker-training`)
+   - Multiple RL-for-agents library or GRPO/trainer posts → one page
+   - Multiple vLLM / inference / KV-cache internals posts → one page
+   - Multiple agent-eval or benchmark posts → one page
+3. **Prefer ~22–26 pages over ~36** one-per-blog when grouping is natural; prefer **one strong page** over three thin overlapping pages.
+4. In each grouped page, use a **Sources** subsection (bullet list of staged filenames or URLs) so nothing is lost.
+5. In CHANGELOG, log:
+   - **Created** / **Updated** with grouped source list
+   - **Skipped — not writeable from source** (stubs only)
+   - **Skipped — edge / periphery** (with one-line reason)
+   - Do **not** bucket substantial HF engineering blogs under “below signal threshold” unless they are stubs or true periphery with no dual-use lesson.
+
+**Grouping is not an excuse to drop content.** If two posts are only loosely related, keep separate pages. Merge when a reader would reasonably want one reference doc.
+
+**Nightly vs backfill**
+
+| Run type | Default strategy |
+|---|---|
+| Nightly (24h window) | Strict triage; write 7+; edge 6–7 only if clearly high leverage |
+| Backfill / user asks for full HF (or similar) coverage | **All, grouped smartly** |
 
 ---
 
@@ -161,7 +231,8 @@ Append only. Never rewrite history. Each run adds one entry:
 
 ## What Not To Do
 
-- Do not write about content that scored below 7
+- Do not write about content that scored below 7 **unless** backfill / “all, grouped smartly” mode applies, or an edge-case substantial article is included via grouping (score 6–7 with clear frontier-zone fit)
+- Do not label substantial full articles “below signal threshold” without checking edge cases and grouping first
 - Do not write generic AI content — everything must connect to Dean's specific context
 - Do not write in a formal academic tone — write like a sharp, knowledgeable colleague
 - Do not add AI-generated filler or transition phrases
