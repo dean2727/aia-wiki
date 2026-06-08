@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout wiki (public)
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Checkout private repo
         uses: actions/checkout@v4
@@ -60,6 +62,10 @@ jobs:
       #   env:
       #     PRIVATE_REPO_PATH: private
 
+      - name: Record pre-run commit
+        id: before
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
       - name: Run Claude Code — triage and update wiki
         uses: anthropics/claude-code-action@v1
         with:
@@ -77,12 +83,31 @@ jobs:
             4. For each source scoring 7 or above:
                - Create a new wiki page OR update the existing relevant page
                - Place it in `wiki/technical/` or `wiki/world/` as appropriate (and update `wiki/overview.md` only when it materially changes)
-               - Include a Dean-Relevance section referencing his current profile
+               - Do NOT add a Dean-Relevance section to public wiki pages (see CLAUDE.md)
             5. Update CHANGELOG.md with a dated entry listing created, updated, and skipped items.
             6. Do NOT regenerate INDEX.md — that runs weekly.
-            7. Do NOT touch any files in private/ — read only.
+            7. Do NOT touch any files in private/ — read only (including relevance files).
+            8. Do NOT run git commands — a later workflow step commits your file edits.
 
             Follow all guidelines in CLAUDE.md exactly.
+
+      - name: Commit and push wiki changes
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add wiki/ CHANGELOG.md
+          BEFORE_SHA="${{ steps.before.outputs.sha }}"
+          if ! git diff --staged --quiet; then
+            git commit -m "Nightly wiki update $(date -u +%F)"
+          fi
+          if [ "$(git rev-parse HEAD)" != "$BEFORE_SHA" ]; then
+            git push
+            echo "committed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            echo "No wiki changes to commit"
+          fi
 
       - name: Write run summary
         if: always()
@@ -93,6 +118,10 @@ jobs:
           cat private/sources/staging/.run-summary >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No summary written" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Wiki Changes" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          git diff --name-only HEAD~1 HEAD >> $GITHUB_STEP_SUMMARY 2>/dev/null || echo "No previous commit to compare" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.commit.outputs.committed }}" = "true" ]; then
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+            git diff --name-only "${{ steps.before.outputs.sha }}" HEAD >> $GITHUB_STEP_SUMMARY
+            echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No changes committed (nothing scored high enough, or no file edits)." >> $GITHUB_STEP_SUMMARY
+          fi
