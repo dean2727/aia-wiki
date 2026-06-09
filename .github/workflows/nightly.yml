@@ -122,7 +122,7 @@ jobs:
       - name: Open PR with wiki changes
         id: commit
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -135,7 +135,7 @@ jobs:
           BRANCH="nightly/$(date -u +%F)-${{ github.run_id }}"
           git checkout -b "$BRANCH"
           git commit -m "Nightly wiki update $(date -u +%F)"
-          git push -u origin "$BRANCH"
+          git -c http.https://github.com/.extraheader="AUTHORIZATION: bearer ${GH_TOKEN}" push -u origin "$BRANCH"
           PR_URL=$(gh pr create \
             --base main \
             --head "$BRANCH" \
