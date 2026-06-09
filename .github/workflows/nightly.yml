@@ -135,7 +135,8 @@ jobs:
           BRANCH="nightly/$(date -u +%F)-${{ github.run_id }}"
           git checkout -b "$BRANCH"
           git commit -m "Nightly wiki update $(date -u +%F)"
-          git -c http.https://github.com/.extraheader="AUTHORIZATION: bearer ${GH_TOKEN}" push -u origin "$BRANCH"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
+          git push -u origin "$BRANCH"
           PR_URL=$(gh pr create \
             --base main \
             --head "$BRANCH" \
