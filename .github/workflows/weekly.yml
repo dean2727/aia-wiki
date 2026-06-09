@@ -1,8 +1,8 @@
 name: Weekly Wiki Synthesis
  
 on:
-  schedule:
-    - cron: '0 3 * * 0'   # 3am UTC every Sunday
+  # schedule:
+  #   - cron: '0 3 * * 0'   # 3am UTC every Sunday
   workflow_dispatch:
  
 jobs:
