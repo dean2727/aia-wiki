@@ -1,5 +1,31 @@
 # Changelog
 
+## [2026-06-09] Nightly Run
+
+26 staged RSS items triaged (Hacker News, OpenAI Blog). Every item was a headline-only stub — title + URL + HN comments link, no synthesizable body. No wiki pages created.
+
+### Skipped — high signal but not writeable from source
+These cleared the signal bar but the staged item contained no article body (HN RSS stubs only). Writing a page would require fabricating post-cutoff specifics. Logged as seen; revisit if a substantive source lands.
+- `hacker-news-2026-06-09-apple-reveals-new-ai-architecture-built-around-google-gemini` — **Score 8** (Apple Intelligence rebuilt around Google Gemini is a major platform shift; partnership with real architectural implications). Stub only.
+- `hacker-news-2026-06-09-mimo-v2-5-pro-ultraspeed-1t-model-with-1000-tokens-per-secon` — **Score 7** (1,000 tokens/sec on a 1T-class model is a genuine inference throughput milestone). Stub only.
+- `hacker-news-2026-06-09-frontiercode` — **Score 7** (Cognition AI / Devin team releasing "FrontierCode" is directly relevant to AI coding agents). Stub only.
+- `hacker-news-2026-06-09-apple-core-ai-framework` — **Score 7** (Apple releasing a public Core AI developer framework has real on-device ML implications for Dean's client-side interest zone). Stub only.
+- `hacker-news-2026-06-09-siri-ai` — **Score 6** (Apple Intelligence positioning update). Stub only.
+- `hacker-news-2026-06-09-apple-bets-cheaper-ai-will-woo-small-developers` — **Score 6** (Apple pricing strategy for on-device inference). Stub only.
+
+### Skipped — below signal threshold or off-topic
+- `openai-blog-2026-06-09-confidential-submission-of-draft-s-1-to-the-sec` + HN duplicate — OpenAI IPO S-1 filing announcement; business/financial event, not a technical advance.
+- `hacker-news-2026-06-09-ai-is-slowing-down` — opinion piece title only; no body to evaluate.
+- `hacker-news-2026-06-09-xai-is-looking-more-like-a-datacentre-reit-than-a-frontier-l` — industry commentary, stub.
+- `hacker-news-2026-06-09-launch-hn-intuned-yc-s22-build-and-run-reliable-browser-auto` — browser automation YC launch; insufficient detail to evaluate vs. existing tools.
+- `hacker-news-2026-06-09-ask-hn-what-are-tools-you-have-made-for-yourself-since-the-a` — HN discussion thread, no synthesizable content.
+- `hacker-news-2026-06-09-crdts-merge-concurrent-edits-why-not-concurrent-creation` — CRDT theory, no AI relevance.
+- `hacker-news-2026-06-09-show-hn-performative-ui-a-react-component-library-of-design` — UI component library, not AI-relevant.
+- `hacker-news-2026-06-09-show-hn-gitdot-a-better-github-open-source-written-in-rust` — GitHub alternative, not AI-relevant.
+- 10 fully off-topic items (pesticides, cell biology, Stonehenge job, ThinkPad coreboot, Ticketmaster, social media, UK surveillance, H1B fee, GoGoGrandparent hiring, parallel internet blog) — no AI relevance.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
