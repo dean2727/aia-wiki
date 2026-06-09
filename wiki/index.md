@@ -1,5 +1,5 @@
 ---
-title: Dean's AI Wiki
+title: AI Advancements Wiki
 ---
 
 > A curated, compounding knowledge base of groundbreaking AI advancements — models, methods, tools, and research — filtered through Dean's lens. Not a news feed; a signal store.

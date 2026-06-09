@@ -71,10 +71,15 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Important: Need the allowedTools arg; claude-code-action severely limits
+          # or entirely disables arbitrary shell execution. Automated code review
+          # plugins that invoke the GitHub CLI (gh api, gh pr diff) will be
+          # consistently denied if not explicitly allowed
           claude_args: |
             --max-turns 30
             --model claude-sonnet-4-6
             --verbose
+            --allowedTools "Read,Write,Edit,Glob,Grep"
           prompt: |
             Perform the nightly wiki update for aia-wiki.
 
@@ -89,6 +94,9 @@ jobs:
             6. Do NOT regenerate INDEX.md — that runs weekly.
             7. Do NOT touch any files in private/ — read only (including relevance files).
             8. Do NOT run git commands — a later workflow step opens a PR with your file edits.
+
+            For this GitHub Actions run, skip the private Dean-Relevance updates even though CLAUDE.md normally asks for them.
+            Only edit files under wiki/ and CHANGELOG.md.
 
             Follow all guidelines in CLAUDE.md exactly.
 

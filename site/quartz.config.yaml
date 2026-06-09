@@ -2,7 +2,7 @@
 # Quartz 5 config for the AIA wiki.
 # Content lives in ../wiki (the `content` symlink points there) — edit pages there, not here.
 configuration:
-  pageTitle: Dean's AI Wiki
+  pageTitle: AI Advancements Wiki
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
