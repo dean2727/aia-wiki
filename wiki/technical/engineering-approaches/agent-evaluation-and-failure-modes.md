@@ -1,18 +1,19 @@
 # Agent Evaluation & Failure Modes
 
-> Three 2026 releases that converge on the same lesson: agents fail at the *seams* — tool selection, multi-hop composition, policy adherence, spoken entities — and your eval is only honest if it observes the whole trajectory and resists being gamed.
+> Four 2026 releases that converge on the same lesson: agents fail at the *seams* — tool selection, multi-hop composition, policy adherence, spoken entities — and your eval is only honest if it observes the whole trajectory and resists being gamed.
 
 **Category**: topics
-**Last updated**: 2026-05-28
+**Last updated**: 2026-06-10
 **Status**: active
 
 ## What it is
 
-A cluster of recent work on how agents actually break and how to measure it without fooling yourself. Three pieces:
+A cluster of recent work on how agents actually break and how to measure it without fooling yourself. Four pieces:
 
 - **VAKRA** (IBM Research) — a tool-grounded, *executable* benchmark for enterprise agents: 8,000+ locally hosted APIs over real databases across 62 domains, with 3–7 step reasoning chains. It scores the full execution trace, not just the final answer, and ships a stage-wise failure taxonomy.
 - **EVA** (ServiceNow) — an end-to-end framework for *voice* agents that scores two axes jointly: **EVA-A** (accuracy) and **EVA-X** (experience). It runs realistic bot-to-bot spoken conversations and surfaces failures that single-axis benchmarks can't see.
 - **Open ASR Leaderboard private-data update** — a small, generalizable lesson in *eval integrity*: how to keep a public, open benchmark from being benchmaxxed once everyone can see the test set.
+- **Code-switching ASR benchmark** (ServiceNow-AI, same team as EVA) — a benchmark for the first stage of any voice-agent pipeline (ASR) on bilingual, code-switched speech, showing that "the customer switches languages mid-sentence" is now a normal — and benchmarkable — production condition.
 
 The through-line: surface-level tool competence is not reliability. Models that "can call an API" still collapse on compositional reasoning under execution constraints — and the only way to know is to instrument the trajectory and guard the measure itself.
 
@@ -23,6 +24,7 @@ Every one of these is a direct attack on the gap between "passes a demo" and "wo
 - **VAKRA** gives a vocabulary for *where* an agent breaks (tool selection vs. argument hallucination vs. argument values vs. final synthesis), so a failure becomes a diagnosable stage rather than a vague "the agent got it wrong." That stage isolation is the difference between debugging and guessing.
 - **EVA** proves a tradeoff that any conversational-agent builder feels intuitively but rarely measures: **task-correct and pleasant-to-talk-to pull against each other.** Optimizing only for task completion silently degrades the experience, and vice versa. If you score one axis, you are blind to the other.
 - **The ASR lesson** is the meta-point: a benchmark is only useful while it stays *ungamed*. Once a test set is public and a metric becomes a target (Goodhart's Law), scores drift upward without real-world gains. The fix generalizes far beyond speech.
+- **Code-switching ASR** is the upstream version of the EVA lesson: if the *transcription* step silently degrades for bilingual callers, no amount of downstream agent quality recovers it — and which ASR provider degrades least is not a fixed answer, it depends on the language pair.
 
 ## How it works
 
@@ -124,11 +126,35 @@ The defenses they applied generalize to *any* agent eval, including conversation
 
 The deeper point for Dean: an agent eval is a *measure under adversarial pressure*. The pressure can be a vendor gaming a leaderboard — or your own optimization loop quietly overfitting to your test conversations. Holding out unseen scenarios, refusing to expose per-slice scores you'd be tempted to tune to, and re-executing rather than trusting reported traces (the VAKRA move) are the same instinct: **protect the measure so it keeps telling the truth.**
 
+### 4. Code-switching ASR — the hidden cost of bilingual voice agents
+
+ServiceNow-AI (the same team behind EVA) built a benchmark for **automatic speech recognition (ASR) on code-switched speech** — bilingual speakers switching languages mid-sentence, the way real contact-center and IT-helpdesk callers do. ASR is the first stage of any voice-agent pipeline, so its errors propagate into every downstream component (routing, intent, task completion).
+
+**Setup**: 4 language pairs (Spanish-English, French-English, Canadian French-English, German-English), HR/ITSM scenarios (benefits, payroll, password resets, VPN access), released through **AU-Harness** — the same harness behind EVA. 7 ASR systems tested — AssemblyAI Universal 3-Pro, Deepgram Nova 3, ElevenLabs Scribe V2, Gemini 3 Flash, Mistral Voxtral Small 24B, NVIDIA Parakeet TDT 0.6B, OpenAI Whisper Large V3 Turbo — under **auto language detection only**, matching production where the system has no prior knowledge of which language pair a caller will use.
+
+**Three metrics, increasing in "does it actually matter"**:
+
+| Metric | What it measures |
+|---|---|
+| WER (Word Error Rate) | Raw transcription accuracy |
+| SWER (Semantic WER) | Rate of *semantically meaningful* errors (Gemma-4-31B as judge) |
+| AER (Answer Error Rate) | Whether an LLM reading the transcript can still answer 3 comprehension questions per utterance — the functional, downstream-task test |
+
+**Findings:**
+
+- **Scribe V2, Gemini 3 Flash, and AssemblyAI Universal-3 Pro** top all three metrics, with the smallest "code-switching penalty" relative to monolingual baselines — Scribe V2 even *outperforms* its own single-language baseline on some pairs.
+- **Whisper Large V3 Turbo is the clear outlier.** Without an explicit language hint it defaults to *translating* code-switched audio into English rather than transcribing it — this tanks WER (0.16–0.61) but, because translation still preserves meaning, narrows the gap on the semantic metrics.
+- A two-part regression separates *whether* an error happens from *how bad* it gets: the **number of language switches** in an utterance predicts whether at least one error occurs; the **Code-Mixing Index** (density of the secondary language) predicts how large the error is once one occurs.
+- **Counterintuitive geography of errors**: errors concentrate on the **English portions** of code-switched utterances — even though English is what these models handle best monolingually. Likely explanations: English segments carry technical vocabulary/named entities, and/or any mid-utterance language transition is hard regardless of direction.
+
+**The takeaway**: code-switching is "increasingly becoming a normal condition" for production voice agents, not an edge case — and provider ranking is **not transferable across language pairs** (best for Spanish-English ≠ best for German-English). Same instinct as the eval-integrity lesson above: don't trust a single aggregate score, benchmark against the languages your users actually speak.
+
 ## Sources
 
 - IBM Research, *"Inside VAKRA: Reasoning, Tool Use, and Failure Modes of Agents"*, Hugging Face Blog (2026-04-15).
 - ServiceNow, *"A New Framework for Evaluating Voice Agents (EVA)"*, Hugging Face Blog (2026-03-24).
 - *"Adding Benchmaxxer Repellant to the Open ASR Leaderboard"*, Hugging Face Blog (2026-05-06).
+- ServiceNow-AI, *"Can Voice Agents Handle Bilingual Customers? Benchmarking Frontier ASR on Code-Switched Speech"*, Hugging Face Blog (2026-06-09).
 
 ## Related
 - [[llm-agent-evaluation]]

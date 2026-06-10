@@ -44,3 +44,4 @@ Protocol standardization is what turns a pile of custom integrations into an eco
 - [[harness-and-scaffolding]]
 - [[building-agents-best-practices]]
 - [[agentic-patterns]]
+- [[agent-callable-building-blocks]]

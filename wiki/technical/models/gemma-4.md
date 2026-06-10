@@ -3,30 +3,32 @@
 > Google DeepMind's truly-open (Apache 2) multimodal family that pushes frontier-arena quality down to on-device sizes — including audio — by combining proven architecture pieces instead of inventing new ones.
 
 **Category**: topics
-**Last updated**: 2026-05-28
+**Last updated**: 2026-06-10
 **Status**: active
 
 ## What it is
 
-Gemma 4 is an open multimodal model family (image + text + audio in, text out) released on Hugging Face under Apache 2 licenses, with first-day support across transformers, llama.cpp, MLX, transformers.js/WebGPU, Mistral.rs, and the major fine-tuning libraries. It comes in four sizes, all with base and instruction-tuned checkpoints:
+Gemma 4 is an open multimodal model family (image + text + audio in, text out) released on Hugging Face under Apache 2 licenses, with first-day support across transformers, llama.cpp, MLX, transformers.js/WebGPU, Mistral.rs, and the major fine-tuning libraries. It now spans five sizes, all with base and instruction-tuned checkpoints:
 
 | Model | Size | Context | Notes |
 |---|---|---|---|
 | Gemma 4 E2B | 2.3B effective (5.1B w/ embeddings) | 128K | + audio |
 | Gemma 4 E4B | 4.5B effective (8B w/ embeddings) | 128K | + audio |
+| Gemma 4 12B | 12B [Needs Verification: dense vs. MoE not specified in source] | [Needs Verification] | + audio, **encoder-free** (see below) |
 | Gemma 4 31B | 31B dense | 256K | |
 | Gemma 4 26B A4B | MoE, 4B active / 26B total | 256K | |
 
 The headline isn't a single trick — it's that Gemma 4 takes architecture components proven in earlier Gemma and other open models, **deliberately leaves out the complex/inconclusive ones (e.g. Altup)**, and combines them into a mix that is highly portable across libraries/devices, efficient on long context and agentic use, and friendly to quantization. The 31B dense reaches an estimated text-only LMArena score of ~1452; the 26B MoE reaches ~1441 with just 4B active parameters.
 
-Source: Hugging Face, *"Welcome Gemma 4: Frontier multimodal intelligence on device"* (2026-04-02).
+**Update (June 2026)**: Gemma 4 12B landed to fill the gap between E4B and the 26B MoE, and pushes the family's design philosophy a step further — it's the **first Gemma 4 model with no multimodal encoders at all** (see "Going fully encoder-free" below). The Gemma 4 family has now crossed 150M downloads.
 
 ## Why it matters
 
-Two things make this notable beyond "another open model":
+Three things make this notable beyond "another open model":
 
 - **Frontier-class quality at on-device sizes, openly licensed.** Apache 2 + sizes that run on a laptop or phone via MLX/WebGPU/llama.cpp moves capable multimodal inference off the API and onto local hardware. That's the local-inference / client-side-ML frontier Dean has flagged as interesting-but-cautious.
 - **The "boring combination" thesis.** Gemma 4's design choice is *restraint* — reuse what's proven, drop what's inconclusive, optimize for compatibility and quantization. The reported result (the HF team "struggled to find good fine-tuning examples because they are so good out of the box") is a signal that the open-model floor has risen sharply, which changes the build-vs-buy and fine-tune-vs-prompt calculus.
+- **Going encoder-free is the next step of the same thesis.** If "reuse what's proven" was the spring story, "need fewer subsystems at all" is the early-summer one — Gemma 4 12B replaces both the vision and audio encoders with direct projections into the LLM backbone, removing entire components rather than just optimizing them.
 
 It also pairs naturally with [[deepseek-v4]]: both are open releases whose real story is *inference economics and deployability* rather than top-line benchmark wins.
 
@@ -62,9 +64,25 @@ flowchart LR
 
 Multimodal capabilities work out of the box (OCR, speech-to-text, object detection, GUI element pointing — natively returning JSON bounding boxes on a 1000×1000 reference grid), plus function calling, reasoning, and code tasks. Small variants ship multi-token-prediction drafters for faster decoding.
 
+### Gemma 4 12B: going fully encoder-free
+
+Every multimodal Gemma 4 size before this one still used dedicated encoders to turn images and audio into something the LLM backbone could consume (a vision encoder with learned 2D positions/RoPE; a USM-style conformer audio encoder on E2B/E4B). Gemma 4 12B removes both:
+
+- **Vision**: the encoder is replaced by a lightweight embedding module — a single matrix multiplication plus positional embeddings and normalization. The LLM backbone itself takes over visual processing instead of consuming pre-digested encoder output.
+- **Audio**: there is no audio encoder at all. The raw audio signal is projected directly into the same dimensional space as text tokens.
+
+The practical effect is fewer moving parts and less encoder-induced latency/memory overhead, while reaching benchmark performance close to the 26B MoE at less than half its memory footprint — small enough for 16GB of VRAM/unified memory. It ships with Multi-Token Prediction (MTP) drafters for faster decoding, and alongside it Google released an official **Gemma Skills Repository** — a library of skills for agents to build with Gemma models, directly relevant to Dean's interest in the [[skills-rules-subagents]] pattern.
+
+## Sources
+
+- Hugging Face, *"Welcome Gemma 4: Frontier multimodal intelligence on device"* (2026-04-02).
+- Google DeepMind Blog, *"Introducing Gemma 4 12B: a unified, encoder-free multimodal model"* (2026-06-03).
+
 ## Related
 - [[deepseek-v4]]
 - [[decoupled-diloco]]
 - [[model-compression]]
 - [[vision-language-action-models]]
 - [[llm-memory-architectures]]
+- [[skills-rules-subagents]]
+- [[north-mini-code]]
