@@ -1,5 +1,31 @@
 # Changelog
 
+## [2026-06-10] Nightly Run
+
+30 staged items triaged (Google DeepMind, Hacker News, Hugging Face, OpenAI). Most Hacker News and OpenAI items were comment-link/one-line stubs with no synthesizable body — wrote pages only for items that scored ≥7 **and** carried enough real content to synthesize.
+
+### Created
+- **Created**: `wiki/technical/engineering-approaches/agent-callable-building-blocks.md` — every Hugging Face Space now ships a plain-text `agents.md` manifest (schema + call/poll endpoints + auth) that lets a coding agent drive it with zero integration code; worked example chains an image-gen Space into a 3D-Gaussian-splat Space to build a Paris monuments gallery, then reuses the same two Spaces for Japan/Egypt for "about one sentence each." **Score 8.** Source: Hugging Face Blog, 2026-06-09.
+- **Created**: `wiki/technical/models/north-mini-code.md` — Cohere's first developer model: 30B-A3B MoE, Apache 2.0, an agentic-coding specialist trained jointly across SWE-Agent / mini-SWE-agent / OpenCode / Terminus 2 harnesses (skills transfer "for free" across them) using CISPO async RL with reward-0 for invalid tool calls. **Score 8.** Source: Hugging Face Blog / CohereLabs, 2026-06-09.
+
+### Updated
+- **Updated**: `wiki/technical/models/gemma-4.md` — added Gemma 4 12B, which fills the gap between E4B and the 26B-A4B MoE and is the first Gemma 4 model with no multimodal encoders at all (vision and audio project directly into the LLM backbone); also added a Sources section now that the page merges two posts. **Score 8.** Source: Google DeepMind Blog, 2026-06-03.
+- **Updated**: `wiki/technical/engineering-approaches/agent-evaluation-and-failure-modes.md` — added a 4th section on ServiceNow-AI's code-switching ASR benchmark (same team/AU-Harness as EVA): 7 ASR systems across 4 bilingual language pairs scored on WER/SWER/AER, with the finding that ASR provider ranking does not transfer across language pairs and errors concentrate on the English portions of code-switched utterances. **Score 7.** Source: Hugging Face Blog / ServiceNow-AI, 2026-06-09.
+
+### Skipped — high signal but not writeable from source
+Cleared the signal bar but the staged item was a headline-only stub (title + URL + HN comments link only) with no body to synthesize. Logged as seen; revisit if a substantive source lands.
+- `Fluid, natural voice translation with Gemini 3.5 Live Translate` (Google DeepMind) — one-sentence product announcement, no technical detail.
+- `Claude Fable 5` (Anthropic, via HN), `If Claude Fable stops helping you, you'll never know` (HN), `What it feels like to work with Mythos` (Ethan Mollick, via HN) — three items appear to relate to the same new Anthropic model release ("Claude Fable 5" / "Mythos"), but all three are HN comment-link stubs with zero body content.
+- `Rich Sutton on AI creativity and discovery` (HN, links to a tweet) — RL-pioneer commentary, directly relevant to Dean's RL interests, but stub only.
+- `Grit: Rewriting Git in Rust with agents` (HN) — sounds like an AI-native engineering story, but stub only.
+
+### Skipped — below signal threshold
+- `Powering the future of robotics in Europe` (Google DeepMind) — accelerator-program announcement listing a 15-startup cohort with one-line descriptions; no method or dual-use lesson, true periphery per the robotics rule.
+- `How engineers at Nextdoor use Codex to build without limits`, `What Codex unlocks for Notion` (OpenAI) — one-line Codex customer-story stubs, same bucket as prior nightly's enterprise/customer stories.
+- 17 remaining Hacker News items — general tech/security/policy/news, off-topic for this wiki, all comment-link stubs with no body: CEOs/AI-replaces-employees, Exif smuggling, FCC burner phones, German ruling on Google AI Overviews liability, Chrome killing uBlock Origin bypasses, "It's Death", Transload (YC) freight CCTV, macOS container machines, "Making Graphics Like It's 1993", RIP software hackathons, "Surprise, Pay $1000", test-case reducers, "The Evolution of 'More Like This'", ultrafast ML on FPGAs via KANs, npm v12 breaking changes, "Vibe coding my way to a healthy family" (Gamow Labs), WWDC 2026 "Apple is Folding".
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
