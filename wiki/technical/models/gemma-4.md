@@ -68,3 +68,4 @@ Multimodal capabilities work out of the box (OCR, speech-to-text, object detecti
 - [[model-compression]]
 - [[vision-language-action-models]]
 - [[llm-memory-architectures]]
+- [[diffusiongemma]]

@@ -106,6 +106,8 @@ Performance (measured in **TPF — tokens per forward pass**, a hardware-agnosti
 
 The 8B beats Qwen3 8B by **+1.2% average accuracy** while delivering those speedups; LinearSpec hit **~865 tok/s on B200** (~4× the AR baseline on the same hardware). Deployment via **SGLang** (landing in main; currently behind an issue-tracker request).
 
+A few weeks later, [[diffusiongemma]] took the same memory-bandwidth-vs-compute bet to a frontier-lab release: a 26B MoE (3.8B active) *dedicated* diffusion model — not a dual-mode AR/diffusion checkpoint — with day-one vLLM/MLX support and 700+ tok/s on a consumer RTX 5090.
+
 ## Sources
 
 - Hugging Face — *Unlocking asynchronicity in continuous batching* (2026-05-14), `huggingface.co/blog/continuous_async`
@@ -117,6 +119,7 @@ The 8B beats Qwen3 8B by **+1.2% average accuracy** while delivering those speed
 - [[llm-memory-architectures]]
 - [[model-compression]]
 - [[gemma-4]]
+- [[diffusiongemma]]
 - [[training-at-scale-infrastructure]]
 - [[rl-post-training-libraries]]
 - [[train-time-rl-scaling]]
