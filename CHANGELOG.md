@@ -1,5 +1,32 @@
 # Changelog
 
+## [2026-06-11] Nightly Run
+
+24 staged items triaged (Google DeepMind, Hacker News, OpenAI Blog). All but one were headline-only stubs (title + URL + "Comments" link, or a one-line summary) with no synthesizable body. Wrote a page for the one item that cleared the signal bar **and** had a full body to synthesize.
+
+### Created
+- **Created**: `wiki/technical/models/diffusiongemma.md` — Google DeepMind's first large-scale, openly-licensed text diffusion model: 26B MoE (3.8B active) built on Gemma 4, generates 256-token blocks via iterative denoising instead of AR decoding, up to 4x faster on dedicated GPUs (700+ tok/s on a consumer RTX 5090, fits 18GB VRAM quantized), with day-one vLLM/MLX/Transformers/Unsloth/NeMo support. **Score 8.** Source: Google DeepMind Blog, 2026-06-10.
+
+### Updated
+- **Updated**: `wiki/technical/models/gemma-4.md` — added `[[diffusiongemma]]` to Related (DiffusionGemma is built on the Gemma 4 architecture).
+- **Updated**: `wiki/technical/algorithms/llm-inference-serving-internals.md` — cross-referenced `[[diffusiongemma]]` in the Nemotron-Labs Diffusion section as a frontier-lab-scale example of the same memory-bandwidth-vs-compute bet, and added it to Related.
+
+### Skipped — high signal but not writeable from source
+These titles touch Dean's frontier zone (agent failure modes, agent frameworks, graph databases, guardrails, transformer internals, model pricing competition) but the staged item was a headline-only stub (title + URL + "Comments" link, no body). Logged as seen; revisit if a substantive source lands.
+- `Apache Burr: Build reliable AI agents and applications`
+- `AI agent runs amok in Fedora and elsewhere`
+- `Cybersecurity researchers aren't happy about the guardrails on Anthropic's Fable`
+- `Deficient executive control in transformer attention`
+- `Show HN: HelixDB – A graph database built on object storage`
+- `Validation, Docs, tests, and database schemas from one source of truth`
+- `OpenAI mulls slashing prices as it competes with Anthropic for users`
+
+### Skipped — below signal threshold / off-topic
+- 13 Hacker News items — general tech/news/hardware/history, off-topic for this wiki: Raspberry Pi 5 (16GB), GeoLibre 1.0, πFS, Japanese train stations animated, Sequoyah's syllabary, how JPL keeps Curiosity doing science, Eric Ries AMA, PgDog funding announcement, Show HN Extend UI, Unix GC Remastered, "Building an HTML-first site doubled our users overnight", "Are insecure code completions in PyCharm a vulnerability?", "What is it like to be a bat?" (1974).
+- 3 OpenAI Blog items — one-line summaries only, no body to synthesize: `Access OpenAI models and Codex through your Oracle cloud commitment`, `How an astrophysicist uses Codex to help simulate black holes`, `PRC-linked influence operations are targeting AI debates in the US`.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
