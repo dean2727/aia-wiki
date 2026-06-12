@@ -1,5 +1,43 @@
 # Changelog
 
+## [2026-06-12] Nightly Run
+
+24 staged Hacker News items triaged. Every single staged file was a headline-only stub — frontmatter (`source`, `url`, `title`, `fetched_at`) plus a bare `<a href="...">Comments</a>` link, with no article body. WebFetch (needed to pull the underlying articles) was unavailable this run (permission not granted in the unattended GitHub Actions context). Per the signal threshold, headline-only stubs are skipped regardless of topical score — writing a page from a title alone would mean fabricating content, which violates the never-hallucinate rule. No wiki pages created or updated.
+
+### Skipped — high signal but not writeable from source
+Titles land squarely in Dean's frontier zone (Claude/Anthropic model line, agent failure modes, open RL reproduction, open coding models), but the staged item carried no body to synthesize. Revisit if a fuller source lands in a future run.
+- `Anthropic apologizes for invisible Claude Fable guardrails` (The Verge) — directly concerns the Claude line Dean uses daily; possible guardrail/distillation story.
+- `Claude Fable 5: mid-tier results on coding tasks` (Endor Labs) — coding-benchmark take on Dean's current model generation.
+- `Claude Fable is relentlessly proactive` (Simon Willison) — trusted source on Claude Fable's agentic behavior; ties to agent design patterns.
+- `MiMo Code is now released and open-source` (Xiaomi) — open coding model/agent release.
+- `Open Reproduction of DeepSeek-R1` (HF `open-r1`) — open RL reproduction effort; ties to existing RL-for-agents pages.
+- `AI agent bankrupted their operator while trying to scan DN42` — agent cost/autonomy failure mode; ties to `agentic-errors` / agent-evaluation pages.
+
+### Skipped — edge, no body to synthesize
+Possibly substantial, but title-only — would need the article body to judge fit against `agentic-patterns`, `engineering-approaches`, or eval pages.
+- `How a new DSL may survive in the era of LLMs` — LLMs + DSL design, possible context-engineering angle.
+- `Software is made between commits` (Zed, "DeltaDB") — AI-native dev-tooling angle.
+- `MTG Bench: Testing how well LLMs can play Magic` — LLM strategic-reasoning benchmark, niche domain.
+- `Show HN: FablePool` — Claude Fable-based crowdfund-and-build product; single-product example of agentic build pattern.
+
+### Skipped — below signal threshold
+- `A jacket that harvests drinking water from the air` — textile/hardware, not AI.
+- `Apple didn't revolutionize power supplies; new transistors did (2012)` — hardware history, not AI.
+- `Device Clock Generation (2025)` — electronics/FPGA, not AI.
+- `FPS.cob: A first person shooter in COBOL` — novelty programming, not AI.
+- `If you are asking for human attention, demonstrate human effort` — general productivity essay, no clear AI link from title.
+- `Lines of code got a better publicist` — general software commentary, no clear AI link from title.
+- `Nobody ever gets credit for fixing problems that never happened (2001) [pdf]` — systems-thinking paper; resonates with Dean personally but outside this wiki's AI-advancement scope.
+- `Petition to Withdraw Canada's Bill C-22` — Canadian politics, not AI.
+- `Removing 'um' from a recording is harder than it sounds` — local audio-editing CLI, narrow/niche.
+- `Show HN: Boo – Screen-style terminal multiplexer built on libghostty` — dev tool, not AI.
+- `Show HN: Homebrew 6.0.0` — package manager release, not AI.
+- `The RCE that AMD wouldn't fix` — hardware security, not AI.
+- `Waymo Premier` — AV product-tier launch; robotics/AV periphery, no dual-use method indicated by title.
+- `WikiLambda the Ultimate` (Wikipedia Signpost) — Wikidata function-repository research note, tangential to AI.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
