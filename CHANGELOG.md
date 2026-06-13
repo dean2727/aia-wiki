@@ -1,5 +1,33 @@
 # Changelog
 
+## [2026-06-13] Nightly Run
+
+24 staged items triaged (Hacker News RSS, one Hugging Face Blog, one OpenAI Blog). Only one item — the Hugging Face blog — carried a synthesizable body; the other 23 were headline-only stubs (title + URL + one-line summary, no body).
+
+### Created
+- **Created**: `wiki/technical/tools/olmo-eval.md` — Allen AI's open-source eval workbench for the model-dev loop. Decouples Task (what's measured) from Harness (how it's run — direct, tool-augmented, or sandboxed), so the same benchmark runs under different scaffolds without rewriting it; pairwise checkpoint comparison reports standard error + minimum detectable effect. Directly operationalizes the "eval harness" concept already in [[harness-and-scaffolding]]. **Score 8.** Source: Hugging Face Blog (Allen AI), 2026-06-12.
+
+### Updated
+- **Updated**: `wiki/technical/engineering-approaches/harness-and-scaffolding.md`, `wiki/technical/engineering-approaches/llm-agent-evaluation.md`, `wiki/technical/engineering-approaches/agent-evaluation-and-failure-modes.md`, `wiki/technical/engineering-approaches/agentic-evals-and-long-horizon-tasks.md` — added `[[olmo-eval]]` to each page's Related section.
+
+### Skipped — high signal but not writeable from source
+- A cluster of 3 stubs on the same apparent event — a US government directive suspending access to models codenamed **"Fable 5"** and **"Mythos 5"**: `Statement on US government directive to suspend access to Fable 5 and Mythos 5` (Anthropic, official statement), `Our response to the US ban on Fable 5 and Mythos 5` (Isaacus), `There is a shadow hanging over this Fable thing` (Substack commentary). All three are title+URL only — no body to synthesize without fabricating the policy/technical details. This would likely score 9–10 (directly affects access to frontier models Dean uses via OpenRouter) if a substantive source lands — **revisit first thing next run.**
+
+### Skipped — frontier-zone-adjacent stubs (revisit if a substantive source lands)
+- `How to setup a local coding agent on macOS` — touches Dean's 🟡 local-inference curiosity, stub only.
+- `Launch HN: BitBoard (YC P25) – Analytics Workspace for Agents` — agent-observability product, stub only.
+- `SkillSpector` (NVIDIA, GitHub repo) — possibly agent-skill tooling, no description beyond the repo link.
+- `Slightly reducing the sloppiness of AI generated front end` — AI-engineering-workflow relevant, stub only.
+- `TycoonLE: A Jax reinforcement learning environment for long-horizon planning` — RL-environment relevant (cf. [[verifiable-rl-environments]]), stub only.
+- `Open source AI must win` — essay title fits [[open-source-ai-state-spring-2026]], stub only.
+- `"Don't You Just Upload It to ChatGPT?"` — AI-workflow-adjacent title, stub only.
+
+### Skipped — below signal threshold / off-topic
+- `New OpenAI Academy courses for the next era of work` (OpenAI Blog) — one-line program announcement, no body (cf. past "ChatGPT Academy how-tos").
+- 12 Hacker News items unrelated to AI or non-synthesizable stubs: a generic dynamic array in C, adaptive PDFs, CRISPR cancer-cell research, rare-earth-free electric motors, UEFI HTTP(S) boot with QEMU/OVMF, on-CPU physics/cycles, Palantir's legal win vs. a Swiss magazine, Swift's TrueType hinting migration, 21 zero-days in FFmpeg, and three game show-offs (Pirates naval warfare, Shepherd's Dog, Putt.day mini golf).
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
