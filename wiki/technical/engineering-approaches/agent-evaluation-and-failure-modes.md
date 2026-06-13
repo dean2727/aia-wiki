@@ -139,3 +139,4 @@ The deeper point for Dean: an agent eval is a *measure under adversarial pressur
 - [[verifiers-in-llm-reasoning]]
 - [[harness-and-scaffolding]]
 - [[verifiable-rl-environments]]
+- [[olmo-eval]]

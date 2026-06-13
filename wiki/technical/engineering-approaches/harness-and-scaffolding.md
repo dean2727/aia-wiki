@@ -49,3 +49,4 @@ Broad vs. narrow usage matters: products like Claude Code and Codex call the *wh
 - [[agentic-patterns]]
 - [[grok-4-20]]
 - [[agent-building-judgment]]
+- [[olmo-eval]]
