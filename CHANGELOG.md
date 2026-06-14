@@ -1,5 +1,39 @@
 # Changelog
 
+## [2026-06-14] Nightly Run
+
+All 23 items in today's staging batch were Hacker News RSS entries consisting only of a title, source URL, and a "Comments" link — no article body to synthesize from. No wiki pages created or updated.
+
+### Skipped — high signal but not writeable from source
+Topically relevant to Dean's frontier zone, but headline-only with no body. Logged for revisit if a substantive source (the actual article) lands.
+- `Amazon CEO's talks with U.S. officials triggered crackdown on Anthropic models` (WSJ) — potential regulatory action affecting Anthropic models, which sit in Dean's stack via OpenRouter; paywalled, no body.
+- `GLM 5.2 Is Out` (Zhipu AI / Jie Tang, Twitter) — possible major open-weight model release on par with DeepSeek/Gemma coverage; tweet-only, no specs or body.
+- `Making Claude a Chemist` (Anthropic research) — likely a specialized-agent/tool-use-for-science case study; stub-only.
+- `RTX 5080 and RTX 3090 Setup: 80 Tok/s on Qwen 3.6 27B Q8` — local LLM inference build, touches Dean's "local inference" watch zone; stub-only.
+
+### Skipped — below signal threshold / off-topic (19 items)
+- `A low-carbon computing platform from your retired phones` (Google Research) — sustainability/edge-compute story, no AI-engineering takeaway in stub form.
+- `Ancient genome duplications laid the foundations of complex brains` (Oxford) — neuroscience/biology, off-topic.
+- `Apt Encounters of the Third Kind` — 2021 APT malware writeup, off-topic.
+- `Building a serial and VGA "everything console"` — retro hardware project, off-topic.
+- `Every Frame Perfect` (tonsky.me) — UI rendering/animation, no AI angle.
+- `Free SQL→ER diagram tool, runs in the browser, nothing uploaded` — dev tool, non-AI.
+- `GameBoy Workboy` — retro gaming hardware, off-topic.
+- `Honda Civics and the Evil Valet` — car security blog, off-topic.
+- `Noise infusion banned from statistical products published by Census Bureau` — differential-privacy policy story, stub, no AI bridge.
+- `Pac-Man, but you're the ghost` — game dev post, off-topic.
+- `Phoenix LiveView 1.2 Released` — Elixir web framework release, non-AI.
+- `Police officer investigated for using AI to 'create evidence' in multiple cases` — AI-misuse news story, stub, no engineering takeaway.
+- `ReactOS (FOSS "Windows") achieves 3D-accelerated Half-Life on real hardware` — retro OS news, off-topic.
+- `Running DOS on Behringers DDX3216 with a DIY x86-Bios from Scratch` — retro hardware, off-topic.
+- `Software Architecture Guide (2019)` (Martin Fowler) — generic pre-AI reference reissue, no new signal.
+- `The redistribution of housing wealth caused by rent control [pdf]` — housing economics, off-topic.
+- `Treating pancreatic tumours may have revealed cancer's master switch` (The Economist) — biomedicine, off-topic.
+- `Tribblix: The retro Illumos distribution` — OS distro, off-topic.
+- `Weave: Merging based on language structure and not lines` — AST-based code-merge tool, potentially relevant to [[worktrees-parallel-agents]] but stub-only, no body to confirm method.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
