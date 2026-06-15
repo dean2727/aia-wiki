@@ -1,5 +1,21 @@
 # Changelog
 
+## [2026-06-15] Nightly Run
+
+19 staged items triaged (RSS: OpenAI Blog, Hacker News). All but one were headline-only stubs (title + URL + a bare "Comments" link, no body), and the one exception (`Introducing the OpenAI Partner Network`) was a single-sentence press blurb. Nothing cleared the writeable bar — even the items that touch Dean's frontier zones had no body to synthesize from. No pages created or updated.
+
+### Skipped — touches frontier zone, but not writeable from source (logged for revisit)
+- `Apple Foundation Models` (docs.claude.com) — possible Claude SDK ↔ on-device Apple model story, which would sit in Dean's 🟡 local-inference curiosity zone; source is a bare doc-page link with no body. Revisit if a substantive writeup appears.
+- `Rio de Janeiro's "homegrown" LLM appears to be a merge of an existing model` — AI-ecosystem provenance/trust story (Nex-N2 GitHub issue); stub only, no body. Revisit if the discussion yields real writeup.
+- `Formal methods and the future of programming` (Jane Street index) — touches Dean's spec-driven-dev/correctness interest; source is a blog index page, not a single article. Revisit with a specific post.
+- `I indexed 669 GB of my GoPro videos using my M1 Max computer and local ML models` — local on-device ML workflow, Dean's 🟡 local-inference curiosity; stub only, no body. Revisit if a methods-level writeup surfaces.
+
+### Skipped — below signal threshold
+- `Introducing the OpenAI Partner Network` — one-line partner/enterprise-deployment press blurb, no technical or methodological content (score 3).
+- `Your ePub Is fine`, `Even more batteries included with Emacs`, `Curl will not accept vulnerability reports during July 2026`, `Show HN: Kage – Shadow any website to a single binary for offline viewing`, `Dalus (YC W25) Is Hiring a Senior Software Engineer in Germany`, `21 years and counting of 'eight fallacies of distributed computing' (2025)`, `Ask HN: What are you working on? (June 2026)`, `Chaosnet (1981)`, `Show HN: Discover Wikipedia articles popular on Hacker News`, `Windows 11 users are tired of MS account requirements creeping into everything`, `Caddy compatibility for zeroserve: 3x throughput and 70% lower latency`, `Perlisisms (1982)`, `FarOutCompany`, `How to earn a billion dollars` — headline-only stubs, general tech/dev/OS/networking/historical-CS/entrepreneurship with no AI angle to extract.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
