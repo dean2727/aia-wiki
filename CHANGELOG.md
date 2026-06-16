@@ -1,5 +1,38 @@
 # Changelog
 
+## [2026-06-16] Nightly Run
+
+25 staged items triaged (all from Hacker News RSS). Every item was a headline-only stub — title + URL + HN comment link, no article body. Nothing was synthesizable without fabricating post-cutoff content. No wiki pages created or updated.
+
+### Skipped — not writeable from source (headline-only stubs)
+- `hacker-news-2026-06-16-ask-hn-has-anyone-replaced-claude-gpt-with-a-local-model-for` — HN discussion thread on local models for coding; relevant topic (Dean's 🟡 local LLM zone) but stub only, no body
+- `hacker-news-2026-06-16-humanity-isn-t-ready-for-the-coming-intelligence-explosion` — Economist intelligence-explosion piece; potentially high-signal for Dean's world context, but stub only
+- `hacker-news-2026-06-16-reviews-have-become-expensive-rewrites-have-become-cheap` — AI-assisted code rewrite framing; relevant to Dean's AI engineering methodology interest, but stub only
+- `hacker-news-2026-06-16-my-homelab-ai-dev-platform` — homelab AI dev setup; adjacent to Dean's infra interests, but stub only
+- `hacker-news-2026-06-16-peopleless-economy-not-technically-impossible` — AI economic displacement essay; stub only
+- `hacker-news-2026-06-16-iroh-1-0` — Iroh 1.0 P2P networking library; no direct AI relevance, stub only
+- `hacker-news-2026-06-16-salesforce-to-acquire-fin-formerly-intercom-for-3-6b` — AI customer service acquisition news; stub only
+- `hacker-news-2026-06-16-amazon-announces-multibillion-dollar-data-center-in-missouri` — infra investment news; stub only
+- `hacker-news-2026-06-16-a-backdoor-in-a-linkedin-job-offer` — supply-chain/social engineering security story; stub only
+- `hacker-news-2026-06-16-how-timescaledb-compresses-time-series-data` — DB internals; stub only
+- `hacker-news-2026-06-16-the-time-the-x86-emulator-team-found-code-so-bad-they-fixed` — Microsoft engineering anecdote; stub only
+- `hacker-news-2026-06-16-i-could-ve-rickrolled-the-fifa-world-cup-all-i-needed-was-my` — security disclosure; stub only
+- `hacker-news-2026-06-16-john-carmack-on-fabrice-bellard` — Twitter post stub; stub only
+- `hacker-news-2026-06-16-banned-book-library-in-a-wi-fi-smart-light-bulb` — creative hardware hack; stub only
+- `hacker-news-2026-06-16-hetzner-price-adjustment` — cloud pricing news; stub only
+- `hacker-news-2026-06-16-what-job-interviews-taught-me-about-kubernetes` — K8s interview tips; stub only
+- `hacker-news-2026-06-16-fox-to-buy-roku` — media M&A; stub only
+- `hacker-news-2026-06-16-copper-transport-drug-restores-memory-and-clears-toxic-alzhe` — biomedical research; stub only
+- `hacker-news-2026-06-16-game-engine-white-papers-commander-keen` — retro game engine history; stub only
+- `hacker-news-2026-06-16-launch-hn-drafted-yc-p26-models-for-residential-architecture` — YC product launch; stub only
+- `hacker-news-2026-06-16-show-hn-veterinarian-turned-founder-ai-lawn-diagnosis` — niche AI product; stub only
+- `hacker-news-2026-06-16-tinywind-a-pixel-pirate-sailing-game-with-real-wind-physics` — game; stub only
+- `hacker-news-2026-06-16-i-love-the-computer` — personal essay; stub only
+- `hacker-news-2026-06-16-why-i-email-complete-strangers` — personal essay; stub only
+- `hacker-news-2026-06-16-show-hn-garden-of-flowers-an-archive-of-pictorial-typography` — typography archive; stub only
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
