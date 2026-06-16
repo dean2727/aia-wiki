@@ -1,5 +1,28 @@
 # Changelog
 
+## [2026-06-09] Nightly Run
+
+26 RSS items fetched (Hacker News, OpenAI Blog). Every item was a headline-only stub — title, URL, and HN comments link with no body content. No wiki pages were created; nothing was synthesizable without fabricating post-cutoff specifics.
+
+### Skipped — high signal, not writeable from source
+These cleared the signal bar but had no body to synthesize. Revisit if a substantive article lands.
+- `hacker-news-2026-06-09-mimo-v2-5-pro-ultraspeed-1t-model-with-1000-tokens-per-secon` — 1T model at 1,000 tokens/second is a striking inference-throughput result; **score 7**. Stub only.
+- `hacker-news-2026-06-09-frontiercode` — Cognition AI's FrontierCode system; **score 6**. Stub only.
+- `hacker-news-2026-06-09-apple-reveals-new-ai-architecture-built-around-google-gemini` — Apple rebuilding AI around Gemini models; **score 6**. Stub only.
+- `hacker-news-2026-06-09-apple-core-ai-framework` — Apple's new Core AI developer framework; **score 5**. Stub only.
+- `openai-blog-2026-06-09-confidential-submission-of-draft-s-1-to-the-sec` — OpenAI S-1 SEC filing; industry-significant event, **score 5**. Stub only.
+
+### Skipped — below signal threshold (score ≤4)
+- `openai-blog-2026-06-09-built-to-benefit-everyone-our-plan` — corporate AGI vision statement; stub.
+- `hacker-news-2026-06-09-siri-ai` — Apple Intelligence product page; stub.
+- `hacker-news-2026-06-09-xai-is-looking-more-like-a-datacentre-reit-than-a-frontier-l` — opinion piece on xAI's business model; stub.
+- `hacker-news-2026-06-09-launch-hn-intuned-yc-s22-build-and-run-reliable-browser-auto` — Intuned browser automation product launch; stub.
+- `hacker-news-2026-06-09-ai-is-slowing-down` — opinion/commentary piece; stub.
+- `hacker-news-2026-06-09-show-hn-command-center-the-ai-coding-env-for-people-who-care` — AI coding product; stub.
+- 14 off-topic items — H1B visa ruling, EU pesticides, cell biology, Switzerland referendum, social media trends, 1worldflag, Gitdot, Mach language, Performative-UI, Thermo Fisher data, Massachusetts privacy law, Apple Music utility, antibody data, world flag. No AI signal.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
