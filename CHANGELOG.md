@@ -1,5 +1,24 @@
 # Changelog
 
+## [2026-06-17] Nightly Run
+
+23 staged items triaged (per `.run-summary`: 23 RSS items fetched, 1 skipped as already seen, 1942 skipped as old) — 1 Google DeepMind blog and 22 Hacker News items. Every single staged file was a headline-only stub: frontmatter (source, URL, title, fetched_at) plus either a one-sentence summary or, for the Hacker News items, just a bare `<a>...Comments</a>` link with no article body at all. None had enough synthesizable content to write a page without fabricating specifics. No wiki pages created or updated; `wiki/overview.md` left untouched (no material change to connect).
+
+### Skipped — high signal but not writeable from source
+AI-touching or frontier-zone-adjacent, but nothing beyond a title to synthesize from. Logged for revisit if a fuller source lands.
+- `SpaceX to buy Cursor for $60B` (Reuters) — potential acquisition of the AI coding tool Dean uses daily; headline only, no deal detail, motivation, or terms to verify or write from.
+- `GPT‑NL: a sovereign language model for the Netherlands` (TNO) — national/sovereign LLM effort; stub only.
+- `Running local models is good now` (vickiboykis.com) — hits Dean's 🟡 local-inference curiosity directly; stub only.
+- `Wolfram Language and Mathematica Version 15, AI Assistant, Symbolic Music, More` — new built-in AI assistant in Mathematica; stub only.
+- `Qwen-Robot Suite: A Foundation Model Suite for Physical World Intelligence` — robotics/VLA suite that might carry a dual-use method (action chunking, etc.) per the periphery rule, but can't assess without body text; stub only.
+- `Unlocking UK house-building with AI-accelerated planning` (Google DeepMind) — one-sentence summary only, civic-AI application; not enough to synthesize a page.
+- `Has AI already killed self-help nonfiction books?` (Tim Ferriss) — touches AI + writing/publishing, adjacent to Dean's intellectual-life interests; stub only.
+
+### Skipped — below signal threshold (off-topic for this wiki)
+16 Hacker News items with no AI/ML relevance: GrapheneOS ported to Android 17, Humiliating IIS servers for fun and jail time, TIL bash `/dev/TCP` HTTP requests, Calvin and Hobbes and the price of integrity, Stop Using JWTs, Stop Killing Games fails to secure EU law, But yak shaving is fun (2019), 10Gb/s Ethernet switching to a Broadcom SFP+ module, NetNewsWire Status, Show HN: cuTile Rust GPU kernels, Apple's anti-nausea dots, Mechanical Watch (2022), Is Meta destroying its engineering organization? (engineering org/management culture, not an AI-native workflow), Frood, an Alpine Initramfs NAS (2024), Semiclassical Gravity Efficiently Solves NP-Complete Problems (physics, not AI), Apple is about to make Hide My Email useless.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
