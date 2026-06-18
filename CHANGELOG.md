@@ -1,5 +1,26 @@
 # Changelog
 
+## [2026-06-18] Nightly Run
+
+29 staged items triaged (RSS fetch: 26 Hacker News items, 2 Hugging Face blogs, 1 OpenAI blog — see `private/sources/staging/.run-summary`). Two substantial Hugging Face posts cleared the signal bar and got full pages; everything else was either a headline-only stub or true periphery with no transferable lesson.
+
+### Created
+- **Created**: `wiki/technical/models/glm-5-2.md` — Z.AI's new flagship open model: IndexShare (shared sparse-attention indexer, 2.9× fewer per-token FLOPs at 1M context, +20% speculative-decoding acceptance length), an online anti-reward-hacking module for agentic RL training, and the `slime` training/serving infra that ran its RL post-training. Highest-ranked open-source model on every long-horizon coding benchmark reported, within a few points of Opus 4.8 on Terminal-Bench 2.1. **Score 9.** Source: Hugging Face / Z.AI, 2026-06-17.
+- **Created**: `wiki/technical/engineering-approaches/sim-to-real-agent-tooling.md` — the transferable pattern behind AWS's Strands Robots + LeRobot integration: agent tools that swap simulation for physical hardware via one keyword argument (not a different codepath), a broker-less peer mesh (Zenoh) for multi-agent fleet coordination, and default-deny human-approval gates delivered out-of-band of the LLM specifically to block prompt-injection forgery on physically-actuating tool calls. Robotics is the example domain, not the point — the abstraction-boundary and HITL-gate patterns generalize directly to agent tool design. **Score 7.** Source: Hugging Face / AWS, 2026-06-17.
+
+### Skipped — not writeable from source (headline-only stubs)
+- `hacker-news-*-glm-5-2-is-the-new-leading-open-weights-model*` — stub pointing to the same GLM-5.2 release covered above via the substantial Hugging Face post; no additional body to synthesize from the stub itself.
+- `hacker-news-*-local-qwen-isn-t-a-worse-opus-it-s-a-different-tool` — touches Dean's "local LLM inference" watch zone but is title+URL only, no body.
+- `hacker-news-*-x86-ai-compute-extensions-ace-specification` — AI-adjacent (hardware ISA extensions for AI compute) but stub only.
+- `hacker-news-*-launch-hn-adam-yc-w25-open-source-ai-cad`, `hacker-news-*-midjourney-medical` — AI product launches, both stubs with no body.
+- `openai-blog-*-a-near-autonomous-ai-chemist-improves-a-challenging-reaction` — one-sentence summary only, no article body to synthesize without fabricating post-cutoff specifics.
+- 19 remaining Hacker News stubs, all off-topic for an AI-advancement wiki regardless of body length (Apple pricing, Clojure-on-Go, Madrid metro, WASM/compilers essay, Lore VCS, interactive-fiction tooling, MicroUI, Nim Conf, RFC 10008, an 8-bit baseball gamecast, SteamOS 3.8, a named-colors catalogue, bread-bag-tag parasitoid taxonomy, Tesco/VMware, US science funding, VW/GrapheneOS, a dialogue/thinking-out-loud essay): `apple-boss-tim-cook-says-prices-to-rise-due-to-memory-chip-c`, `clojure-hosted-on-go`, `how-madrid-built-its-metro-cheaply-2024`, `i-hate-compilers`, `lore-open-source-version-control-system-designed-for-scalabi`, `loreline-tools-for-writing-interactive-fiction`, `microui-a-tiny-portable-immediate-mode-ui-library-written-in`, `nim-conf-2026-online-sat-june-20`, `rfc-10008-the-new-http-query-method`, `show-hn-an-8-bit-live-gamecast-for-baseball`, `steamos-linux-3-8-released-as-stable`, `storied-colors-a-catalogue-of-named-colors`, `taxonomy-of-the-occlupanida-parasitoids-on-bread-bag-tags`, `tesco-moving-40k-server-workloads-off-vmware-amid-broadcom-s`, `u-s-science-is-in-chaos`, `volkswagen-started-blocking-grapheneos-users`, `why-thinking-out-loud-with-someone-beats-thinking-alone`.
+
+### Skipped — edge / true periphery (no reusable lesson beyond what's already covered)
+- `hugging-face-blog-*-molmomotion-language-guided-3d-motion-forecasting` — substantial article (AllenAI's language-guided 3D point-trajectory forecaster, MolmoMotion-1M dataset, PointMotionBench), and its dual-headed decoding (autoregressive coordinate-as-text vs. flow-matching) is methodologically real. But the transferable lessons — flow matching for multimodal continuous outputs, a VLM backbone plus a specialized output head — are already captured in [[vision-language-action-models]], and the downstream applications (robot manipulation planning, trajectory-conditioned video generation) are squarely robotics/diffusion-product territory without a new generalizable angle for Dean's stack. **Score 6.**
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
