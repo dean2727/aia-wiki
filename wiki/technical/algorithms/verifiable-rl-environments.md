@@ -106,3 +106,4 @@ Qwen 3 8B, DAPO (G=8 rollouts/prompt), LR 1e-5, a 2M-product FAISS catalog (`gte
 - [[agent-evaluation-and-failure-modes]]
 - [[rl-post-training-libraries]]
 - [[agentic-patterns]]
+- [[privacy-aware-deep-research]]
