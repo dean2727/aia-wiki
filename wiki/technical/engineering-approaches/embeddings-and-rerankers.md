@@ -3,7 +3,7 @@
 > A 2026 snapshot of where retrieval quality is moving — small open Apache-2.0 embedders and rerankers that beat much larger models, plus the now-cheap recipes to fine-tune your own embedder/reranker on domain data in under a day.
 
 **Category**: topics
-**Last updated**: 2026-05-28
+**Last updated**: 2026-06-23
 **Status**: active
 
 ## What it is
@@ -110,9 +110,13 @@ A six-command CLI pipeline (`nemotron embed sdg|prep|finetune|eval|export|deploy
 
 Whole thing: under a day on one A100/H100 (most of it hands-off), ~2–3 hrs for ~500 docs.
 
-### 6. PaddleOCR 3.5 — the ingestion step that feeds everything above (brief)
+### 6. PaddleOCR — the ingestion step that feeds everything above (brief)
 
-Retrieval quality is capped by ingestion quality: "the hard part often starts before the LLM." PaddleOCR 3.5 turns PDFs, scans, screenshots, tables, charts, formulas, and complex layouts into structured data — and now runs with **Hugging Face Transformers as an inference backend** (`engine="transformers"`), so its OCR (PP-OCRv5) and document-parsing (PaddleOCR-VL 1.5) models slot into a PyTorch/Transformers stack with less integration friction (`engine_config` for dtype/device/attention). For raw throughput, the default `paddle_static` backend is still recommended. Note the alternative for image-heavy docs: VDR (section 3) skips OCR entirely by embedding page *images* directly.
+Retrieval quality is capped by ingestion quality: "the hard part often starts before the LLM." PaddleOCR turns PDFs, scans, screenshots, tables, charts, formulas, and complex layouts into structured data that downstream RAG/agent pipelines can consume.
+
+**PP-OCRv6 (June 2026) supersedes PP-OCRv5.** It's now a three-tier family — tiny (1.5M params), small (7.7M), medium (34.5M) — instead of one size, so the ingestion step can be matched to the deployment target (edge/local vs. accuracy-oriented server pipeline) rather than over-paying for OCR everywhere. Medium and small tiers cover 50 languages in one model. The architecture changes are what drove the accuracy jump: a unified **PPLCNetV4** backbone shared across detection and recognition, **RepLKFPN** (large-kernel feature pyramid) for multi-scale text detection, and **EncoderWithLightSVTR** (local context + global attention) for recognition. Net result: PP-OCRv6_medium hits 86.2% detection Hmean / 83.2% recognition accuracy — +4.6pp / +5.1pp over PP-OCRv5_server.
+
+The backend story also got more flexible: PaddleOCR 3.7 added a unified `engine=` switch, so the same model artifact runs on **Paddle Inference** (native, fastest), **Transformers** (`engine="transformers"`, less PyTorch-stack integration friction), or **ONNX Runtime** (`engine="onnxruntime"`, portable deployment) — pick the runtime without re-exporting the model. Note the alternative for image-heavy docs: VDR (section 3) skips OCR entirely by embedding page *images* directly.
 
 ## Sources
 - `hugging-face-blog-2026-05-28-introducing-the-ettin-reranker-family.md`
@@ -121,6 +125,7 @@ Retrieval quality is capped by ingestion quality: "the hard part often starts be
 - `hugging-face-blog-2026-05-28-training-and-finetuning-multimodal-embedding-reranker-models.md`
 - `hugging-face-blog-2026-05-28-build-a-domain-specific-embedding-model-in-under-a-day.md`
 - `hugging-face-blog-2026-05-28-paddleocr-3-5-running-ocr-and-document-parsing-tasks-with-a.md`
+- `hugging-face-blog-2026-06-23-pp-ocrv6-on-hugging-face-50-language-ocr-from-1-5m-to-34-5m.md`
 
 ## Related
 - [[advanced-rag-techniques]]
