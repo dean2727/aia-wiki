@@ -1,5 +1,39 @@
 # Changelog
 
+## [2026-06-21] Nightly Run
+
+22 staged Hacker News RSS items triaged. Every single item was a headline-only stub — frontmatter (`source`/`url`/`title`/`fetched_at`) plus a bare "Comments" link, no article body. Nothing was synthesizable without fabricating post-cutoff specifics, so no wiki pages were created or updated this run regardless of topic fit.
+
+### Skipped — high signal but not writeable from source
+These titles sit squarely in Dean's frontier zone (agentic reliability, agent infrastructure, AI-engineering discipline) and would likely have cleared the ≥7 bar with a real body. Logged as seen; revisit if a substantive source lands.
+- `Building reliable agentic AI systems` (martinfowler.com) — exactly Dean's agent-reliability/evals interest; stub only.
+- `Project Fetch: Phase Two` (Anthropic research) — Anthropic research post, title-only.
+- `Temporary Cloudflare accounts for AI agents` (Cloudflare blog) — agent identity/auth infra, dual-use for agentic-mesh tracking; stub only.
+- `The 100k Whys of AI` (lcamtuf substack) — philosophically-framed AI essay from a writer whose work tends to be non-obvious; stub only.
+- `When I reject AI code even if it works` — directly on Dean's AI-engineering-discipline / vibe-coding-critique frontier; stub only.
+
+### Skipped — below signal threshold / off-topic
+General tech, news, and lifestyle items with no AI engineering or agent-relevant content, independent of the stub problem.
+- `Alice is impatient` (queueing-theory blog post)
+- `Armstrong Effect` (Wikipedia, psychology/history)
+- `Developers don't understand CORS (2019)`
+- `DOS Game "F-15 Strike Eagle II" reversing project needs DOS test pilots`
+- `Epoll vs. io_uring in Linux`
+- `Linux eliminates the strncpy API after six years of work, 360 patches`
+- `Loupe – A iOS app that raises awareness about what native apps can see`
+- `Renting a sewing machine from the library`
+- `Show HN: StartupWiki – A Free Alternative to Crunchbase`
+- `Show HN: TownSquare, a tiny presence layer for websites`
+- `Slow breathing modulates brain function and risk behavior`
+- `SMPTE Makes Its Standards Freely Accessible`
+- `The Lost Story of Alan Turing's "Delilah" Project`
+- `The rise of South Korea's weapons business`
+- `UHF X11: X11 Built for VisionOS and Apple Vision Pro`
+- `Unauthorized alert sent to cell phones across Brazil`
+- `Your brain was never designed for this much bad news`
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
