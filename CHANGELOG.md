@@ -1,5 +1,26 @@
 # Changelog
 
+## [2026-06-22] Nightly Run
+
+22 staged items triaged (21 Hacker News RSS + 1 OpenAI Blog post). Every single item was a headline-only stub — title, URL, and at most a one-line summary, with no article body — so nothing cleared the "enough real text to synthesize" bar regardless of topic. No wiki pages created or updated today; this was a quiet news day for the staging feed.
+
+### Skipped — not writeable from source (stub only, AI-adjacent)
+These touch Dean's frontier zone but the staged item carried no body to synthesize from — writing a page would mean fabricating specifics. Logged as seen; revisit if a fuller source lands.
+- `Apertus – Open Foundation Model for Sovereign AI` — open foundation model release, link only
+- `Sakana Fugu` — Sakana AI release, link only
+- `Show HN: Recall – Local project memory for Claude Code` — squarely in Dean's agent-memory/Claude Code zone, but just a GitHub link, no description of how it works
+- `Good results fine tuning a local LLM like Qwen 3:0.6B to categorize questions` — link only
+- `There is minimal downside to switching to open models` — open-model-adoption argument, link only
+- `Identity verification on Claude` — Claude support/policy page, link only; low signal even with a body (account feature, not a method or model advancement)
+- `Samsung Electronics brings ChatGPT and Codex to employees` (OpenAI Blog) — one-line enterprise-rollout summary, no technical depth, not groundbreaking
+
+### Skipped — below signal threshold / off-topic
+15 Hacker News items unrelated to AI or to anything Dean tracks: `1983 Northern Telecom Commodore Phone`, `Beyond All Reason` (RTS game), `Danish privacy activist Lars Andersen raided by police`, `Deno Desktop`, `Did my old job only exist because of fraud?`, `Everything is logarithms`, `FDA advisors unanimously vote to approve Moderna's mRNA after agency drama`, `(How to Write a (Lisp) Interpreter (In Python)) (2010)`, `Japanese verb conjugation the simple hard way`, `JSON-LD explained for personal websites`, `PowerFox Browser`, `Prefer duplication over the wrong abstraction (2016)` (classic software-engineering principle, not AI-native), `Rent collections are down in New York`, `Show HN: Teach your kids perfect pitch`, `The minimum viable unit of saleable software`.
+
+- **Created**: None
+- **Updated**: None
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
