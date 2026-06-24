@@ -43,3 +43,4 @@ Frameworks: LangChain/LangGraph, LlamaIndex, DSPy, Letta, CrewAI — see [[agent
 - [[mcp-and-a2a]]
 - [[llm-agent-evaluation]]
 - [[intro-to-agents]]
+- [[privacy-aware-deep-research]]

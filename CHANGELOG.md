@@ -1,5 +1,19 @@
 # Changelog
 
+## [2026-06-19] Nightly Run
+
+24 staged items triaged (OpenAI Blog, Hugging Face Blog, Hacker News). Of these, 23 were headline-only stubs (title + URL + one-line RSS summary, or just a "Comments" link with no fetched body) — no synthesizable content regardless of topic. Only one item had a real article body.
+
+### Created
+- **Created**: `wiki/technical/algorithms/privacy-aware-deep-research.md` — MosaicLeaks benchmark (the "mosaic effect": individually-benign web queries that jointly leak private local data) + PA-DR, an RL method combining a situational task reward (per-call credit assignment, 5-6x more sample-efficient than outcome-only RL) with a learned privacy-classifier reward; cuts leakage from 34.0% to 9.9% while keeping task performance, after task-only RL had made leakage *worse* (51.7%). **Score 8** — direct hit on Dean's frontier interests in agentic systems, RL reward design, and eval/guardrail reliability; the "you can't prompt privacy in, you have to train it in" finding generalizes to any agent mixing private context with external tool calls. Source: Hugging Face Blog (ServiceNow), 2026-06-18. Added backlinks from `agentic-rl-exploration`, `verifiers-in-llm-reasoning`, `verifiable-rl-environments`, `ai-guardrails`, `agentic-rag`, `llm-agent-evaluation`, `agentic-evals-and-long-horizon-tasks`.
+
+### Skipped — not writeable from source (headline-only stubs)
+- OpenAI Blog (one-line RSS summary only, no body): `New usage analytics and updated spend controls for enterprises`, `Improving health intelligence in ChatGPT` (GPT-5.5 Instant), `Using AI to help physicians diagnose rare genetic diseases affecting children`.
+- Hacker News (title + URL + "Comments" link only, no fetched body — includes otherwise on-topic items worth a revisit if a full source lands): `Zero-Touch OAuth for MCP`, `Show HN: Are You in the Weights?`, `Launch HN: TesterArmy (YC P26) – Agents that test web and mobile apps`, `I found 10k GitHub repositories distributing Trojan malware`.
+- Hacker News — off-topic for this wiki regardless of body (general tech/news/trivia, stubs): `Ice water drowning survival of young patient`, `So You Want to Define a Well-Known URI`, `Datasette Apps`, `Building a robotics research setup that lives next to my desk`, `Ubiquiti: Enterprise NAS, Built on ZFS`, `Many Let's Encrypt renewals had errors today`, `CS 6120: Advanced Compilers`, `Show HN: Talos – WASM interpreter for Lean`, `DARPA Heavy Life Challenge`, `Flexport (YC W14) hiring`, `.gitignore Isn't the only way to ignore files in Git`, `Hospitals and universities repurposing drugs at lower cost`, `I told them forced consent was unlawful... Elkjop €1.8M`, `Zork name origin update on Wikipedia`, `W Social and the theater of European digital sovereignty`, `Modos Color Monitor e-paper`, `How Alberta Eradicated Rats`.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
