@@ -1,5 +1,20 @@
 # Changelog
 
+## [2026-06-23] Nightly Run
+
+23 staged items triaged (the day's RSS fetch: Hacker News, Hugging Face Blog, OpenAI Blog). All but one were headline-only stubs with no synthesizable body. The one substantial item — a Hugging Face PP-OCRv6 release post — turned out to be a new-version update of a tool already covered in the wiki, so it was folded into the existing page rather than spun into a duplicate.
+
+### Updated
+- **Updated**: `wiki/technical/engineering-approaches/embeddings-and-rerankers.md` — refreshed the PaddleOCR ingestion section (§6) for **PP-OCRv6**, which supersedes the PP-OCRv5 coverage already there: new tiny/small/medium tiers (1.5M/7.7M/34.5M params), unified PPLCNetV4 backbone, RepLKFPN detection + EncoderWithLightSVTR recognition, 50-language support, +4.6pp detection / +5.1pp recognition over PP-OCRv5_server, and a three-way backend choice (Paddle Inference / Transformers / ONNX Runtime) via PaddleOCR 3.7's unified `engine=` switch. **Score 7.** Source: Hugging Face Blog, 2026-06-22.
+
+### Skipped — not writeable from source (headline-only stubs)
+- **21 Hacker News items**, all title + URL + "Comments" link only, no body to synthesize from:
+  - AI/ML-adjacent but stubbed (would otherwise be in-zone): `GLM-5.2 — How to Run Locally`, `Ultralytics YOLO26: Unified Real-Time End-to-End Vision Models`, `An Introduction to YOLO26`, `VibeThinker: 3B param model that beats Opus 4.5 on reasoning with novel SFT+GRPO`, `Moebius: 0.2B image inpainting model with 10B-level performance`, `Show HN: Oak — Git alternative designed for agents`, `Prompt Injection as Role Confusion`.
+  - General tech/news, off-topic for this wiki: `1,700 free online courses from top universities`, `British Columbia, Time Zones, and Postgres`, `Canada plans 'nuclear renaissance' with up to 10 reactors built by 2040`, `Chevron signs 20-year power agreement with Microsoft for West Texas data center`, `Flock-Powered Police Chiefs Stalking Women Shows Why Warrants Are Needed`, `In praise of memcached`, `Japanese symbols that speak without words`, `Job application asked for my SAT scores`, `Kyber (YC W23) Is Hiring a Head of Engineering`, `Optocam Zero: a Pi Zero based digital camera`, `Show HN: Got sick of ads, so I made my own logic puzzle site`, `Steam Machine launches today`, `Will It Mythos?`.
+- **2 OpenAI Blog items** — one-line-summary stubs, not enough body to write from without fabricating specifics: `Daybreak: Tools for securing every organization in the world` (names Codex Security, GPT-5.5-Cyber but no detail beyond one sentence), `Patch the Planet: a Daybreak initiative to support open source maintainers`. Logged for revisit if a substantive write-up lands.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
