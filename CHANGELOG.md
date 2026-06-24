@@ -1,5 +1,20 @@
 # Changelog
 
+## [2026-06-20] Nightly Run
+
+17 staged Hacker News RSS items triaged (per `.run-summary`: 17 fetched, 1 skipped-seen, 1959 skipped-old, 1 feed failed). Every staged file was a headline-only stub — frontmatter (title + URL) plus an HN "Comments" link, with no article body actually fetched. Per the stub rule in CLAUDE.md, none were writeable from source regardless of topic. No wiki pages created or updated.
+
+### Skipped — high signal but not writeable from source
+- `John Jumper to join Anthropic` — if substantiated, a notable AI-talent move (AlphaFold/Nobel-laureate scientist reportedly joining Anthropic); staged source is a bare tweet-status URL with no body text, so writing a page would mean fabricating specifics. Revisit if a substantive source lands.
+
+### Skipped — below signal threshold / off-topic (stubs, no body)
+- AI-adjacent but unwritable: `Norway imposes near ban on AI in elementary school` — policy headline, stub only, no body to assess real implications.
+- General tech/engineering, no AI angle: `I Stored a Website in a Favicon`, `There are no instances in ATProto`, `Surprising economics of load-balanced systems`, `Project Valhalla, Explained: How a Decade of Work Arrives in JDK 28`, `AURpocalypse now: a look at the recent AUR attacks`, `Hey, n00b, we didn't hire you to complete tasks`, `Ask HN: Will programmers write more efficient code during the memory shortage?`.
+- Business/M&A, no method takeaway: `Hyundai buys Boston Dynamics`.
+- Off-topic / general interest: `Bobby Prince, composer for Doom, Wolfenstein 3D, and Duke Nukem 3D, has died`, `How many of the 170k English words do you know?`, `How to feed a dictator`, `Satellite reveals immense scale of GPS signal tampering`, `Court Records Should Be Free`, `Big Banana Car`, `Think of the children: How to force real ID for all internet traffic (2023)`.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.
