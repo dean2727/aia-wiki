@@ -126,26 +126,24 @@ def fetch_article_content(url: str) -> str | None:
 
 
 def entry_content(entry: Any) -> str:
-    content = rss_entry_content(entry)
-    if content:
-        return content
-
     title = str(getattr(entry, "title", "Untitled"))
     link = getattr(entry, "link", None)
-    if not link:
-        return title
 
-    try:
-        article_content = fetch_article_content(str(link))
-    except requests.RequestException as error:
-        logger.warning("Failed to fetch full article content for %s: %s", link, error)
-        return title
+    if link:
+        try:
+            article_content = fetch_article_content(str(link))
+            if article_content:
+                logger.info("Fetched full article content for: %s", title)
+                return article_content
+        except requests.RequestException as error:
+            logger.warning("Failed to fetch full article content for %s: %s", link, error)
 
-    if article_content:
-        logger.info("Fetched full article content for: %s", title)
-        return article_content
+    content = rss_entry_content(entry)
+    if content:
+        logger.warning("Using RSS summary fallback for: %s", title)
+        return content
 
-    logger.warning("Article page had no extractable text, falling back to title: %s", title)
+    logger.warning("No extractable content, falling back to title: %s", title)
     return title
 
 
