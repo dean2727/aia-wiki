@@ -110,8 +110,78 @@ When the run is a **backfill** (many staged files, empty wiki seed, or the user 
 
 | Run type | Default strategy |
 |---|---|
-| Nightly (24h window) | Strict triage; write 7+; edge 6–7 only if clearly high leverage |
+| Nightly (24h window) | Strict triage for RSS and other external sources; **Notion learning deltas** use the rules in [Notion learning deltas](#notion-learning-deltas) |
 | Backfill / user asks for full HF (or similar) coverage | **All, grouped smartly** |
+
+---
+
+## Notion learning deltas
+
+Staged files with `source: notion` (and `type: notion`) are **Dean's personal learning notes** — a mix of fundamentals Dean is internalizing and pointers to papers, products, or techniques not yet fully unpacked. They are **not** external news and must **not** be triaged like RSS.
+
+**Unit of work:** bullet clusters within each Notion file — not the whole file as one scored item.
+
+### Step 2a: Resolve target wiki pages
+
+Before writing anything from a Notion file:
+
+1. Read `suggested_wiki_pages` in the file frontmatter (if present).
+2. Search `wiki/` for pages whose slug or title matches the Notion `title` field.
+3. Read those pages in full. Prefer **updating existing pages** over creating new ones.
+
+### Track A — Enrich existing pages (default)
+
+Most Notion content belongs here. For each **cluster** of related bullets (not every bullet individually):
+
+| Content type | Action |
+|---|---|
+| Definitions, tradeoffs, patterns, heuristics | Merge into the best-matching existing wiki page |
+| Operational detail (failure modes, compaction, offloading, MCP patterns) | Add under a named section (e.g. `## Failure modes`, `## Offloading and compaction`) — never dump raw bullets |
+| Content that fits a **different** existing page better (e.g. memory bullets → [[agent-memory-learning-from-experience]]) | Update that page instead, with a cross-link from the primary topic page |
+| Vague principles with no external referent | Merge if durable; otherwise skip |
+
+**Merge rules:**
+
+- Compare against what's **already on the wiki page** — add only net-new, durable insight.
+- Rewrite in wiki voice (synthesized prose). Do not paste Notion bullet lists verbatim.
+- Keep pages under 800 lines — split into a sub-topic page only when a section would become unwieldy.
+- Do **not** create a new page just because Notion touched a topic that already has a wiki page.
+
+### Track B — Frontier pointers (selective)
+
+Some bullets name distinct external things (papers, repos, products, techniques) that deserve their own wiki page **if** they would score ≥7 from a primary source — not from Notion alone.
+
+**Only use WebSearch when all of these apply:**
+
+1. The bullet (or cluster) names a **specific** entity: product, paper, repo, benchmark, or technique.
+2. It is **not** already covered adequately on an existing wiki page.
+3. It would plausibly get its own page if it arrived via RSS.
+
+**Research discipline:**
+
+- **Cluster first** — e.g. all `llms.txt` / MCP-server bullets → one research task, not one search per bullet.
+- **Cap: 3 WebSearch calls per Notion file per run.** Prioritize the highest-signal clusters.
+- **Primary sources only** — official docs, paper, repo README, first-party blog. Skip SEO summaries and unattributed blog posts.
+- **Do not canonize Notion claims** — verify stats and attributions against what you find; if unverifiable, omit or mark `[Needs Verification]`.
+- Create or update **one wiki page per cluster**, with a `## Sources` section listing URLs found.
+
+### Explicit skips (Notion)
+
+Skip without web search:
+
+- Bullets too thin to synthesize (fragment, typo-only, personal reminder with no generalizable lesson)
+- Duplicates of content already on the target wiki page
+- Personal workflow anecdotes unless generalized into a reusable pattern
+- Name-drops too ambiguous to research reliably in ≤1 search
+
+Log skipped clusters in CHANGELOG under **Skipped — Notion** with a one-line reason.
+
+### Notion vs RSS triage
+
+| Source | Nightly behavior |
+|---|---|
+| RSS / YouTube / ArXiv / queue | Standard signal threshold (7+); skip whole item if below |
+| Notion (`type: notion`) | Always process via Track A / Track B; do not skip the whole file because it "isn't groundbreaking news" |
 
 ---
 

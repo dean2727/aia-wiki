@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 import requests
+import yaml
 
 if str(_repo_root := Path(__file__).resolve().parents[2]) not in sys.path:
     sys.path.insert(0, str(_repo_root))
@@ -29,6 +30,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 REPO_ROOT = _repo_root
+SOURCES_FILE = REPO_ROOT / "sources.yml"
+WIKI_DIR = REPO_ROOT / "wiki"
 PRIVATE_REPO_PATH = Path(os.environ.get("PRIVATE_REPO_PATH", REPO_ROOT.parent / "dean-wiki-private"))
 STAGING_DIR = PRIVATE_REPO_PATH / "sources" / "staging"
 SEEN_EDITS_FILE = PRIVATE_REPO_PATH / "sources" / ".seen_notion_edits.txt"
@@ -176,6 +179,88 @@ def collect_tree_page_ids(node: dict[str, Any]) -> set[str]:
     for child in node.get("children", []):
         ids.update(collect_tree_page_ids(child))
     return ids
+
+
+def build_wiki_slug_index() -> dict[str, list[str]]:
+    index: dict[str, list[str]] = {}
+    if not WIKI_DIR.exists():
+        return index
+
+    skip_names = {"index.md", "overview.md"}
+    for path in WIKI_DIR.rglob("*.md"):
+        if path.name in skip_names:
+            continue
+        rel_path = path.relative_to(REPO_ROOT).as_posix()
+        index.setdefault(path.stem, []).append(rel_path)
+    return index
+
+
+def suggest_wiki_pages(title: str, wiki_index: dict[str, list[str]]) -> list[str]:
+    title_slug = slugify(title)
+    exact = wiki_index.get(title_slug, [])
+    if exact:
+        return sorted(set(exact))
+
+    partial: list[str] = []
+    for stem, paths in wiki_index.items():
+        if title_slug in stem or stem in title_slug:
+            partial.extend(paths)
+    return sorted(set(partial))
+
+
+def load_wiki_candidate_ids() -> set[str]:
+    if not SOURCES_FILE.exists():
+        return set()
+
+    try:
+        with SOURCES_FILE.open("r", encoding="utf-8") as source_file:
+            data = yaml.safe_load(source_file) or {}
+    except (OSError, yaml.YAMLError) as error:
+        logger.warning("Could not read %s: %s", SOURCES_FILE, error)
+        return set()
+
+    notion = data.get("notion") or {}
+    entries = notion.get("wiki_candidates") or []
+    ids: set[str] = set()
+    for entry in entries:
+        if isinstance(entry, dict) and entry.get("id"):
+            try:
+                ids.add(normalize_page_id(str(entry["id"])))
+            except ValueError:
+                continue
+    return ids
+
+
+def find_subtree_ids(structure: dict[str, Any], target_id: str) -> set[str] | None:
+    target_id = normalize_page_id(target_id)
+    if normalize_page_id(structure["id"]) == target_id:
+        return collect_tree_page_ids(structure)
+    for child in structure.get("children", []):
+        found = find_subtree_ids(child, target_id)
+        if found is not None:
+            return found
+    return None
+
+
+def notion_lane(page_id: str, wiki_candidate_ids: set[str], structure_path: Path) -> str | None:
+    page_id = normalize_page_id(page_id)
+    if page_id in wiki_candidate_ids:
+        return "wiki_candidate"
+
+    if not structure_path.exists() or not wiki_candidate_ids:
+        return None
+
+    try:
+        structure = json.loads(structure_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+    for candidate_id in wiki_candidate_ids:
+        subtree = find_subtree_ids(structure, candidate_id)
+        if subtree and page_id in subtree:
+            return "wiki_candidate"
+
+    return None
 
 
 def load_subtree_page_ids(root_page_id: str, structure_path: Path) -> set[str] | None:
@@ -364,7 +449,15 @@ def unique_output_path(title: str, fetched_at: datetime) -> Path:
     return output_path
 
 
-def write_staged_page(client: NotionClient, update: PageUpdate, fetched_at: datetime) -> Path:
+def write_staged_page(
+    client: NotionClient,
+    update: PageUpdate,
+    fetched_at: datetime,
+    *,
+    wiki_index: dict[str, list[str]],
+    wiki_candidate_ids: set[str],
+    structure_path: Path,
+) -> Path:
     page_slug = slugify(update.title, max_length=70)
     output_path = unique_output_path(update.title, fetched_at)
     blocks = client.list_block_children(update.id)
@@ -386,18 +479,26 @@ def write_staged_page(client: NotionClient, update: PageUpdate, fetched_at: date
             update.url,
         )
 
+    suggested = suggest_wiki_pages(update.title, wiki_index)
+    lane = notion_lane(update.id, wiki_candidate_ids, structure_path)
+
     frontmatter = [
         "---",
         "source: notion",
         f"notion_id: {update.id}",
         f"notion_url: {update.url}",
         "type: notion",
+        "ingestion_mode: learning-delta",
         f"title: {json.dumps(update.title, ensure_ascii=False)}",
         f"fetched_at: {fetched_at.isoformat()}",
         f"last_edited_time: {update.last_edited_time.isoformat()}",
-        "---",
-        "",
     ]
+    if lane:
+        frontmatter.append(f"notion_lane: {lane}")
+    if suggested:
+        frontmatter.append("suggested_wiki_pages:")
+        frontmatter.extend(f"  - {path}" for path in suggested)
+    frontmatter.extend(["---", ""])
     output_path.write_text("\n".join(frontmatter) + body + "\n", encoding="utf-8")
     return output_path
 
@@ -465,6 +566,8 @@ def main(argv: list[str] | None = None) -> int:
     since = now - timedelta(hours=args.hours)
     client = NotionClient(api_key, request_delay=args.request_delay)
     seen_edits = load_seen_edits()
+    wiki_index = build_wiki_slug_index()
+    wiki_candidate_ids = load_wiki_candidate_ids()
 
     logger.info("Searching Notion for edits under %s since %s", root_page_id, since.isoformat())
     try:
@@ -498,7 +601,14 @@ def main(argv: list[str] | None = None) -> int:
             continue
 
         try:
-            output_path = write_staged_page(client, update, now)
+            output_path = write_staged_page(
+                client,
+                update,
+                now,
+                wiki_index=wiki_index,
+                wiki_candidate_ids=wiki_candidate_ids,
+                structure_path=args.structure_cache,
+            )
         except NotionClientError as error:
             logger.error("Failed to fetch page %s (%s): %s", update.title, update.id, error)
             continue
