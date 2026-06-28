@@ -7,6 +7,8 @@ rss:
     url: https://openai.com/news/rss.xml
   - name: Hugging Face Blog
     url: https://huggingface.co/blog/feed.xml
+  - name: LangChain Blog
+    url: https://www.langchain.com/blog/rss.xml
   - name: The Batch (Andrew Ng)
     url: https://raw.githubusercontent.com/cnzhujie/ai-rss-feed/main/rss/deeplearning_the_batch_rss.xml
   - name: Import AI (Jack Clark)
