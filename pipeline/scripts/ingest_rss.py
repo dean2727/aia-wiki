@@ -199,7 +199,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument(
         "--backfill",
         action="store_true",
-        help="If set, widen the date window to the last 3 months (~90 days). Default is last 24 hours.",
+        help="If set, widen the date window to the last month (~30 days). Default is last 24 hours.",
     )
     return parser.parse_args(argv)
 
@@ -219,7 +219,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     now = datetime.now(UTC)
-    cutoff = now - (timedelta(days=90) if args.backfill else timedelta(hours=24))
+    cutoff = now - (timedelta(days=30) if args.backfill else timedelta(hours=24))
     logger.info("RSS window: %s → %s (backfill=%s)", cutoff.isoformat(), now.isoformat(), args.backfill)
     fetched = 0
     skipped_seen = 0
