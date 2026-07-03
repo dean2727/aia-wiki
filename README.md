@@ -8,7 +8,7 @@ AI is a rapidly evolving field. Information from the internet and media is const
 
 The Wiki approach establishes a persistent, ever-growing/ever-updating data source (written in markdown), which an AI agent can easily write to and read from. It rewrites, summarizes, or filters information in the way deemed appropriate, so as to focus on the core purpose of the wiki source. This is a Wikipedia centered entirely on the advancements in technology, primarily AI, so that Dean (and others) can remain in-the-loop on what's out there, and stay strong and relevant as an AI engineer.
 
-The wiki is made so as to match my learning style, preferences in selecting new content to read/consume, and existing set of skills/knowledge. It includes content sections pertaining to what I should do/learn (the implications of the new AI hype), based on where I am on my journey - the repo points at a private data source - a `Dean-Profile.md` that describes my cognitive style, thinking patterns, intellectual life, professional identity, what great content looks like, working style, AI collaboration patterns, preferences and tolerances, life context and values, and deeper life mission (mostly derived from Cursor and Claude chats over multiple years).
+The wiki is made so as to match my learning style, preferences in selecting new content to read/consume, and existing set of skills/knowledge. It includes content sections pertaining to what I should do/learn (the implications of the new AI hype), based on where I am on my journey - the repo points at a private data source - a `dean.md` that describes my cognitive style, thinking patterns, intellectual life, professional identity, what great content looks like, working style, AI collaboration patterns, preferences and tolerances, life context and values, and deeper life mission.
 
 This repo is an example of what's possible when we apply the wiki pattern to information, and do so in a personalized way. It is an example of a personalized wiki.
 
@@ -20,7 +20,7 @@ A nightly GitHub Actions workflow monitors a curated set of sources: RSS feeds f
 
 Everything that gets ingested passes through a triage step before it touches the wiki. The LLM evaluates each piece against a strict signal threshold — is this genuinely groundbreaking, does it have real implications for how humans work with AI, or is it gaining significant traction for a reason? Most content gets filtered out. What clears the bar gets synthesized into a structured wiki page, cross-linked to related topics, and committed here.
 
-A weekly pass runs deeper synthesis across topics, surfaces connections between recent developments, and keeps the index current. A `Dean-Profile.md` in the private companion repo acts as the persistent user model the pipeline references on every run — it's what makes the relevance framing consistent over time.
+A weekly pass runs deeper synthesis across topics, surfaces connections between recent developments, and keeps the index current. A `dean.md` in the private companion repo acts as the persistent user model the pipeline references on every run — it's what makes the relevance framing consistent over time.
 
 Every page includes a **Dean-Relevance** section, in the private wiki repo, so I can read quarter-by-quarter markdown files with brief sections on why each piece of new content hitting the wiki matters to my career, goals, learning, and knowledge. I can read this before or after a given wiki entry, as I drink my coffee.
 
@@ -39,6 +39,32 @@ The pipeline is powered by [Claude Code GitHub Actions](https://code.claude.com/
 | **Cursor Logs** | Markdown exports of my Cursor AI coding sessions, synced from my local machine via a LaunchAgent | Signals about what I'm actually building, what tools I'm using, what problems I'm running into — the ground truth of my technical work | Nightly (when machine is on): new session files are committed to the private repo and inform the weekly profile review pass |
 | **Claude Exports** | Monthly conversation export from Claude.ai (Anthropic data export ZIP), processed into markdown | My longer strategic thinking, design decisions, research sessions, and ideas developed conversationally — context that doesn't appear in code | Monthly: ZIP is processed into individual conversation files and surfaced during the monthly manual workflow run |
 | **Notion** | Personal notes I've written myself — original observations, reactions, half-formed ideas, personal context | The one source the pipeline can't generate on its own: my perspective, not the internet's | Nightly: only pages I've personally written are pulled via the Notion API |
+
+## Source coverage
+
+_Living tracker — updated by the nightly and weekly Claude runs after each ingestion pass. Canonical source list in [`sources.yml`](sources.yml). Staging filenames use `{feed-slug}-{YYYY-MM-DD}-{title}.md`; counts come from `private/sources/staging/` (read-only during wiki runs)._
+
+<!-- source-coverage:start -->
+_Last table update: 2026-06-28 (nightly run)_
+
+| Source | Type | Schedule | Last ingested | Staged (last run) | Coverage window | Last wiki-processed | Notes |
+|---|---|---|---:|---|---|---|---|
+| Anthropic Blog | RSS | Nightly | 2026-06-28 | 12 | ~30d backfill | 2026-06-28 | Triage + updates in CHANGELOG |
+| Google DeepMind Blog | RSS | Nightly | 2026-06-28 | 9 | ~30d backfill | 2026-06-28 | Gemma 4 12B, DiffusionGemma, computer use |
+| OpenAI Blog | RSS | Nightly | 2026-06-28 | 46 | ~30d backfill | 2026-06-28 | GPT-5.6, Codex, Jalapeño cluster |
+| Hugging Face Blog | RSS | Nightly | 2026-06-28 | 25 | ~30d backfill | 2026-06-28 | PEFT, Holo3.1, fine-tuning posts |
+| LangChain Blog | RSS | Nightly | 2026-06-28 | 74 | ~30d backfill | 2026-06-28 | Mostly already-covered; Deep Agents cluster watch |
+| The Batch (Andrew Ng) | RSS | Nightly | — | 0 | — | — | No new items in last ingest window |
+| Import AI (Jack Clark) | RSS | Nightly | 2026-06-28 | 3 | ~30d backfill | 2026-06-28 | #462 synthesized; #459/#461 watch |
+| Ahead of AI (Sebastian Raschka) | RSS | Nightly | 2026-06-28 | 1 | ~30d backfill | 2026-06-28 | Link index only — skipped |
+| Hacker News | RSS | Nightly | 2026-06-28 | 10 | ~30d backfill | 2026-06-28 | All skipped (non-AI / periphery) |
+| Notion (live feed) | Notion API | Nightly | 2026-06-28 | 1 | 2026-06-28 edit | 2026-06-28 | Context engineering — Track A enrichments |
+| YouTube channels | YouTube | Nightly | — | — | — | — | Ingest not enabled in nightly workflow |
+| ArXiv (cs.AI, cs.LG) | ArXiv | Weekly | — | — | — | — | Weekly workflow only |
+| queue.txt | URL queue | Nightly | — | — | — | — | Ingest not enabled in nightly workflow |
+| Cursor logs | Local sync | Weekly review | — | — | — | — | Synced locally; reviewed on weekly pass |
+| Claude exports | Monthly ZIP | Monthly | — | — | — | — | Monthly workflow |
+<!-- source-coverage:end -->
 
 ## Pipeline
 
@@ -151,7 +177,7 @@ aia-wiki/                           ← public repo (this one)
 dean-wiki-private/                   ← private repo (data only, no code)
 │
 ├── profile/
-│   ├── Dean-Profile.md             ← persistent user model
+│   ├── dean.md             ← persistent user model
 │   └── TELOS.md
 │
 ├── relevance/                     ← Dean-Relevance notes (quarterly)
