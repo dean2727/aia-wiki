@@ -3,7 +3,7 @@
 > Google DeepMind's truly-open (Apache 2) multimodal family that pushes frontier-arena quality down to on-device sizes — including audio — by combining proven architecture pieces instead of inventing new ones.
 
 **Category**: topics
-**Last updated**: 2026-05-28
+**Last updated**: 2026-06-28
 **Status**: active
 
 ## What it is
@@ -14,6 +14,7 @@ Gemma 4 is an open multimodal model family (image + text + audio in, text out) r
 |---|---|---|---|
 | Gemma 4 E2B | 2.3B effective (5.1B w/ embeddings) | 128K | + audio |
 | Gemma 4 E4B | 4.5B effective (8B w/ embeddings) | 128K | + audio |
+| Gemma 4 12B | 12B dense | 128K | + audio; **encoder-free** multimodal; MTP drafters |
 | Gemma 4 31B | 31B dense | 256K | |
 | Gemma 4 26B A4B | MoE, 4B active / 26B total | 256K | |
 
@@ -61,6 +62,17 @@ flowchart LR
 ```
 
 Multimodal capabilities work out of the box (OCR, speech-to-text, object detection, GUI element pointing — natively returning JSON bounding boxes on a 1000×1000 reference grid), plus function calling, reasoning, and code tasks. Small variants ship multi-token-prediction drafters for faster decoding.
+
+### Gemma 4 12B — the encoder-free variant (June 2026)
+
+The 12B (added after the initial launch, now past 150M total Gemma 4 downloads) is the family's clearest architectural departure and the one most relevant to Dean's local-inference watch. It bridges the gap between the edge E4B and the 26B MoE, reaching benchmark performance *nearing the 26B* at less than half the memory footprint — small enough to run locally in **16GB of VRAM/unified memory**, with MTP drafters for lower latency.
+
+What makes it distinct is **encoder-free** multimodality. Where the 31B/26B route images and audio through dedicated encoders (see the vision/audio encoders above), the 12B feeds both modalities *directly into the LLM backbone*:
+
+- **Vision**: the vision encoder is replaced by a lightweight embedding module — a single matrix multiply plus positional embedding and normalizations — letting the backbone itself do visual processing.
+- **Audio** (its first mid-sized model with native audio in): the audio encoder is removed entirely; the raw audio signal is projected into the same dimensional space as text tokens.
+
+The payoff is the inverse of the usual multimodal tax: dropping the split encoders removes the latency and memory they add, which is exactly what makes laptop-class deployment realistic. It's the same "restraint as architecture" thesis as the rest of Gemma 4 — here applied to the modality pipeline itself. Ships with an official agent **Skills Repository** to make the model agent-buildable out of the box.
 
 ## Related
 - [[deepseek-v4]]

@@ -20,7 +20,7 @@ rss:
 
 # For seeing the wikis
 notion:
-  # These pages feed Dean-Profile context only
+  # These pages feed dean context only
   # Agent reads them to understand Dean's baseline knowledge
   # No wiki pages generated from these
   knowledge_base:

@@ -16,7 +16,7 @@ This wiki tracks groundbreaking AI advancements — models, tools, methodologies
 
 ## Step 1: Always Read Dean's Profile First
 
-Before writing any wiki content, read `private/profile/Dean-Profile.md` in full. This is the user model. Every page you write must connect to it.
+Before writing any wiki content, read `private/profile/dean.md` in full. This is the user model. Every page you write must connect to it.
 
 Key things to internalize from the profile before each run:
 - What tools and stack Dean is currently working with
@@ -49,7 +49,7 @@ Log all skipped items in CHANGELOG.md with a one-line reason.
 
 Use this when staged content has **enough real text to synthesize** (not a stub) but feels incremental, niche, or outside Dean’s core comfort zone.
 
-**Bias toward inclusion when the topic touches Dean’s frontier zone** (from `Dean-Profile.md`):
+**Bias toward inclusion when the topic touches Dean’s frontier zone** (from `dean.md`):
 
 - Agents, harnesses/scaffolds, tool use, orchestration, multi-agent patterns
 - RAG / retrieval / embeddings / reranking / graph or entity-aware retrieval
@@ -313,12 +313,31 @@ Append only. Never rewrite history. Each run adds one entry:
 - **Profile**: No changes | [description of any profile update]
 ```
 
+### README.md — Source coverage table
+
+After every nightly or weekly run, update the **Source coverage** table in `README.md` (between `<!-- source-coverage:start -->` and `<!-- source-coverage:end -->`).
+
+**How to update:**
+
+1. Read `sources.yml` for the canonical source list and schedules.
+2. Read `private/sources/staging/` (read-only) — count files per feed this run. Staging RSS filenames start with a slug derived from the feed name (e.g. `anthropic-blog`, `openai-blog`, `langchain-blog`, `hugging-face-blog`, `google-deepmind-blog`, `import-ai-jack-clark`, `ahead-of-ai-sebastian-raschka`, `the-batch-andrew-ng`, `hacker-news`). Notion files start with `notion-`.
+3. Read `private/sources/staging/.run-summary` for ingest totals and window hints (e.g. `24h` vs backfill).
+4. For **Coverage window**: on a standard nightly, `24h ingest window`; on backfill or large batches, `~30d backfill` or the actual date span if you can infer it from staged content dates. Use `—` when nothing was staged.
+5. Update rows **only for sources that ran this ingest pass**. Preserve prior values for sources with no new staging files (do not zero out historical counts unless the source was explicitly checked and returned 0 new items).
+6. Set **Last wiki-processed** to today's date for sources you triaged or synthesized from this run; leave `—` for sources not processed.
+7. **Notes**: one short line — wiki outcome (created/updated/skipped), `0 new in window`, `not enabled`, or feed failure.
+8. Update the `_Last table update: YYYY-MM-DD (nightly|weekly run)_` line above the table.
+
+**Table columns:** Source | Type | Schedule | Last ingested | Staged (last run) | Coverage window | Last wiki-processed | Notes
+
+Include all rows from `sources.yml` (RSS, Notion live feed, YouTube, ArXiv) plus pipeline sources not yet in `sources.yml` (queue.txt, Cursor logs, Claude exports) using the same row format.
+
 ---
 
 ## File & Repo Rules
 
 - Wiki content lives in `wiki/technical/`, `wiki/world/`, and `wiki/overview.md` only
-- `INDEX.md` and `CHANGELOG.md` are the only root-level files you modify
+- `INDEX.md`, `CHANGELOG.md`, and the Source coverage table in `README.md` are the only root-level files you modify
 - Dean-Relevance assessments live in `private/relevance/<season>-<year>.md` (private repo, quarterly) — never in public pages
 - **Never commit anything from `private/`** — that repo is data only
 - **Never modify pipeline scripts or workflow files**

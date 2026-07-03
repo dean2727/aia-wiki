@@ -3,7 +3,7 @@
 > The serving-layer mechanics — CPU/GPU overlap, RL-rollout correctness, and parallel/diffusion decoding — that decide the latency, throughput, and cost you actually pay per token, even when you never touch the GPU yourself.
 
 **Category**: topics
-**Last updated**: 2026-05-28
+**Last updated**: 2026-06-28
 **Status**: active
 
 ## What it is
@@ -105,6 +105,16 @@ Performance (measured in **TPF — tokens per forward pass**, a hardware-agnosti
 | Quadratic self-speculation | **6.4× TPF** | comparable |
 
 The 8B beats Qwen3 8B by **+1.2% average accuracy** while delivering those speedups; LinearSpec hit **~865 tok/s on B200** (~4× the AR baseline on the same hardware). Deployment via **SGLang** (landing in main; currently behind an issue-tracker request).
+
+### (d) Custom inference silicon — the full-stack bet (OpenAI × Broadcom Jalapeño)
+
+Levers (a)–(c) wring waste out of *software* on general-purpose GPUs. The next lever is the hardware itself. OpenAI's **Jalapeño** (June 2026, with Broadcom + Celestica) is a blank-slate **LLM-inference ASIC** — explicitly *not* a general-purpose accelerator adapted from earlier AI workloads. The thesis is the same one this page makes, pushed down a layer: a token's cost is a property of the whole serving stack, so if you own the models, kernels, and serving patterns, you can co-design the chip around them.
+
+What's notable for a hosted consumer like Dean:
+
+- **The optimization target is the bottleneck this page keeps naming.** Jalapeño is architected to *reduce data movement* and balance compute/memory/networking so realized utilization sits much closer to theoretical peak — i.e. attacking the memory-traffic and coordination waste, not raw FLOPs. The stated goal: GPU-class throughput with latency closer to specialized inference systems, aimed at interactive products at scale.
+- **Early claim: perf/watt "substantially better than current state-of-the-art"** (final numbers pending a technical report). Designed from initial design to tape-out in ~9 months — claimed fastest high-performance ASIC cycle ever — partly *because OpenAI used its own models to accelerate the chip design* (a concrete instance of the AI-helps-build-AI flywheel; cf. [[ai-capability-and-society-summer-2026]]).
+- **The strategic read: vertical integration as the cost lever.** When a frontier lab owns chip → kernels → serving → product, each "fast/cheap tier" you consume increasingly reflects custom silicon, not just a software trick. Deployment is planned at gigawatt scale with data-center partners from late 2026 over multiple generations. For build-vs-buy, it widens the gap between self-hosting on commodity GPUs and consuming a vertically-integrated provider's economics.
 
 ## Sources
 

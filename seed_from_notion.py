@@ -3,7 +3,7 @@
 Default behavior:
   - knowledge_base pages -> private/sources/notion/seed/dean-foundational-knowledge/
   - wiki_candidates pages + all descendants -> private/sources/staging/
-  - rebuilds a managed AI knowledge baseline section in Dean-Profile.md
+  - rebuilds a managed AI knowledge baseline section in dean.md
 
 Use --export-structure for the older tree JSON export.
 """
@@ -47,7 +47,7 @@ NOTION_SEED_DIR = NOTION_DIR / "seed"
 NOTION_KNOWLEDGE_DIR = NOTION_SEED_DIR / "dean-foundational-knowledge"
 PAGES_WITH_IMAGES_FILE = NOTION_SEED_DIR / "pages_with_images.txt"
 DEFAULT_STRUCTURE_PATH = NOTION_SEED_DIR / "page-structure.json"
-DEAN_PROFILE_PATH = PRIVATE_REPO_PATH / "profile" / "Dean-Profile.md"
+DEAN_PROFILE_PATH = PRIVATE_REPO_PATH / "profile" / "dean.md"
 
 PROFILE_START_MARKER = "<!-- notion-knowledge-baseline:start -->"
 PROFILE_END_MARKER = "<!-- notion-knowledge-baseline:end -->"
@@ -806,7 +806,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--no-progress", action="store_true", help="Disable tqdm progress bar")
     parser.add_argument("--export-structure", action="store_true", help="Export Notion page tree JSON instead of seeding markdown")
     parser.add_argument("--validate-sources", action="store_true", help="Report cached pages not listed directly in sources.yml")
-    parser.add_argument("--skip-profile", action="store_true", help="Do not update Dean-Profile.md after knowledge_base fetch")
+    parser.add_argument("--skip-profile", action="store_true", help="Do not update dean.md after knowledge_base fetch")
     parser.add_argument(
         "--request-delay",
         type=float,

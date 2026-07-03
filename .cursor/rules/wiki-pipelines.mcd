@@ -32,14 +32,14 @@ synthesized Markdown pages to wiki/.
 - Scripts exit with code 1 on failure, 0 on success
 - Triage threshold is 7/10 — do not change without updating 
   pipeline/prompts/triage.md to match
-- Always load Dean-Profile.md before any Claude API call that 
+- Always load dean.md before any Claude API call that 
   writes wiki content
 
 ## Claude API Usage
 - Model: claude-sonnet-4-5 for triage and updates
 - Model: claude-opus-4 for weekly synthesis only
 - Max tokens: 4096 for triage, 8192 for updates
-- Always include Dean-Profile.md content in system prompt context
+- Always include dean.md content in system prompt context
 - Parse --- FILE: path/to/file.md --- blocks from responses
 
 ## What Not To Do
@@ -47,4 +47,4 @@ synthesized Markdown pages to wiki/.
 - Do not modify CHANGELOG.md manually — update_index.py owns it
 - Do not commit anything from ../dean-wiki-private/
 - Do not add dependencies without adding them to pyproject.toml and refreshing uv.lock
-- Do not make Claude API calls without the Dean-Profile context
+- Do not make Claude API calls without the dean context

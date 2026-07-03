@@ -87,7 +87,7 @@ jobs:
           prompt: |
             Perform the nightly wiki update for aia-wiki.
 
-            1. Read private/profile/Dean-Profile.md to load Dean's user model.
+            1. Read private/profile/dean.md to load Dean's user model.
             2. Read all files in private/sources/staging/ — these are today's ingested sources.
             3. Split sources by type:
                - **Notion** (`source: notion` / `type: notion`): follow "Notion learning deltas" in CLAUDE.md.
@@ -100,12 +100,15 @@ jobs:
                - Do NOT add a Dean-Relevance section to public wiki pages (see CLAUDE.md)
             5. Update CHANGELOG.md with a dated entry listing created, updated, and skipped items
                (include a **Skipped — Notion** section when applicable).
-            6. Do NOT regenerate INDEX.md — that runs weekly.
-            7. Do NOT touch any files in private/ — read only (including relevance files).
-            8. Do NOT run git commands — a later workflow step opens a PR with your file edits.
+            6. Update the Source coverage table in README.md (between <!-- source-coverage:start -->
+               and <!-- source-coverage:end -->) per CLAUDE.md — reflect this run's ingest counts,
+               coverage window, and wiki-processing outcome for each source.
+            7. Do NOT regenerate INDEX.md — that runs weekly.
+            8. Do NOT touch any files in private/ — read only (including relevance files).
+            9. Do NOT run git commands — a later workflow step opens a PR with your file edits.
 
             For this GitHub Actions run, skip the private Dean-Relevance updates even though CLAUDE.md normally asks for them.
-            Only edit files under wiki/ and CHANGELOG.md.
+            Only edit files under wiki/, CHANGELOG.md, and the Source coverage table in README.md.
 
             Follow all guidelines in CLAUDE.md exactly.
 
@@ -115,7 +118,7 @@ jobs:
       #   run: |
       #     git config user.name "github-actions[bot]"
       #     git config user.email "github-actions[bot]@users.noreply.github.com"
-      #     git add wiki/ CHANGELOG.md
+      #     git add wiki/ CHANGELOG.md README.md
       #     BEFORE_SHA="${{ steps.before.outputs.sha }}"
       #     if ! git diff --staged --quiet; then
       #       git commit -m "Nightly wiki update $(date -u +%F)"
@@ -135,7 +138,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add wiki/ CHANGELOG.md
+          git add wiki/ CHANGELOG.md README.md
           if git diff --staged --quiet; then
             echo "committed=false" >> "$GITHUB_OUTPUT"
             echo "No wiki changes to commit"

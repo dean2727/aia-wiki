@@ -1,12 +1,12 @@
 ---
 name: Notion wiki seeding
-overview: "Scope: `seed_from_notion.py` only — backfill wiki_candidates to staging/, knowledge_base to sources/notion/seed/dean-foundational-knowledge/ AND a managed section in Dean-Profile.md. Block conversion handles tables; images downloaded locally. Nightly ingest deferred."
+overview: "Scope: `seed_from_notion.py` only — backfill wiki_candidates to staging/, knowledge_base to sources/notion/seed/dean-foundational-knowledge/ AND a managed section in dean.md. Block conversion handles tables; images downloaded locally. Nightly ingest deferred."
 todos:
   - id: seed-notion-core
     content: "seed_from_notion.py: ingest from sources.yml, block→markdown (tables + images), wiki→staging, KB→sources/notion/seed/dean-foundational-knowledge/"
     status: completed
   - id: seed-profile-update
-    content: "After KB fetch, deterministically rebuild <!-- notion-knowledge-baseline --> section in Dean-Profile.md from KB markdown"
+    content: "After KB fetch, deterministically rebuild <!-- notion-knowledge-baseline --> section in dean.md from KB markdown"
     status: completed
   - id: seed-export-structure
     content: "Move DFS JSON export to --export-structure (not default main); keep validate-sources optional"
@@ -18,7 +18,7 @@ todos:
     content: "DEFERRED: CLAUDE.md / README Notion lanes — after seed backfill proves out"
     status: cancelled
   - id: deferred-llm-seed-pass
-    content: "DEFERRED: one-time Claude pass (local or workflow_dispatch) — enrich Dean-Profile + write wiki/ from staging/notion-*"
+    content: "DEFERRED: one-time Claude pass (local or workflow_dispatch) — enrich dean + write wiki/ from staging/notion-*"
     status: cancelled
 isProject: false
 ---
@@ -36,7 +36,7 @@ flowchart TB
   yml["sources.yml"]
   seed["seed_from_notion.py"]
   nk["sources/notion/seed/dean-foundational-knowledge/*.md\n+ assets/"]
-  profile["profile/Dean-Profile.md\nmanaged baseline section"]
+  profile["profile/dean.md\nmanaged baseline section"]
   st["staging/notion-*.md"]
 
   yml --> seed
@@ -62,17 +62,17 @@ flowchart TB
 | Output | Path | Purpose |
 |--------|------|---------|
 | **Raw archive** | `dean-wiki-private/sources/notion/seed/dean-foundational-knowledge/{slug}.md` | Full fetched notes; agent can drill in |
-| **Profile baseline** | [`dean-wiki-private/profile/Dean-Profile.md`](dean-wiki-private/profile/Dean-Profile.md) | Curated “what Dean already knows” for wiki triage/synthesis |
+| **Profile baseline** | [`dean-wiki-private/profile/dean.md`](dean-wiki-private/profile/dean.md) | Curated “what Dean already knows” for wiki triage/synthesis |
 
 Wiki candidates still go to **`staging/` only** (no profile update).
 
 ---
 
-## Dean-Profile.md update (knowledge_base)
+## dean.md update (knowledge_base)
 
 ### Managed section (idempotent re-runs)
 
-Add marker pair to Dean-Profile (once, if missing):
+Add marker pair to dean (once, if missing):
 
 ```markdown
 <!-- notion-knowledge-baseline:start -->
@@ -110,7 +110,7 @@ After KB pages are fetched to `sources/notion/seed/dean-foundational-knowledge/`
 1. Parse each file’s markdown (headings, lists, first ~500 chars of body text)
 2. Build topic table (title, local file link, top headings as “depth signal”)
 3. Build per-topic bullets: `**Knows:**` from heading inventory + short excerpt
-4. Splice into Dean-Profile
+4. Splice into dean
 
 **Why deterministic:** Matches pipeline rule (Python fetch only). Produces a structured inventory the nightly/weekly **Claude agent** uses so wiki pages skip re-explaining transformers, embeddings, etc.
 
@@ -168,7 +168,7 @@ Wiki staging files reference the same relative asset paths if images appear on w
 3. For each page (tqdm): fetch blocks → markdown (+ assets)
 4. Write wiki → `staging/notion-{date}-{slug}.md`
 5. Write KB → `sources/notion/seed/dean-foundational-knowledge/{slug}.md`
-6. **Rebuild Dean-Profile baseline section** from all KB markdown files
+6. **Rebuild dean baseline section** from all KB markdown files
 7. Log summary (pages written, images saved, profile updated)
 
 ### Secondary flags
@@ -177,7 +177,7 @@ Wiki staging files reference the same relative asset paths if images appear on w
 |------|---------|
 | `--export-structure` | DFS → `page-structure.json` |
 | `--validate-sources` | Uncategorized pages vs cache |
-| `--skip-profile` | Fetch only; do not touch Dean-Profile |
+| `--skip-profile` | Fetch only; do not touch dean |
 | `--request-delay` | Override API throttle (default 0.35s) |
 
 ---
@@ -206,7 +206,7 @@ New functions: `blocks_to_markdown()`, `download_image()`, `table_rows_to_markdo
 
 ---
 
-## Phase 2: LLM pass (after Python seed) — how to populate Dean-Profile + wiki
+## Phase 2: LLM pass (after Python seed) — how to populate dean + wiki
 
 Python seed **gathers** data; **Claude Code** **synthesizes** it. Do not call the LLM inside `seed_from_notion.py`.
 
@@ -221,7 +221,7 @@ sequenceDiagram
   You->>Seed: uv run python seed_from_notion.py
   Seed->>Private: sources/notion/seed/dean-foundational-knowledge/*.md, staging/notion-*.md, profile §10 stub
   You->>Claude: one-time backfill prompt
-  Claude->>Private: enrich Dean-Profile.md
+  Claude->>Private: enrich dean.md
   Claude->>Wiki: create/update wiki pages
   Claude->>Wiki: CHANGELOG.md, INDEX.md optional
 ```
@@ -231,7 +231,7 @@ sequenceDiagram
 | Artifact | LLM uses it to… |
 |----------|------------------|
 | `sources/notion/seed/dean-foundational-knowledge/*.md` | Understand Dean’s foundational AI notes in full |
-| `profile/Dean-Profile.md` §10 (markers) | Mechanical inventory — **LLM rewrites this into readable prose** |
+| `profile/dean.md` §10 (markers) | Mechanical inventory — **LLM rewrites this into readable prose** |
 | `staging/notion-*.md` | Source material for **wiki pages** (triage each file) |
 
 ### Why not use the nightly workflow as-is
@@ -239,8 +239,8 @@ sequenceDiagram
 [`nightly.yml`](aia-wiki/.github/workflows/nightly.yml) today:
 
 - Reads `staging/` but assumes **RSS-style nightly deltas**, not a bulk Notion backfill
-- **`Do NOT touch any files in private/`** — so it **cannot** update `Dean-Profile.md`
-- [`weekly.yml`](aia-wiki/.github/workflows/weekly.yml) explicitly says profile observations go to **CHANGELOG only**, not Dean-Profile
+- **`Do NOT touch any files in private/`** — so it **cannot** update `dean.md`
+- [`weekly.yml`](aia-wiki/.github/workflows/weekly.yml) explicitly says profile observations go to **CHANGELOG only**, not dean
 
 Initial Notion seed needs a **dedicated one-time LLM pass** with permission to write **both repos**.
 
@@ -257,11 +257,11 @@ uv run python seed_from_notion.py
 
 **Step 2 — Synthesize (LLM):** Run in **Cursor Agent** on the wiki project (both repos open), or add a manual GitHub workflow (below). Use **one session, two logical jobs** (can be one prompt):
 
-#### Job A — Enrich `Dean-Profile.md` (private repo)
+#### Job A — Enrich `dean.md` (private repo)
 
 **Reads:**
 
-- `dean-wiki-private/profile/Dean-Profile.md` (full file)
+- `dean-wiki-private/profile/dean.md` (full file)
 - All `dean-wiki-private/sources/notion/seed/dean-foundational-knowledge/*.md`
 
 **Writes:**
@@ -277,7 +277,7 @@ uv run python seed_from_notion.py
 
 **Reads:**
 
-- `Dean-Profile.md` (after Job A)
+- `dean.md` (after Job A)
 - All `private/sources/staging/notion-*.md` where `type: notion-wiki-candidate`
 
 **Writes (per [`CLAUDE.md`](aia-wiki/CLAUDE.md)):**

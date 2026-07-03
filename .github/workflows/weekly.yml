@@ -71,7 +71,7 @@ jobs:
           prompt: |
             Perform the weekly deep synthesis pass for aia-wiki.
  
-            1. Read private/profile/Dean-Profile.md to load Dean's user model.
+            1. Read private/profile/dean.md to load Dean's user model.
             2. Read all files in private/sources/staging/.
                - Notion files (`type: notion`): follow "Notion learning deltas" in CLAUDE.md (enrich existing pages first; selective WebSearch for frontier pointers).
                - Other sources: triage as in the nightly run; create or update wiki pages for anything scoring 7+.
@@ -81,11 +81,14 @@ jobs:
                synthesis pages when the insight is genuine.
             4. Review private/sources/cursor-logs/ for recent entries. Note any shifts in
                Dean's tools, problems, or working patterns that aren't reflected in
-               private/profile/Dean-Profile.md. If meaningful updates are warranted,
+               private/profile/dean.md. If meaningful updates are warranted,
                describe them clearly in CHANGELOG.md under a "Profile observations" section
-               — do NOT write to Dean-Profile.md directly (that file is managed separately).
+               — do NOT write to dean.md directly (that file is managed separately).
             5. Regenerate INDEX.md completely with the current wiki state.
             6. Append a detailed weekly summary entry to CHANGELOG.md.
- 
+            7. Update the Source coverage table in README.md (between <!-- source-coverage:start -->
+               and <!-- source-coverage:end -->) per CLAUDE.md — include YouTube, ArXiv, and
+               queue.txt rows if those ingests ran this week.
+
             This is the deepest reasoning pass of the week. Take time to find genuine
             connections. Follow all guidelines in CLAUDE.md exactly.

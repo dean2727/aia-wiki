@@ -1,5 +1,47 @@
 # Changelog
 
+## [2026-06-28] Nightly Run
+
+Large batch: 180 RSS items (LangChain 74, OpenAI 46, Hugging Face 25, Anthropic 12, DeepMind 9, Hacker News 10, Import AI 3, Ahead of AI 1) + 1 Notion file. Applied nightly rules: strict ≥7 triage for RSS with bias-to-inclusion in Dean's frontier zone, Track A/B for the Notion file, and smart grouping of near-duplicate clusters into strong reference pages rather than one-per-source. Deep-processed the highest-signal **new** material; the long tail is triaged at cluster level below (much of it already covered by existing pages, or enterprise/PR/non-AI below threshold).
+
+### Created
+- **Created**: `wiki/world/products/frontier-model-launches-summer-2026.md` — grouped synthesis of the two frontier proprietary launches and the real story (capability-gated, government-previewed releases; classifier + fall-back-to-weaker-model safeguard architecture). **Score 9.** Sources: OpenAI *Previewing GPT-5.6 Sol* (06-26), Anthropic *Claude Fable 5 and Mythos 5* (06-09).
+- **Created**: `wiki/technical/algorithms/text-diffusion-llms.md` — DiffusionGemma: parallel-block text diffusion, why it's a *local/low-concurrency* speedup, bidirectional editing. **Score 8.** Source: DeepMind *DiffusionGemma* (06-10).
+- **Created**: `wiki/technical/engineering-approaches/computer-use-agents.md` — grouped: Gemini 3.5 Flash native computer use + Holo3.1 fast/local open CUAs; robustness-across-deployment + prompt-injection safeguards. **Score 8.** Sources: DeepMind *Computer use in Gemini 3.5 Flash* (06-24), HF/H Company *Holo3.1* (06-02).
+- **Created**: `wiki/world/ai-capability-and-society-summer-2026.md` — grouped: superpersuasion study, AI-enabled cyber threats (MITRE ATT&CK gaps), paths to ASI/RSI. **Score 8.** Sources: Import AI 462 (06-22), Anthropic Frontier Red Team cyber-threats report (06-03).
+- **Created**: `wiki/technical/engineering-approaches/peft-beyond-lora.md` — LoRA isn't always Pareto-optimal; benchmark PEFT on your own data; non-LoRA→LoRA conversion for serving. **Score 7.** Source: HF *Beyond LoRA* (06-18).
+- **Created**: `wiki/technical/tools/openai-codex.md` — Codex as a general long-running knowledge-work agent (plugins, Sites, annotations; verifiable-steps + delegation framing). **Score 7.** Sources: OpenAI *Codex for every role* (06-02), *Codex-maxxing for long-running work* (06-22).
+
+### Updated
+- **Updated**: `wiki/technical/engineering-approaches/context-engineering.md` — Notion Track A enrichment: offloading/compaction, context failure modes (poisoning, irreversible pruning, keep tool errors), caching, multi-agent context isolation tradeoffs, and the "structure is the product / design for improving models" thesis.
+- **Updated**: `wiki/technical/engineering-approaches/agent-memory-learning-from-experience.md` — Notion Track A: write-policy vs. retrieval split (Claude Code explicit vs. ChatGPT autonomous), memory-as-multi-step-RAG, human corrections as memory (ambient agents).
+- **Updated**: `wiki/technical/engineering-approaches/mcp-and-a2a.md` — Notion Track A: pushing work into the server (prompts/resources/sampling), shipping prompts with the server, the `llms.txt` doc-routing pattern.
+- **Updated**: `wiki/technical/models/gemma-4.md` — added Gemma 4 12B (encoder-free unified multimodal, native audio, MTP drafters, 16GB-local). Source: DeepMind *Gemma 4 12B* (06-03).
+- **Updated**: `wiki/technical/algorithms/llm-inference-serving-internals.md` — added section (d): OpenAI×Broadcom **Jalapeño** custom LLM-inference ASIC (perf/watt, 9-month tape-out, vertical-integration cost lever). Source: OpenAI (06-24).
+
+### Skipped — Notion
+- The `llms.txt` frontier pointer (a specific named entity in the Notion file) was **folded into existing pages** (`context-engineering`, `mcp-and-a2a`) rather than given a thin standalone page; no WebSearch was needed (0 of the 3-search cap used) since it's adequately covered by enrichment.
+
+### Skipped — already covered (re-fetched, no new synthesizable advance)
+- **LangChain (~60 of 74)**: LangSmith/LangGraph product, eval-tooling, and agent-framework posts (`how-to-think-about-agent-frameworks`, `on-agent-frameworks-and-agent-observability`, `agent-evaluation-readiness-checklist`, `pairwise-evaluations`, `regression-testing-with-langsmith`, `openevals`, `align-evals`, `rubrics`, `the-agent-development-lifecycle`, `how-to-build-memory-into-ai-agents`, `how-to-choose-the-right-sandbox`, `multi-agent-systems`, `what-is-an-ai-agent`, etc.) are already synthesized in `agent-frameworks`, `llm-agent-evaluation`, `agent-evaluation-and-failure-modes`, `harness-and-scaffolding`, `building-agents-best-practices`, `agentic-patterns`, `context-engineering`, `agent-memory-learning-from-experience`. Plus customer case studies (Klarna, Lyft, Rippling, Box, Benchling, Monte Carlo, Factory) — below threshold.
+
+### Skipped — watch (substantial, frontier-adjacent; revisit if a deeper pass is warranted)
+- **LangChain Deep Agents cluster** (`new-in-deep-agents-v0-6`, `context-management-for-deep-agents`, `evaluating-deep-agents`, `prompt-caching-with-deep-agents`, `how-we-build-evals-for-deep-agents`), `introducing-open-swe` (open-source async coding agent), `the-art-of-loop-engineering`, `building-langgraph-...-agent-runtime-from-first-principles` — a future grouped page on the Deep Agents framework + agent-runtime design could be warranted.
+- **HF**: `glm-5-2-built-for-long-horizon-tasks`, `direct-preference-optimization-beyond-chatbots`, `accelerating-transformers-fine-tuning-with-nvidia-nemo`, `introducing-mellum2` (12B MoE), `build-real-agentic-apps-using-cuga`, `is-it-agentic-enough` benchmarking, `mosaicleaks` (research-agent secret-keeping), `nemotron-3-5-content-safety` — incremental relative to existing pages or thin bodies; logged for revisit.
+- **DeepMind**: `investing-in-multi-agent-ai-safety-research`, `securing-the-future-of-ai-agents` — conceptually folded into `ai-guardrails` / the society page; standalone treatment deferred.
+- **Import AI 459** (AI oversight; scaling laws) and **461** (alignment not on track; FrontierCode) — substantial Jack Clark issues; not deep-read this run, logged to revisit.
+- **Ahead of AI**: `llm-research-papers-the-2026-list` (Raschka) — a curated link index, not synthesizable into a page on its own; useful as a reading list.
+
+### Skipped — below signal threshold (≤6: enterprise/PR/policy/customer stories)
+- **OpenAI (~40)**: Codex customer/enterprise stories (Notion, Nextdoor, Wasmer, Braintrust, Samsung, Endava, BBVA, LSEG, Travelers, Omio, Preply), cloud-availability (AWS, Oracle), policy/governance posts (`democratic-governance`, `industrial-policy`, `public-policy-agenda`, `political-advocacy`, influence-ops), health/science applications (Boston Children's, rare-genetic-disease, immunologist, astrophysicist, LifeSciBench, GPT-Rosalind, near-autonomous chemist), Daybreak/biodefense, OpenAI Academy, usage analytics, Ona acquisition.
+- **Anthropic (~9)**: Seoul office, partnerships (DXC, TCS), `claude-corps`, `claude-tag`, services-track/partner-hub, public-record results, policy posts, US-gov access-suspension statement (context already in the frontier-launches page).
+- **DeepMind (~4)**: Sierra Leone education impact, UK house-building, robotics-in-Europe, Gemini 3.5 Live translation — application/policy, no reusable method.
+
+### Skipped — true periphery / non-AI (Hacker News, all 10)
+- `ai-learns-the-dark-art-of-rfic-design` (AI-for-chip-design, no transferable method for Dean), `regular-expressions-that-work-everywhere`, `wal-rus-a-rust-rewrite-of-wal-g`, `one-man-two-kernels-and-a-lot-of-risc-v`, `how-do-you-keep-web-midi-from-crashing-a-1983-synthesizer`, `how-h-e-b-became-texas-most-beloved-brand`, `paradise-revisited-what-darwin-saw-in-the-galapagos`, `reducing-tick-density-along-recreational-trails`, `space-shuttle-endeavour-s-20-story-vertical-display`, `the-eerie-interface-of-man-and-machine` — off-topic for this wiki.
+
+- **Profile**: No changes
+
 ## [2026-05-28] HF Backfill Expansion
 
 Follow-up to the nightly run: on Dean's instruction ("reconsider those HF blogs, I want them in the wiki too") and the updated CLAUDE.md **backfill / "all, grouped smartly"** mode, processed the remaining ~36 substantial Hugging Face engineering blogs that the nightly run had bucketed as "below threshold." These were full articles, not stubs — they belonged in the wiki. Grouped near-duplicates into 12 strong reference pages (one per conceptual bucket) rather than ~36 thin ones; each grouped page carries a **Sources** list so nothing is lost. This supersedes the nightly run's mistaken "below signal threshold" classification of these HF blogs.

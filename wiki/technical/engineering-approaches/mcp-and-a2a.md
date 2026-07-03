@@ -3,8 +3,8 @@
 > Two protocol layers for agent interoperability — MCP connects agents to tools/data, A2A connects agents to each other.
 
 **Category**: topics
-**Last updated**: 2026-05-25
-**Status**: baseline
+**Last updated**: 2026-06-28
+**Status**: active
 
 ## What it is
 
@@ -37,6 +37,15 @@ Protocol standardization is what turns a pile of custom integrations into an eco
 **Enterprise patterns:** Block built "Goose" on in-house MCP servers for end-to-end control (~75% time saved on routine tasks); Amazon layered MCP over its API-first ecosystem, using MCP as a universal translator over thousands of existing endpoints.
 
 **Tradeoff:** whether to adopt MCP/A2A depends on mission-criticality, desired user control, and how much bespoke integration you'd otherwise carry — user-centered design drives the call.
+
+## Push work into the server, not the context
+
+An MCP server isn't only a tool endpoint — it exposes **prompts, resources, and sampling**. That means token-heavy work (summarizing a tool result, extracting data, light reasoning) can run *in the server* and return a compact result, instead of dumping raw output into the agent's window. This is the server-side complement to [[context-engineering]]'s offloading.
+
+Two patterns worth stealing:
+
+- **Ship prompts with the server.** Store the "how to use this server" prompts in the server itself, so any agent — regardless of harness — behaves consistently against it. You absorb the integration skill so your users don't have to get it right in their own agent.
+- **The `llms.txt` doc-routing trick.** Instead of indexing your docs for retrieval, publish an `llms.txt` file: a flat list of doc URLs, each with a one-line description (cheaply LLM-generated) of what's in it, plus a simple "fetch URL" tool. The agent reads the descriptions to decide what to pull. LangChain found this beat heavier setups across ~20 LangGraph coding tasks — no index to maintain, dead simple, and the *descriptions* do the heavy lifting for recall. (The LangGraph MCP server exposed exactly this before Claude Code had native doc search.)
 
 ## Related
 - [[agentic-mesh]]
