@@ -183,6 +183,7 @@ Log skipped clusters in CHANGELOG under **Skipped — Notion** with a one-line r
 | RSS / YouTube / ArXiv / queue | Standard signal threshold (7+); skip whole item if below |
 | Notion (`type: notion`) | Always process via Track A / Track B; do not skip the whole file because it "isn't groundbreaking news" |
 | Manual injection (`type: url`) | Dean-endorsed: write floor is **6**, not 7; ask before discarding |
+| Deep research (`type: research`) | Already triaged and already synthesized; enrich `suggested_wiki_pages` — see [Deep research backfills](#deep-research-backfills) |
 
 ---
 
@@ -204,6 +205,63 @@ Treat them like RSS in every respect except the bar:
 
 Log these in CHANGELOG under a **Manual Injection** entry (or, on a nightly run that picks up a leftover
 injected file, in the normal Created/Updated lists with the source URL noted).
+
+---
+
+## Deep research backfills
+
+Staged files with `type: research` and `ingestion_mode: deep-research-backfill` come from the
+`deep-research` skill. They are not external news. They are **the wiki researching its own gaps**: a
+run only happens because a gap analysis found that a page describes something without accounting for
+where it came from.
+
+Two consequences: **do not re-triage them against the 7+ threshold** — the decision to research was
+the triage — and treat the report as *evidence*, not copy. It is a source document written to be
+synthesized, and the frontmatter tells you what it is for.
+
+| Frontmatter key | Use it for |
+|---|---|
+| `suggested_wiki_pages` | The pages to update. First entry is the seed page the backfill was run for |
+| `topic`, `timeline_span` | What was researched and how far back the evidence reaches |
+| `event_count`, `source_count` | How much the report actually stands on. Low numbers mean write cautiously |
+
+**Unit of work:** each page in `suggested_wiki_pages`, not the report as a whole.
+
+### Track A — enrich the seed page (default)
+
+Almost every report belongs here. Read the seed page in full, then:
+
+1. Add a `## Background` section (or fold into `## How it works` when the history *is* the mechanism),
+   placed after `## What it is`. Write the arc: what people did before, what each step fixed, and what
+   is still unsettled.
+2. Date the claims the page already makes where the report's timeline supports them. A page that named
+   one year should come out of this naming several.
+3. Wire the `[[wikilinks]]` the report's narrative already uses.
+4. Merge the report's source list into the page's `## Sources`.
+5. Bump `Last updated`.
+
+### Track B — a new page for a milestone (selective)
+
+Create one only when a milestone on the timeline is a wiki-worthy topic in its own right — several
+pages would link to it, and it would clear the normal threshold if it had arrived from a feed. A
+predecessor that only matters as part of this story stays a paragraph in the seed page's background.
+
+### Rules
+
+- **Never introduce a date the report's timeline does not contain.** The report was built so that
+  every year in it has a source; do not undo that by adding one from memory.
+- Rewrite in wiki voice. Do not paste the narrative — it is longer and more hedged than a wiki page
+  should be.
+- Skip the report's `## What this backfill was for` and `## Perspectives researched` sections. Those
+  are run metadata, not content.
+- Keep pages under 800 lines. If the background would push a page past that, it has earned its own
+  page — link it from the seed page.
+- Carry `[Needs Verification]` forward wherever the report marked a claim uncertain or recorded
+  sources disagreeing.
+
+Log these in CHANGELOG under a **Deep Research Backfill** entry, naming the `run_id` and the pages
+updated. Update the `Deep research backfill` row in the README coverage table, and add or update the
+relevance sections for the pages you touched.
 
 ---
 
@@ -362,9 +420,10 @@ Include all rows from `sources.yml` (RSS, Notion live feed, YouTube, ArXiv) plus
 - `INDEX.md`, `CHANGELOG.md`, and the Source coverage table in `README.md` are the only root-level files you modify
 - Dean-Relevance assessments live in `private/relevance/<season>-<year>.md` (private repo, quarterly) — never in public pages
 - **Never commit anything from `private/`** — that repo is data only
-- **Never modify pipeline scripts or workflow files**
+- **Never modify pipeline scripts, research scripts, or workflow files**
 - **Never rename a page without finding and updating all `[[WikiLinks]]` that reference it**
 - Raw source material never appears in the wiki — only synthesized content
+- Research run artifacts live in `research/runs/` and are gitignored working files — read them freely, never commit them
 
 ---
 
