@@ -39,6 +39,7 @@ The pipeline is powered by [Claude Code GitHub Actions](https://code.claude.com/
 | **Cursor Logs** | Markdown exports of my Cursor AI coding sessions, synced from my local machine via a LaunchAgent | Signals about what I'm actually building, what tools I'm using, what problems I'm running into — the ground truth of my technical work | Nightly (when machine is on): new session files are committed to the private repo and inform the weekly profile review pass |
 | **Claude Exports** | Monthly conversation export from Claude.ai (Anthropic data export ZIP), processed into markdown | My longer strategic thinking, design decisions, research sessions, and ideas developed conversationally — context that doesn't appear in code | Monthly: ZIP is processed into individual conversation files and surfaced during the monthly manual workflow run |
 | **Notion** | Personal notes I've written myself — original observations, reactions, half-formed ideas, personal context | The one source the pipeline can't generate on its own: my perspective, not the internet's | Nightly: only pages I've personally written are pulled via the Notion API |
+| **Manual injection** | A link I hand to the agent directly via the `inject-article` skill | The thing I found *now* and want in the wiki *now* — articles, papers, repos, release notes I don't want to wait a night for | On demand: the URL is fetched and extraction is verified before anything is written, then triaged and synthesized like a nightly item (write floor 6 instead of 7, since I picked it) |
 
 ## Source coverage
 
@@ -62,6 +63,7 @@ _Last table update: 2026-06-28 (nightly run)_
 | YouTube channels | YouTube | Nightly | — | — | — | — | Ingest not enabled in nightly workflow |
 | ArXiv (cs.AI, cs.LG) | ArXiv | Weekly | — | — | — | — | Weekly workflow only |
 | queue.txt | URL queue | Nightly | — | — | — | — | Ingest not enabled in nightly workflow |
+| Manual injection | URL (on demand) | On demand | — | — | — | — | `inject-article` skill; no links injected yet |
 | Cursor logs | Local sync | Weekly review | — | — | — | — | Synced locally; reviewed on weekly pass |
 | Claude exports | Monthly ZIP | Monthly | — | — | — | — | Monthly workflow |
 <!-- source-coverage:end -->
@@ -105,6 +107,36 @@ flowchart LR
   wiki --> site["Quartz Site\nGitHub Pages"]
 ```
 
+## Injecting a link by hand
+
+When I find something interesting and don't want to wait for the nightly run, I hand the link to the agent
+and the [`inject-article`](.cursor/skills/inject-article/SKILL.md) skill takes over: it verifies the page is
+reachable and parseable, tells me what's blocking extraction if it isn't (and what would fix it), then
+triages and synthesizes the material with the nightly rules.
+
+The fetch/verify/stage step is a normal script, so it can be run directly. `PRIVATE_REPO_PATH` defaults to
+`../dean-wiki-private`.
+
+```bash
+# 1. Check only — is the page reachable, and does real text come out? Writes nothing.
+uv run python pipeline/scripts/ingest_url.py --check https://example.com/post
+
+# 2. Stage it for triage, recording why it caught my eye
+uv run python pipeline/scripts/ingest_url.py --note "why this matters" https://example.com/post
+
+# 3. Escape hatch when the page is JS-only, paywalled, or bot-blocked: paste the text yourself
+uv run python pipeline/scripts/ingest_url.py --from-file ~/Downloads/article.md \
+  --title "Exact Article Title" https://example.com/post
+```
+
+Useful flags: `--allow-thin` (stage a genuinely short piece), `--min-chars N` (extraction floor, default
+800), `--force` (re-stage a URL already in `.seen_urls.txt`), `--json` (machine-readable report),
+`--staging-dir PATH` (write somewhere other than the private repo).
+
+Expected output is one verdict block per URL — `ok` plus the staged path and word count, or a failure
+status with a one-line `fix:` hint. Exit code `0` means every URL is clean, `2` means at least one needs a
+decision. Staged files land in `private/sources/staging/` as `injected-YYYY-MM-DD-<title-slug>.md`.
+
 ## Repository structure
 
 ```
@@ -117,9 +149,15 @@ aia-wiki/                           ← public repo (this one)
 │       ├── monthly.yml             ← manual: process Claude export ZIP
 │       └── deploy-quartz.yml       ← build + deploy Quartz site to GitHub Pages
 │
+├── .cursor/
+│   ├── rules/                      ← pipeline coding rules
+│   └── skills/
+│       └── inject-article/         ← on-demand: verify a link, then triage + write
+│
 ├── pipeline/
 │   └── scripts/                    ← data fetching only (no LLM calls)
 │       ├── ingest_rss.py
+│       ├── ingest_url.py           ← ad-hoc link injection (backs inject-article)
 │       ├── ingest_youtube.py
 │       ├── ingest_arxiv.py
 │       ├── ingest_notion.py

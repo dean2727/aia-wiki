@@ -182,6 +182,28 @@ Log skipped clusters in CHANGELOG under **Skipped — Notion** with a one-line r
 |---|---|
 | RSS / YouTube / ArXiv / queue | Standard signal threshold (7+); skip whole item if below |
 | Notion (`type: notion`) | Always process via Track A / Track B; do not skip the whole file because it "isn't groundbreaking news" |
+| Manual injection (`type: url`) | Dean-endorsed: write floor is **6**, not 7; ask before discarding |
+
+---
+
+## Manual injections
+
+Staged files with `type: url` and `ingestion_mode: manual-injection` are links **Dean chose himself** and
+handed to the `inject-article` skill. They are not feed noise, and they are already proven extractable —
+the injector refuses to stage a page it could not parse.
+
+Treat them like RSS in every respect except the bar:
+
+- **Write floor is 6**, not 7. Dean's selection is itself signal.
+- Below 6, do not silently skip. Report the score and reasoning and ask whether he wants the page anyway.
+- Read `injected_note` in the frontmatter when present — it is Dean's own reason for flagging the link, and
+  it is the strongest input to the relevance assessment.
+- `extraction: thin` or `manual-paste` means less body than usual to work with. Write a shorter page rather
+  than padding it, and mark anything you could not confirm from the body `[Needs Verification]`.
+- Prefer updating an existing page over creating a new one, same as everywhere else.
+
+Log these in CHANGELOG under a **Manual Injection** entry (or, on a nightly run that picks up a leftover
+injected file, in the normal Created/Updated lists with the source URL noted).
 
 ---
 
