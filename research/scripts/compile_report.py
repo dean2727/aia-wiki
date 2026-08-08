@@ -222,7 +222,7 @@ def load_run(run_dir: Path) -> tuple[RunArtifacts | None, list[str]]:
         required is missing.
 
     Raises:
-        RunNotFoundError: If the run directory does not exist.
+        RunNotFoundError: If the run directory does not exist or its artifacts cannot be read.
     """
     if not run_dir.is_dir():
         raise RunNotFoundError(f"{run_dir} is not a directory — run start_run.py first")
@@ -231,29 +231,34 @@ def load_run(run_dir: Path) -> tuple[RunArtifacts | None, list[str]]:
     if missing:
         return None, missing
 
-    findings_dir = run_dir / "findings"
-    findings = tuple(
-        (path.stem, path.read_text(encoding="utf-8")) for path in sorted(findings_dir.glob("*.md")) if path.is_file()
-    )
-    if not findings:
-        return None, ["findings/*.md"]
+    try:
+        findings = tuple(
+            (path.stem, path.read_text(encoding="utf-8"))
+            for path in sorted((run_dir / "findings").glob("*.md"))
+            if path.is_file()
+        )
+        if not findings:
+            return None, ["findings/*.md"]
 
-    perspectives = read_json(run_dir / "perspectives.json", [])
-    gaps = read_json(run_dir / "gaps.json", [])
+        perspectives = read_json(run_dir / "perspectives.json", [])
+        gaps = read_json(run_dir / "gaps.json", [])
 
-    return (
-        RunArtifacts(
-            run_dir=run_dir,
-            manifest=dict(read_json(run_dir / "run.json", {})),  # type: ignore[arg-type]
-            timeline_markdown=(run_dir / "timeline.md").read_text(encoding="utf-8"),
-            timeline=dict(read_json(run_dir / "timeline.json", {})),  # type: ignore[arg-type]
-            narrative=(run_dir / "narrative.md").read_text(encoding="utf-8"),
-            findings=findings,
-            perspectives=tuple(perspectives) if isinstance(perspectives, list) else (),
-            gaps=tuple(gaps) if isinstance(gaps, list) else (),
-        ),
-        [],
-    )
+        return (
+            RunArtifacts(
+                run_dir=run_dir,
+                manifest=dict(read_json(run_dir / "run.json", {})),  # type: ignore[arg-type]
+                timeline_markdown=(run_dir / "timeline.md").read_text(encoding="utf-8"),
+                timeline=dict(read_json(run_dir / "timeline.json", {})),  # type: ignore[arg-type]
+                narrative=(run_dir / "narrative.md").read_text(encoding="utf-8"),
+                findings=findings,
+                perspectives=tuple(perspectives) if isinstance(perspectives, list) else (),
+                gaps=tuple(gaps) if isinstance(gaps, list) else (),
+            ),
+            [],
+        )
+    except OSError as error:
+        logger.exception("Could not read the artifacts in %s", run_dir)
+        raise RunNotFoundError(f"could not read the artifacts in {run_dir}: {error}") from error
 
 
 def demote_headings(text: str, levels: int = 1) -> str:
@@ -691,17 +696,22 @@ def main(argv: list[str] | None = None) -> int:
         notes=notes,
     )
 
-    if status is Status.OK and not args.check:
+    if status is Status.OK:
+        # Rendered even for --check so a dry run reports exactly what would be written.
         text, report.word_count = render_report(artifacts, sources, compiled_at)
-        try:
-            report_path = run_dir / "report.md"
-            report_path.write_text(text, encoding="utf-8")
-            report.report_path = str(report_path)
-        except OSError as error:
-            logger.exception("Could not write %s", run_dir / "report.md")
-            report.status, report.reason = Status.STAGING_FAILED, f"could not write report.md: {error}"
 
-        if args.stage and report.ok:
+        if args.check:
+            report.notes.append("Check-only run: nothing was written.")
+        else:
+            try:
+                report_path = run_dir / "report.md"
+                report_path.write_text(text, encoding="utf-8")
+                report.report_path = str(report_path)
+            except OSError as error:
+                logger.exception("Could not write %s", run_dir / "report.md")
+                report.status, report.reason = Status.STAGING_FAILED, f"could not write report.md: {error}"
+
+        if args.stage and not args.check and report.ok:
             try:
                 staging_dir = resolve_staging_dir(args.staging_dir)
                 slug = str(artifacts.manifest.get("slug", run_dir.name))
@@ -709,8 +719,6 @@ def main(argv: list[str] | None = None) -> int:
                 write_run_summary(staging_dir, report)
             except StagingError as error:
                 report.status, report.reason = Status.STAGING_FAILED, str(error)
-    elif args.check and status is Status.OK:
-        report.notes.append("Check-only run: nothing was written.")
 
     if not report.ok:
         report.remediation = REMEDIATION[report.status]

@@ -44,6 +44,8 @@ DEFAULT_HOPS = 1
 # Short titles ("Synthesis", "Agents") match too much prose to be evidence of a missing link.
 MIN_MENTION_TITLE_CHARS = 8
 MAX_MENTION_PAGES = 15
+# Only affects the printed report; --json always carries the full list.
+MAX_REFERENCES_SHOWN = 8
 
 DANGLING_LINK_WEIGHT = 3
 SHALLOW_HISTORY_WEIGHT = 2
@@ -343,7 +345,9 @@ def print_gaps(graph: WikiGraph, seed: str | None, found: dict[GapKind, list[Gap
         for gap in gaps:
             lines.append(f"  {gap.score:>4}  {gap.subject} — {gap.detail}")
             if gap.referenced_by:
-                lines.append(f"        from: {', '.join(gap.referenced_by)}")
+                shown = ", ".join(gap.referenced_by[:MAX_REFERENCES_SHOWN])
+                extra = len(gap.referenced_by) - MAX_REFERENCES_SHOWN
+                lines.append(f"        from: {shown}" + (f", +{extra} more" if extra > 0 else ""))
         lines.append("")
 
     logger.info("\n".join(lines).rstrip())
