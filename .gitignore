@@ -20,3 +20,7 @@ site/node_modules/
 site/public/
 site/.quartz/
 site/.quartz-cache/
+
+# Research runs (scratch artifacts for deep-research backfills)
+research/runs/*
+!research/runs/.gitkeep
