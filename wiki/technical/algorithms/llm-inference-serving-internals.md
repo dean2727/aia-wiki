@@ -3,7 +3,7 @@
 > The serving-layer mechanics — CPU/GPU overlap, RL-rollout correctness, and parallel/diffusion decoding — that decide the latency, throughput, and cost you actually pay per token, even when you never touch the GPU yourself.
 
 **Category**: topics
-**Last updated**: 2026-06-28
+**Last updated**: 2026-08-09
 **Status**: active
 
 ## What it is
@@ -116,10 +116,22 @@ What's notable for a hosted consumer like Dean:
 - **Early claim: perf/watt "substantially better than current state-of-the-art"** (final numbers pending a technical report). Designed from initial design to tape-out in ~9 months — claimed fastest high-performance ASIC cycle ever — partly *because OpenAI used its own models to accelerate the chip design* (a concrete instance of the AI-helps-build-AI flywheel; cf. [[ai-capability-and-society-summer-2026]]).
 - **The strategic read: vertical integration as the cost lever.** When a frontier lab owns chip → kernels → serving → product, each "fast/cheap tier" you consume increasingly reflects custom silicon, not just a software trick. Deployment is planned at gigawatt scale with data-center partners from late 2026 over multiple generations. For build-vs-buy, it widens the gap between self-hosting on commodity GPUs and consuming a vertically-integrated provider's economics.
 
+### (e) Stateful streaming inference — when the *session* is the unit, not the request
+
+Levers (a)–(d) all assume request-response serving: work arrives, is batched, completes. Live interaction breaks that assumption, and OpenAI's GPT‑Live serving stack is the first detailed public account of what replaces it (see [[realtime-voice-agent-architecture]] for the full architecture). Three consequences are worth carrying into any streaming design:
+
+- **Sessions outlive instances, so migration has to be invisible.** A session holds model state for the length of a conversation while instances scale up and down underneath it. The mechanism is a warm handoff: start a replacement instance, prefill it with the current session context, run inference against both in parallel, and cut over only once the new one is ready.
+- **Compaction is a cache problem, not a summarization problem.** Rewriting past context invalidates the KV cache and forces a fresh prefill — exactly the cost you cannot pay mid-stream. So compaction runs on a warm parallel instance while the original keeps serving, and the switchover is the same handoff primitive. This is the serving-layer counterpart to the context discipline in [[context-engineering]].
+- **The capacity question changes shape.** Not "how many requests can a GPU handle" but "how many concurrent sessions can the system sustain with every frame on schedule." Because sessions stay open and stream continuously, CPU-side stream handlers, queues, and network paths have to scale alongside inference — in production a *non-GPU* component saturated before inference did, and requests piled up behind it. Regional capacity and traffic steering became first-order for the same reason: distant capacity adds delay at several points, so rollouts were validated together with geographic routing rather than after it.
+
+The generalizable form: **when an expensive state operation would block a live loop, perform it on a warm parallel copy and cut over.** That holds whether the state is a KV cache, a session, or an index.
+
 ## Timeline
 
 - `2026-05` (wiki) Page created by a wiki run — continuous batching, vLLM RL correctness, parallel/diffusion decoding
 - `2026-06` (wiki) Page updated by a wiki run — added section (d): OpenAI×Broadcom **Jalapeño** custom LLM-inference ASIC (perf/watt, 9-month tape-out, vertical-integration cost lever)
+- `2026-08` (method) OpenAI described stateful streaming inference behind GPT-Live — warm instance handoff, compaction on a parallel instance to avoid an in-place KV-cache rebuild, and capacity measured in concurrent sessions rather than requests per GPU. [source](https://openai.com/index/continuous-voice-interaction-with-gpt-live)
+- `2026-08` (wiki) Page updated by a wiki run — added section (e) on stateful streaming inference for live sessions.
 
 ## Sources
 

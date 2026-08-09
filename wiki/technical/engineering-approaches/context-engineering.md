@@ -3,7 +3,7 @@
 > The deliberate, dynamic management of exactly what an agent sees at each step — framed as the alternative (or complement) to multi-agent complexity.
 
 **Category**: topics
-**Last updated**: 2026-06-28
+**Last updated**: 2026-08-09
 **Status**: active
 
 ## What it is
@@ -50,6 +50,8 @@ The core move is to keep raw material **out** of the model and bring back only a
 
 The discipline: offload first (reversible), summarize/prune second (lossy), and keep the raw available so a prune is never a dead end.
 
+**Compaction also has a latency cost, not just an information cost.** Because it rewrites past context, it invalidates the KV cache and forces a fresh prefill — which is why OpenAI's realtime voice stack never compacts in place: it compacts onto a warm parallel model instance while the original keeps serving, then cuts over invisibly ([[realtime-voice-agent-architecture]]). If an agent of yours ever compacts mid-stream while a user waits, that is the move to copy.
+
 ## Context failure modes
 
 - **Pruning is irreversible.** Once you drop history to save tokens, it's gone unless you offloaded it. Treat summarize/prune as lossy and always back it with an on-disk copy.
@@ -72,6 +74,7 @@ The deepest lesson is temporal: **the structure is the product, not the model.**
 
 - `2026-05` (wiki) Page created by a wiki run — single-agent context discipline vs. multi-agent complexity
 - `2026-06` (wiki) Page updated by a wiki run — Notion Track A enrichment: offloading/compaction, context failure modes (poisoning, irreversible pruning, keep tool errors), caching, multi-agent context isolation tradeoffs, and…
+- `2026-08` (method) OpenAI showed compaction run on a warm parallel model instance so a live session never pays the in-place KV-cache rebuild, reframing compaction as a latency problem as well as an information-loss one. [source](https://openai.com/index/continuous-voice-interaction-with-gpt-live)
 
 ## Related
 - [[grok-4-20]]
