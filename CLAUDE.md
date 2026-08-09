@@ -227,37 +227,52 @@ synthesized, and the frontmatter tells you what it is for.
 
 **Unit of work:** each page in `suggested_wiki_pages`, not the report as a whole.
 
-### Track A — enrich the seed page (default)
+### Track A — merge the timeline (default)
 
-Almost every report belongs here. Read the seed page in full, then:
+A backfill's product is the topic's **past months**, and those belong in `## Timeline`. The run
+already produced them as structured, sourced, deduplicated records, so this is a tool call, not a
+writing task:
 
-1. Add a `## Background` section (or fold into `## How it works` when the history *is* the mechanism),
-   placed after `## What it is`. Write the arc: what people did before, what each step fixed, and what
-   is still unsettled.
-2. Date the claims the page already makes where the report's timeline supports them. A page that named
-   one year should come out of this naming several.
-3. Wire the `[[wikilinks]]` the report's narrative already uses.
-4. Merge the report's source list into the page's `## Sources`.
-5. Bump `Last updated`.
+```bash
+uv run python research/scripts/merge_timeline.py <seed-page> --from-run research/runs/<run-id>
+```
+
+Then, by hand:
+
+1. **Distribute the events that belong elsewhere.** An event about a neighboring topic goes on that
+   topic's page, not the seed page's. Use `--from-run … --only <substring>` to move a subset, or
+   `--event` for one-offs.
+2. **Date the prose.** Where a claim the page already makes is now anchored by a timeline event, add
+   the date inline. A page that named one year should come out of this naming several.
+3. **Add at most one arc sentence.** If the backfill produced a genuine thesis about how the topic
+   got here, one italic line under `## Timeline` is the whole budget. Everything else stays in the
+   events' significance text.
+4. Wire the `[[wikilinks]]` the report's narrative used, merge the report's sources into `## Sources`,
+   bump `Last updated`, and append one `wiki` event recording the backfill.
+
+**Do not write a prose history section.** No `## Background`, no `## History`. The prose stays
+present-tense; the slider carries the past. This is the single biggest difference from how Notion
+deltas are ingested.
 
 ### Track B — a new page for a milestone (selective)
 
 Create one only when a milestone on the timeline is a wiki-worthy topic in its own right — several
 pages would link to it, and it would clear the normal threshold if it had arrived from a feed. A
-predecessor that only matters as part of this story stays a paragraph in the seed page's background.
+predecessor that only matters as part of this story stays an event on the seed page's timeline.
 
 ### Rules
 
 - **Never introduce a date the report's timeline does not contain.** The report was built so that
   every year in it has a source; do not undo that by adding one from memory.
-- Rewrite in wiki voice. Do not paste the narrative — it is longer and more hedged than a wiki page
-  should be.
+- The narrative in the report is *evidence*, not copy. Its job was to make the events coherent enough
+  to trust. Do not paste it into the wiki.
 - Skip the report's `## What this backfill was for` and `## Perspectives researched` sections. Those
-  are run metadata, not content.
-- Keep pages under 800 lines. If the background would push a page past that, it has earned its own
-  page — link it from the seed page.
+  are run metadata.
+- Keep pages under 800 lines, **excluding `## Timeline`** — that section is data, and the site
+  collapses it. Revisit if a page's timeline passes ~100 events.
 - Carry `[Needs Verification]` forward wherever the report marked a claim uncertain or recorded
-  sources disagreeing.
+  sources disagreeing. For a disputed date, keep the event whose source you trust and note the
+  conflict in its significance text.
 
 Log these in CHANGELOG under a **Deep Research Backfill** entry, naming the `run_id` and the pages
 updated. Update the `Deep research backfill` row in the README coverage table, and add or update the
@@ -278,7 +293,7 @@ Every page follows this exact structure:
 
 **Category**: topics | synthesis | tools
 **Last updated**: YYYY-MM-DD
-**Status**: active | watching | deprecated
+**Status**: active | baseline | reference | watching | deprecated
 
 ## What it is
 
@@ -293,6 +308,11 @@ What changes because this exists. Implications for the field and for AI engineer
 Technical depth appropriate to the topic.
 Use mermaid diagrams where they genuinely clarify something.
 
+## Timeline
+
+Dated events for this topic, oldest first. See [The Timeline section](#the-timeline-section) — the
+format is strict, and `merge_timeline.py` is the only thing that should write it.
+
 ## Sources
 
 (Only on grouped/backfill pages that merge multiple sources — a bullet list of the staged source filenames or URLs.)
@@ -302,6 +322,50 @@ Use mermaid diagrams where they genuinely clarify something.
 - [[Related Topic 1]]
 - [[Related Topic 2]]
 ```
+
+**Status values**: `active` (current, maintained), `baseline` (foundational, changes slowly),
+`reference` (stable explainer, consulted not tracked), `watching` (may matter, not yet proven),
+`deprecated` (superseded — say by what).
+
+**Prose is always present-tense.** A page describes the current state of affairs. How the topic got
+here lives in `## Timeline`, not in the prose. Do not add a `## Background`, `## History`, or
+`## Origins` section.
+
+### The Timeline section
+
+Every page carries a `## Timeline` section: the topic's dated event stream, oldest first. The site
+renders it as a month slider — the page reads as the current state of affairs, and scrubbing the
+slider walks the topic's history. That only works if the format is exact.
+
+```markdown
+## Timeline
+
+- `2021-07` (paper) Austin et al. publish D3PM, structured denoising diffusion in discrete state spaces — first serious attempt to move diffusion from pixels to tokens. [source](https://arxiv.org/abs/2107.03006)
+- `2026-06` (release) DeepMind releases DiffusionGemma, a 26B MoE diffusion head on Gemma 4. [source](https://developers.googleblog.com/en/introducing-diffusion-gemma/)
+- `2026-08` (wiki) Page created from the DiffusionGemma release.
+```
+
+Grammar, per bullet: `` - `YYYY-MM` (kind) sentence — significance. [source](url) ``
+
+| Part | Rule |
+|---|---|
+| Date | Backticked. `YYYY-MM` is the norm; `YYYY-MM-DD` when a source supports it; `YYYY` only when it genuinely does not |
+| Kind | One of `paper`, `method`, `release`, `benchmark`, `tooling`, `org`, `milestone`, `wiki` |
+| Sentence | One event, past tense, names the actor. Not a summary of several things |
+| Significance | Optional, after an em dash. What became possible that was not before |
+| Source | At least one `[source](url)` link, except `wiki` events. More than one is fine |
+
+**Never hand-write or hand-sort this section.** Use the merge tool, which parses what is there,
+merges the new events, deduplicates, sorts, and rewrites the section:
+
+```bash
+uv run python research/scripts/merge_timeline.py <page> --event '2026-06|release|DiffusionGemma ships|https://…'
+uv run python research/scripts/merge_timeline.py <page> --from-run research/runs/<run-id>   # bulk, from a backfill
+uv run python research/scripts/merge_timeline.py <page> --check                             # validate only
+```
+
+The `wiki` kind is the page's own changelog: when you materially update a page, append one
+`wiki` event saying what changed and why. It needs no source. Keep it to one per page per run.
 
 **Public wiki pages never contain a Dean-Relevance section.** Dean-Relevance is personal; it lives only in the private repo, in one file per calendar quarter (see below).
 
@@ -341,6 +405,22 @@ Whenever you create or materially update a wiki page, add or update its section 
 - Favor diagrams, tables, and structured comparisons over prose walls
 - Write how Dean thinks: scan-friendly structure, analogy-driven, implication-first
 - Never pad pages with obvious information or boilerplate headers with nothing under them
+- Prose is present-tense. The past goes in `## Timeline`, never in a history section
+
+### Every write updates the timeline
+
+A page write is not finished until its `## Timeline` reflects it. This applies to **every** run —
+nightly, weekly, manual injection, and backfill.
+
+- **New page**: seed `## Timeline` with whatever dated events the staged source supports (the release
+  date, the paper date, the announcement), plus one `wiki` event for the page's creation.
+- **Updated page**: append an event for the advance itself, month-stamped from the **source's
+  publication date**, not today's date. Add a `wiki` event only when the update materially changed
+  what the page says.
+- **Nothing worth dating**: leave the timeline alone. A copy-edit is not an event.
+
+Always go through `merge_timeline.py` (see [The Timeline section](#the-timeline-section)) so the
+section stays sorted, deduplicated, and parseable by the site.
 
 ### Engineering approaches rule
 
