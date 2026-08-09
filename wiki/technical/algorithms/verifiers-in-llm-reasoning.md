@@ -66,6 +66,10 @@ flowchart TD
 
 A theme threaded through [[self-improving-ai-agents|the whole field]]: many systems work by **exploiting the gap** between how hard a problem is to *solve* and how easy it is to *check*. Code (run the tests), math (check the proof in Lean), CUDA kernels (compile + benchmark) all have near-perfect verifiers — which is exactly why self-improvement works best there and stalls in subjective domains where the verifier is itself an LLM that can be reward-hacked.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — Cobbe → Lightman PRM → Math-Shepherd → Weaver; the reliability bottleneck; application-layer relevance to his RAG/agent quality gates (fit 8)
+
 ## Related
 - [[test-time-compute-scaling]]
 - [[train-time-rl-scaling]]

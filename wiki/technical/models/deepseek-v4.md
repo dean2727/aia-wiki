@@ -66,6 +66,10 @@ Knowledge/reasoning numbers are competitive, not leading. The *agent* numbers se
 
 The instruct models offer three reasoning modes — Non-think, Think High, Think Max (needs ≥384K context). Recommended sampling: `temperature=1.0, top_p=1.0`.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — open MoE (1.6T/49B + 284B/13B) whose real advance is *cheap* 1M-token context for agents: hybrid CSA/HCA attention (~2% of GQA's KV cache), interleaved thinking across tool calls,…
+
 ## Related
 - [[gemma-4]]
 - [[decoupled-diloco]]

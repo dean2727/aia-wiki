@@ -91,6 +91,10 @@ Nested collections `C1 ⊂ C2 ⊂ C4 ⊂ C8` (Cart → +Substitution → +Discov
 
 Qwen 3 8B, DAPO (G=8 rollouts/prompt), LR 1e-5, a 2M-product FAISS catalog (`gte-modernbert-base`, 768-dim), user sim Qwen3.5 9.7B, 300 steps on cart building. Early result: **progressive growth in difficulty reached**, confirming adaptive scheduling produces a steady learning signal rather than saturation or starvation. Results are explicitly "early" and the project is still evolving. [Needs Verification] for any claim of transfer beyond the C1 viability study — the C8-beats-specialist result is stated as a hypothesis, not yet demonstrated here.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — code-computed rewards + adaptive-difficulty environments (Ecom-RLVE)
+
 ## Sources
 
 - Hugging Face Blog, *"Ecom-RLVE: Adaptive Verifiable Environments for E-Commerce Conversational Agents"* (2026-04-16) — https://huggingface.co/blog/ecom-rlve. Code: `github.com/owlgebra-ai/EcomRLVE-Gym`; catalog: `owlgebra-ai/Amazebay-catalog-2M`.

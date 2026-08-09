@@ -70,6 +70,10 @@ GPU HBM  →  CPU RAM  →  local SSD  →  remote object store (S3)
 
 Related model-side trick: **DeepSeek's MLA** (Multi-head Latent Attention) shrinks the KV cache itself by compressing keys/values into a latent space — attacking the same cost from the architecture side.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — MemGPT, Cartridges, LMCache, CacheBlend, MLA; KV cache as memory; maps to his self-updating-KB ✅ zone (fit 7)
+
 ## Related
 - [[agent-memory-learning-from-experience]]
 - [[context-engineering]]

@@ -147,6 +147,10 @@ SmartRedact Paste shows *why* `gradio.Server` (vs. pure Gradio Blocks) matters h
 
 **The cost lever:** redaction with a 50M-active model at the edge is nearly free, and it lets you strip PII *before* spending an expensive hosted-LLM call — privacy and cost improve together.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — where ML inference lives in a web app (browser / edge backend / PII redaction)
+
 ## Sources
 
 - Hugging Face Blog, *How to Use Transformers.js in a Chrome Extension* (Nico Martin, 2026-04-23) — `huggingface.co/blog/transformersjs-chrome-extension`

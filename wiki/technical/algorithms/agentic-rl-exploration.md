@@ -76,6 +76,10 @@ These are the methods that *worked at scale* in deep RL and look most LM-feasibl
 
 Replace the high-variance return with an **advantage** (how much better an action is than typical). If a task is too easy or always-solved, advantage → 0 and there's no signal — so **sample tasks at the frontier of ability**. Exactly the zone of proximal development: too easy or way-over-your-head both teach little; progress lives at the edge, in micro-steps.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — policy gradient as the fundamental equation, 3 unsolved problems, exploration ladder, RL²/AdA/Algorithm Distillation; zone-of-proximal-development ≈ Praxis thesis (fit 7)
+
 ## Related
 - [[verifiers-in-llm-reasoning]]
 - [[train-time-rl-scaling]]

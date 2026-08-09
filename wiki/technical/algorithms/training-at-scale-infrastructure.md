@@ -144,6 +144,10 @@ The non-obvious part is **Xet** — the content-defined chunking backend. Files 
 
 **Pre-warming** brings hot data close to compute — you declare the cloud/region where your jobs run (AWS and GCP at launch) and Buckets ensure the data is already there, instead of crossing regions on every read. This directly closes the loop with post (a): **storage location is a throughput variable**, and a global-by-default store needs a locality escape hatch for distributed training.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — FM training building blocks, Ulysses sequence parallelism, trillion-param delta-weight sync, HF storage buckets
+
 ## Sources
 
 - Hugging Face / Amazon, *Building Blocks for Foundation Model Training and Inference on AWS* (2026-05-11)

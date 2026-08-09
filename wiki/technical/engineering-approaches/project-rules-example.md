@@ -31,6 +31,10 @@ Sections worth lifting as patterns:
 | Mock-patching / known-broken notes | Document lazy-import patch targets, soft-delete sentinels, and tests to `--ignore` |
 | Kubernetes ops rule | Trigger→action: if a rollout stalls >30s, immediately pull logs — don't wait |
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — example AGENTS.md artifact (colleague's "ellie" repo)
+
 ## Related
 - [[skills-rules-subagents]]
 - [[repo-init-workflow]]

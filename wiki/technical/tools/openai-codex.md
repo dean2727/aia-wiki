@@ -29,6 +29,10 @@ The caution flag from Dean's profile applies: much of the value here requires co
 - **Annotations** extend the developer "point and refine" loop to documents, spreadsheets, and slides — Codex focuses edits on the selected region without reworking the rest.
 - **Long-running work**: used as a persistent context store across workstreams; the operative skill is decomposition into verifiable steps plus an explicit delegate-vs-oversee decision per step.
 
+## Timeline
+
+- `2026-06` (wiki) Page created by a wiki run — Codex as a general long-running knowledge-work agent (plugins, Sites, annotations; verifiable-steps + delegation framing)
+
 ## Related
 - [[harness-and-scaffolding]]
 - [[spec-driven-development]]

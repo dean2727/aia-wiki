@@ -31,6 +31,10 @@ Fragmented chunks produce fragmented retrieval: a chunk that cuts a drug name fr
 
 **Hard limit**: this keeps related info together *within* a source but cannot bridge facts distributed *across* multiple documents. When the answer requires cross-document synthesis, reach for [[graph-rag]] instead.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — context-aware chunking with entity preservation
+
 ## Related
 - [[pre-retrieval]]
 - [[advanced-rag-techniques]]

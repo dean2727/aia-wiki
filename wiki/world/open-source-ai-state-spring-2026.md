@@ -71,6 +71,10 @@ This is a distinct argument, not a continuation of the data. Its spine:
 
 The unifying claim across both pieces: **the future is decided by the ecosystem around the model, not the model.** Security as a distributed, open, four-stage speed race; capability as a system recipe; value as a derivative tree. Same shape, three domains.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — open-source ecosystem state + openness-as-security argument
+
 ## Sources
 
 - Hugging Face — *State of Open Source on Hugging Face: Spring 2026* (Ghosh, Kaffee, Jernite, Solaiman; 2026-03-17)

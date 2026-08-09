@@ -116,6 +116,11 @@ What's notable for a hosted consumer like Dean:
 - **Early claim: perf/watt "substantially better than current state-of-the-art"** (final numbers pending a technical report). Designed from initial design to tape-out in ~9 months — claimed fastest high-performance ASIC cycle ever — partly *because OpenAI used its own models to accelerate the chip design* (a concrete instance of the AI-helps-build-AI flywheel; cf. [[ai-capability-and-society-summer-2026]]).
 - **The strategic read: vertical integration as the cost lever.** When a frontier lab owns chip → kernels → serving → product, each "fast/cheap tier" you consume increasingly reflects custom silicon, not just a software trick. Deployment is planned at gigawatt scale with data-center partners from late 2026 over multiple generations. For build-vs-buy, it widens the gap between self-hosting on commodity GPUs and consuming a vertically-integrated provider's economics.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — continuous batching, vLLM RL correctness, parallel/diffusion decoding
+- `2026-06` (wiki) Page updated by a wiki run — added section (d): OpenAI×Broadcom **Jalapeño** custom LLM-inference ASIC (perf/watt, 9-month tape-out, vertical-integration cost lever)
+
 ## Sources
 
 - Hugging Face — *Unlocking asynchronicity in continuous batching* (2026-05-14), `huggingface.co/blog/continuous_async`

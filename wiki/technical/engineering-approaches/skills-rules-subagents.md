@@ -33,6 +33,10 @@ These are the levers for the real bottleneck in agent coding: context. Skills gi
 
 **Subagent heuristics:** use for context isolation, parallelism, specialized multi-step work, or independent verification; overkill for a simple single-purpose task (use a skill). Foreground for sequential output you need; background for long/parallel work. Cursor's built-in Explore subagent runs many parallel searches in its own context with a faster model.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — the three context primitives of coding agents
+
 ## Related
 - [[spec-driven-development]]
 - [[harness-and-scaffolding]]

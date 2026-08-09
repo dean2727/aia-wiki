@@ -123,7 +123,7 @@ def render_neighbor(graph: WikiGraph, slug: str, seed_slug: str | None) -> list[
     else:
         relation = "links to the seed page"
 
-    years = sorted(distinct_years(page.body))
+    months = page.timeline_months
     return [
         f"### {page.title} — `{page.path}`",
         f"_{relation}; status {page.status or 'unset'}; updated {page.last_updated or 'unknown'}_",
@@ -131,8 +131,8 @@ def render_neighbor(graph: WikiGraph, slug: str, seed_slug: str | None) -> list[
         f"> {page.definition}" if page.definition else "> (no definition line)",
         "",
         f"- Sections: {' | '.join(page.sections) or 'none'}",
-        f"- Years named: {', '.join(years) or 'none'}",
-        f"- Links out: {', '.join(f'[[{target}]]' for target in sorted(page.links)) or 'none'}",
+        f"- Timeline: {f'{len(page.timeline)} event(s), {months[0]} → {months[-1]}' if months else 'none yet'}",
+        f"- Links out: {', '.join(f'[[{target}]]' for target in sorted(graph.outbound(slug))) or 'none'}",
         "",
     ]
 
@@ -160,10 +160,13 @@ def build_wiki_context(graph: WikiGraph, manifest: RunManifest, seed_slug: str |
 
     if seed_slug is not None:
         seed = graph.pages[seed_slug]
+        months = seed.timeline_months
+        covered = f"{months[0]} → {months[-1]}" if months else "nothing yet"
         lines += [
             f"## Seed page — `{seed.path}`",
             "",
-            f"_Years it names: {', '.join(sorted(distinct_years(seed.body))) or 'none'} — everything earlier is the gap._",
+            f"_Timeline already covers: {covered}. Prose names: "
+            f"{', '.join(sorted(distinct_years(seed.body))) or 'no years'}. Everything earlier is the gap._",
             "",
             seed.body,
             "",
@@ -244,12 +247,12 @@ def build_manifest(graph: WikiGraph, args: argparse.Namespace) -> tuple[RunManif
             seed_page=seed.path if seed else None,
             seed_title=seed.title if seed else None,
             seed_urls=tuple(seed.source_urls) if seed else (),
-            neighborhood=tuple(graph.neighborhood(seed.slug, args.hops)) if seed else (),
+            neighborhood=tuple(graph.neighborhood(graph.key_for(seed), args.hops)) if seed else (),
             hops=args.hops,
             wiki_pages_indexed=len(graph),
             created_at=created_at.isoformat(),
         ),
-        seed.slug if seed else None,
+        graph.key_for(seed) if seed else None,
     )
 
 

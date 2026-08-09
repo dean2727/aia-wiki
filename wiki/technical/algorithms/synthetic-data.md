@@ -42,6 +42,10 @@ For engineers, synthetic data is the lever for evaluation and edge-case coverage
 
 This is where synthetic data meets [[llm-agent-evaluation]] — generated eval sets need the same realism/utility/privacy scrutiny — and [[advanced-rag-techniques]], where synthetic query/doc pairs power HyDE and embedding-adapter training.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — SMOTE/CTGAN/GenAI synthetic data + evaluation
+
 ## Related
 - [[llm-agent-evaluation]]
 - [[advanced-rag-techniques]]

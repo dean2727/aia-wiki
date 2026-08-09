@@ -74,6 +74,10 @@ The post reframes the buy as three questions, not one purchase:
 2. Is benchmark leadership alone sufficient evidence? (In this domain, no.)
 3. Given that alignment compounds, what's the right *starting* model — and should the org build a specialization ecosystem rather than chase one universal model?
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — distributional alignment over parameter count
+
 ## Sources
 
 - Erick Lachmann & Gabriel Pimenta de Freitas Cardoso (Dharma-AI), *"Specialization Beats Scale: A Strategic Variable Most AI Procurement Decisions Overlook"*, Hugging Face Blog, 2026-05-22.

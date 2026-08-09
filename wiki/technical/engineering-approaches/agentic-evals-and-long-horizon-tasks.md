@@ -72,6 +72,10 @@ flowchart LR
 
 External validity is the open question — and all three still need validation against humans who can actually solve the tasks.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — METR time horizon, GDPval, DeepScholar-Bench; reliability gap calibration; closing reflection ≈ Praxis human-growth thesis (fit 7)
+
 ## Related
 - [[llm-agent-evaluation]]
 - [[agentic-errors]]

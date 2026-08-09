@@ -18,7 +18,12 @@
 
 [Needs writing]
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — quarterly connector placeholder
+
 ## Related
 
 - [[technical/synthesis]]
 - [[world/synthesis]]
+- [[self-improving-ai-agents]]

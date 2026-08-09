@@ -35,6 +35,10 @@ Ten `// turbo` analysis passes → one synthesized doc:
 
 Output `AGENTS.md` covers: overview, dev guidelines, tooling/workflow, agent-specific instructions, quick reference, troubleshooting, integration points, perf/security.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — deep repo analysis → AGENTS.md generator
+
 ## Related
 - [[project-rules-example]]
 - [[starting-a-project-vibe-coding]]

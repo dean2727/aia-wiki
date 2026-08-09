@@ -22,6 +22,10 @@ The core tradeoff: high-agency frameworks are fast to stand up but hard to steer
 | Repeatable, scalable, controllable flows | LangGraph-style (explicit graph) |
 | Standard patterns (routing, reflection, tools) | Any major framework now supports them |
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — LangGraph vs. autogen control spectrum (stub source)
+
 ## Related
 - [[agentic-patterns]]
 - [[agentic-rag]]

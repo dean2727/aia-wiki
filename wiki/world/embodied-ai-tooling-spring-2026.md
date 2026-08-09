@@ -28,6 +28,10 @@ The dual-use lessons, stripped of robot context:
 
 **Reachy Mini fully local — a swap-able cascade behind a stable protocol.** The whole stack runs with no cloud and no API keys: `llama.cpp` serving [[gemma-4]], Silero VAD, Parakeet-TDT STT, Qwen3-TTS. The key design move is the **Responses-API boundary**: the LLM "brain" lives in its own process, and you point the voice loop at it over HTTP — local MLX/llama.cpp/vLLM or a hosted endpoint, identical client either way. A practical latency note that generalizes: they disable the model's `<think>` channel for conversation because *every reasoning token is silence the user hears* — thinking budget is a UX cost, not just a compute cost.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — robotics tooling tracked only for software-transferable patterns (local inference, experience-data capture)
+
 ## Sources
 
 - Hugging Face, *LeRobot v0.5.0: Scaling Every Dimension* (2026-03-09)

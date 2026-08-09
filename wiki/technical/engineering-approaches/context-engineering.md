@@ -68,6 +68,11 @@ Multi-agent is, in context terms, a way to *compress*: each sub-agent does token
 
 The deepest lesson is temporal: **the structure is the product, not the model.** You add scaffolding (decomposition, fixed workflows, inductive biases) to get acceptable performance from *today's* model at *today's* compute — but that same structure becomes the bottleneck as models improve. The 2024 "split into sections, then compile a report" workflow beat the contemporaneous open-ended agent; once base models got dramatically better, the ranking flipped and the rigid workflow held the system back. The bitter-lesson corollary for builders: prefer letting the model think with more compute over hand-specifying how it should think, and constantly re-assess which assumptions you can now *remove*. Practical implications: keep harnesses general and thin (Claude Code ships deliberately under-scaffolded), avoid having to rip out and rebuild the agent, and note that shipping a product that *doesn't quite work yet* can pay off when model capability catches up to it.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — single-agent context discipline vs. multi-agent complexity
+- `2026-06` (wiki) Page updated by a wiki run — Notion Track A enrichment: offloading/compaction, context failure modes (poisoning, irreversible pruning, keep tool errors), caching, multi-agent context isolation tradeoffs, and…
+
 ## Related
 - [[grok-4-20]]
 - [[harness-and-scaffolding]]

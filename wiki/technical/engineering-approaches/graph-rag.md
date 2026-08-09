@@ -34,6 +34,10 @@ flowchart LR
 
 The depth knob is the central cost/quality tradeoff: more communities explored means broader synthesis but linearly more LLM calls.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — entity-graph + community-summary retrieval
+
 ## Related
 - [[advanced-rag-techniques]]
 - [[semantic-boundary-chunking]]

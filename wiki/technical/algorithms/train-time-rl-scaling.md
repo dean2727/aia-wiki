@@ -89,6 +89,10 @@ Naive GRPO stalls and collapses entropy. **DAPO** adds four targeted fixes (AIME
 
 **Open problems**: stable exploration (entropy collapse), credit assignment over long trajectories, and reward design — all of which are the bottlenecks elaborated in [[agentic-rl-exploration]].
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — STaR, GRPO vs PPO, DAPO's four fixes, DeepSeekMath unified gradient, "RL elicits not expands"; mostly conceptual since he's API-based, watch adoption (fit 5)
+
 ## Related
 - [[test-time-compute-scaling]]
 - [[verifiers-in-llm-reasoning]]

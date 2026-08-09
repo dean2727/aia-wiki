@@ -45,6 +45,10 @@ The throughline for a builder/thinker like Dean:
 2. **Scaffolding is the risk and the product.** Offensive cyber, agent products, and persuasion all concentrate their power in the *structure around the model*, not the raw weights. Governance that targets only model capability (and not orchestration) will keep missing the real differentiator.
 3. **Forecast in scenarios, monitor continuously.** DeepMind's prescription — hold a diverse set of forecasts, benchmark and update their relative plausibility over time — is itself a systems-thinking discipline, and the right posture for a fast-moving frontier.
 
+## Timeline
+
+- `2026-06` (wiki) Page created by a wiki run — grouped: superpersuasion study, AI-enabled cyber threats (MITRE ATT&CK gaps), paths to ASI/RSI
+
 ## Sources
 
 - Import AI 462 (Jack Clark), *"Superpersuasion; self-sustaining AI; paths to ASI"* (2026-06-22) — covering the Oxford/AISI persuasion study, the Cotra/Lee Asterisk interview, DeepMind's *From AGI to ASI*, and Recursive's automated-research results

@@ -54,6 +54,10 @@ Two insights got robotics past the wall:
 
 Robotics is "in its infancy" on data; little inference-time compute is used; high-level→sub-task decomposition is underexplored; and there's a big disconnect between **computer-vision benchmarks** and what CV can actually do *in* robotics. The bottleneck is data diversity, not (yet) algorithms.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — PaLM-E → RT-2 → action chunking/diffusion → π0/π0-FAST → Knowledge Insulation → π0.5; robotics is skip for Dean, but action-chunking / flow-matching / knowledge-insulation are…
+
 ## Related
 - [[evolutionary-search-self-improving-agents]]
 - [[self-improving-ai-agents]]

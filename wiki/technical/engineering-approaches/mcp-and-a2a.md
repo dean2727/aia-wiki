@@ -47,6 +47,11 @@ Two patterns worth stealing:
 - **Ship prompts with the server.** Store the "how to use this server" prompts in the server itself, so any agent — regardless of harness — behaves consistently against it. You absorb the integration skill so your users don't have to get it right in their own agent.
 - **The `llms.txt` doc-routing trick.** Instead of indexing your docs for retrieval, publish an `llms.txt` file: a flat list of doc URLs, each with a one-line description (cheaply LLM-generated) of what's in it, plus a simple "fetch URL" tool. The agent reads the descriptions to decide what to pull. LangChain found this beat heavier setups across ~20 LangGraph coding tasks — no index to maintain, dead simple, and the *descriptions* do the heavy lifting for recall. (The LangGraph MCP server exposed exactly this before Claude Code had native doc search.)
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — MCP (agent↔tool) + A2A (agent↔agent) interop protocols
+- `2026-06` (wiki) Page updated by a wiki run — Notion Track A: pushing work into the server (prompts/resources/sampling), shipping prompts with the server, the `llms.txt` doc-routing pattern
+
 ## Related
 - [[agentic-mesh]]
 - [[skills-rules-subagents]]

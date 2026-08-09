@@ -75,6 +75,10 @@ flowchart LR
 
 The selection/composition of inference-time moves (how many samples, which ranker, fusion, verification cascade) is itself a search space. **Archon** treats "inference-time architecture search" (ITAS) as an optimization problem and uses Bayesian optimization (the same family as **MIPRO / DSPy** prompt optimizers) to find a good inference pipeline per task — a meta-layer on top of all the above.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — Large Language Monkeys, pass@k vs Maj@k, generation–verification gap, compute-optimal scaling, Archon/ITAS; all reachable via his OpenRouter stack (fit 7)
+
 ## Related
 - [[verifiers-in-llm-reasoning]]
 - [[train-time-rl-scaling]]

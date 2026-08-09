@@ -28,6 +28,10 @@ Treat AI like an eager but inexperienced junior developer you manage. Core princ
 
 Workflow: start from a strong template; plan in Markdown before coding; keep plans in-repo (`plans/implementation-plan.md`); distill patterns/frustrations into rules (AGENTS.md); separate planning from execution (cheap models draft, strong models review). Recovery: when a section goes off the rails, redo it with proper planning rather than patching messy code. See [[spec-driven-development]] and [[starting-a-project-vibe-coding]] for the structured form, and treat repeated frustrations as inputs to a workflow/rule you can reuse.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — vibe coder vs. real developer; ownership discipline
+
 ## Related
 - [[spec-driven-development]]
 - [[starting-a-project-vibe-coding]]

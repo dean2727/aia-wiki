@@ -82,14 +82,39 @@ gitignored.
 
 | Script | Does | Notable flags |
 |---|---|---|
-| `wiki_graph.py` | Parses `wiki/**` into a link graph — inbound, outbound, and dangling edges. Library for the rest; run it directly for a health summary | `--json`, `--wiki-dir` |
-| `detect_gaps.py` | Ranks missing background: concepts linked but undefined, pages with no dated prior art, unlinked mentions, orphan/stale/thin pages | `--page`, `--hops`, `--min-years`, `--top`, `--json` |
+| `events.py` | The event model: date grammar, timeline-bullet grammar, duplicate rule. Library only — shared so the two writers cannot drift | — |
+| `wiki_graph.py` | Parses `wiki/**` into a link graph (inbound, outbound, dangling) and each page's `## Timeline` into events. Library for the rest; run it directly for a health summary | `--json`, `--events`, `--wiki-dir` |
+| `detect_gaps.py` | Ranks missing background: pages whose timeline is too thin to place them in time, concepts linked but undefined, unlinked mentions, orphan/stale/thin pages | `--page`, `--hops`, `--min-events`, `--min-years`, `--top`, `--json` |
 | `start_run.py` | Creates `runs/<date>-<slug>/` with `run.json` and `wiki-context.md` | `--seed-page`, `--topic`, `--hops`, `--force` |
 | `build_timeline.py` | Validates events, parses partial dates, merges duplicates, sorts, writes `timeline.md` + `timeline.json` | `--check`, `--min-events`, `--drop-unsourced`, `--allow-sparse` |
 | `compile_report.py` | Assembles `report.md`, verifies it, stages it as `type: research` | `--check`, `--stage`, `--min-sources`, `--allow-unanchored` |
+| `merge_timeline.py` | **The only sanctioned writer of a wiki page's `## Timeline`.** Parses existing bullets back into events, merges and dedupes the incoming ones, sorts, rewrites the section in canonical position | `--from-run`, `--event`, `--only`, `--check`, `--dry-run`, `--replace` |
+| `build_global_timeline.py` | Rolls every page's timeline into `wiki/timeline.md`, one slider over the whole wiki | `--skip-wiki-events`, `--dry-run` |
+| `seed_timelines.py` | One-time migration (safe to re-run): seeds each page's timeline with `wiki`-kind events derived from `CHANGELOG.md` | `--page`, `--dry-run`, `--bump` |
 
 `detect_gaps.py` is useful on its own, with no run attached — `python research/scripts/detect_gaps.py`
 scans the whole wiki and ranks every gap it can prove.
+
+## Ingesting a finished run
+
+The report is staged for a separate wiki run, but the events go onto pages through one command:
+
+```bash
+# Merge a run's whole timeline onto the seed page
+python research/scripts/merge_timeline.py model-compression --from-run research/runs/2026-08-09-model-compression
+
+# Move a subset onto a neighbouring page instead
+python research/scripts/merge_timeline.py gemma-4 --from-run research/runs/... --only "Gemma 2"
+
+# Record a one-off event, e.g. the page's own edit history
+python research/scripts/merge_timeline.py model-compression --event '2026-08|wiki|Backfilled the compression lineage'
+
+# Then refresh the wiki-wide page
+python research/scripts/build_global_timeline.py
+```
+
+Never hand-edit a `## Timeline` section: the site parses it strictly, and `merge_timeline.py --check`
+is what tells you whether it still parses.
 
 ## What the checks actually catch
 

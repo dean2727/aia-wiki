@@ -103,6 +103,10 @@ TRL's release is philosophically the opposite of the survey's deep-systems focus
 
 TRL's positioning vs. the survey libraries: it's the **general-purpose, low-infrastructure, broadly-integrated** option (single GPU, standard stack, full HF Hub integration, any experiment tracker). It explicitly does *not* compete with verl on 671B-scale throughput or PipelineRL on async generation — those are the specialist tools the survey covers. TRL is where you start.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — the open-source RL post-training software layer + the async-disaggregation lesson
+
 ## Sources
 
 - Hugging Face Blog, *"Keep the Tokens Flowing: Lessons from 16 Open-Source RL Libraries"* (2026-03-10) — Dirhoussi, Gallouédec, Rasul, Tunstall, Beeching, et al.

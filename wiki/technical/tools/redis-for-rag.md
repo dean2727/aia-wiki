@@ -26,6 +26,10 @@ Build flow: stand up Redis configured for vectors → use RedisVL (or a framewor
 
 **Where it fits vs. Dean's stack**: Dean already runs Qdrant for vector search, so Redis-as-vector-DB is redundant. The non-overlapping wins are the *semantic cache* and *session memory* layers, which Qdrant doesn't cover and which complement any pipeline from [[advanced-rag-techniques]] / [[agentic-rag]].
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — Redis as vector store / semantic cache / session memory
+
 ## Related
 - [[advanced-rag-techniques]]
 - [[pre-retrieval]]

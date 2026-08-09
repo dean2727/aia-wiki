@@ -40,6 +40,10 @@ Caveats the authors are honest about: hyperparameter sweeps can't be exhaustive 
 
 **The takeaway:** LoRA is a fine default, not an automatic one. Run a short PEFT sweep on your own task before committing.
 
+## Timeline
+
+- `2026-06` (wiki) Page created by a wiki run — LoRA isn't always Pareto-optimal; benchmark PEFT on your own data; non-LoRA→LoRA conversion for serving
+
 ## Related
 - [[rl-post-training-libraries]]
 - [[model-compression]]

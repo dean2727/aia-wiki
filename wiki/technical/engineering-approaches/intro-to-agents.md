@@ -30,6 +30,10 @@ This is the framing for the core build/skip decision. Collaborative agents commu
 
 Data privacy (agents touch sensitive data), technical complexity, poor generalization to unforeseen scenarios without retraining, compute cost, and ethical/bias/transparency concerns. Human oversight remains important even as capability improves.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — traditional vs. compound vs. agentic systems
+
 ## Related
 - [[agentic-patterns]]
 - [[building-agents-best-practices]]

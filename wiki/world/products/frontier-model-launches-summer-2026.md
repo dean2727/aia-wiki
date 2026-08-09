@@ -55,6 +55,10 @@ The safeguards are stress-tested with compute, not just humans. OpenAI dedicated
 
 Anthropic's AAV (adeno-associated virus) example crystallizes the problem: Mythos 5 predicted unpublished experimental properties of a viral shell — a genuine gene-therapy capability — *better than dedicated protein language models*, using biological reasoning alone and without being trained for the task. The same capability that accelerates therapeutics is the one that makes the model dangerous in the wrong hands, which is why Fable falls back to Opus on most bio/chem requests for now, accepting over-broad blocking as the price of shipping safely and fast.
 
+## Timeline
+
+- `2026-06` (wiki) Page created by a wiki run — grouped synthesis of the two frontier proprietary launches and the real story (capability-gated, government-previewed releases; classifier + fall-back-to-weaker-model safeguard…
+
 ## Sources
 
 - OpenAI, *"Previewing GPT-5.6 Sol: a next-generation model"* (2026-06-26)

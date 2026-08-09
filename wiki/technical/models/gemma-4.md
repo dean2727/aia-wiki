@@ -74,6 +74,11 @@ What makes it distinct is **encoder-free** multimodality. Where the 31B/26B rout
 
 The payoff is the inverse of the usual multimodal tax: dropping the split encoders removes the latency and memory they add, which is exactly what makes laptop-class deployment realistic. It's the same "restraint as architecture" thesis as the rest of Gemma 4 — here applied to the modality pipeline itself. Ships with an official agent **Skills Repository** to make the model agent-buildable out of the box.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — truly-open (Apache 2) multimodal-incl-audio family from on-device (E2B/E4B) to 31B/26B-MoE; frontier arena scores via deliberate reuse (PLE, shared KV cache, alternating…
+- `2026-06` (wiki) Page updated by a wiki run — added Gemma 4 12B (encoder-free unified multimodal, native audio, MTP drafters, 16GB-local)
+
 ## Related
 - [[deepseek-v4]]
 - [[decoupled-diloco]]

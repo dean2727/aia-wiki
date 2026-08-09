@@ -53,6 +53,10 @@ Internal app (crawl) → limited external group (walk) → all customers (run) �
 
 Good metrics each surfaced a distinct real failure: **LLM-call error rate** → partial approvals on mid-analysis API failures (fix: state rollback); **task completion rate** → claims marked complete missing verifications (fix: mandatory checklists); **# human requests** → agent handling cases beyond its competence (fix: escalation protocols); **token usage per interaction** → unnecessary PHI in working memory (fix: data minimization). Metrics-driven optimization must align with business objectives.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — agent lifecycle (data → scope → eval → scale)
+
 ## Related
 - [[agentic-patterns]]
 - [[llm-agent-evaluation]]

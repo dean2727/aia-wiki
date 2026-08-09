@@ -56,6 +56,10 @@ flowchart TD
 
 **Where conventional multi-agent still wins:** private-domain control via RAG, hard business constraints/guardrails injected as orchestration code, mixing model families per task, and upgrading one component without retraining a frontier model. The honest trade: external systems are bounded by their weakest piece (usually the planner/router) and can't "train away" pathologies — you detect them with evals and patch with prompts/code.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — Grok 4.20's in-model four-agent MoE architecture; the "experts inside vs. agents outside" framing for Dean's multi-agent work
+
 ## Related
 - [[context-engineering]]
 - [[agentic-patterns]]
