@@ -22,3 +22,4 @@
 
 - [[technical/synthesis]]
 - [[world/synthesis]]
+- [[self-improving-ai-agents]]

@@ -219,6 +219,8 @@ aia-wiki/                           ← public repo (this one)
 │   │   │                               themes across technical advancements,
 │   │   │                               research methods and breakthroughs
 │   │   │                               that redefined how something works (weekly update)
+│   │   ├── self-improving-ai-agents.md ← standalone narrative arc page
+│   │   │                                 (was mistakenly living in synthesis.md)
 │   │   ├── models/                   ← transformer, VLA, MoE architectures
 │   │   ├── algorithms/               ← research-origin findings
 │   │   │                               (verifiers, RLHF, test-time compute)
