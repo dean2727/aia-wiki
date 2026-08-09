@@ -1,0 +1,48 @@
+{
+  "name": "aia-wiki-topic-timeline",
+  "version": "1.0.0",
+  "description": "Renders a wiki page's ## Timeline section as a scrubable month slider.",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "import": "./dist/component.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "peerDependencies": {
+    "preact": "^10.0.0"
+  },
+  "quartz": {
+    "name": "topic-timeline",
+    "displayName": "Topic Timeline",
+    "description": "Renders a page's ## Timeline section as a scrubable month slider.",
+    "category": ["transformer", "component"],
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 55,
+    "defaultEnabled": true,
+    "defaultOptions": {
+      "minEvents": 1,
+      "extendToToday": true,
+      "title": "Timeline"
+    },
+    "components": {
+      "TopicTimeline": {
+        "displayName": "Topic Timeline",
+        "description": "Month slider over a topic's dated events.",
+        "defaultPosition": "afterBody",
+        "defaultPriority": 5
+      }
+    },
+    "optionSchema": {
+      "minEvents": { "type": "number" },
+      "extendToToday": { "type": "boolean" },
+      "title": { "type": "string" }
+    }
+  }
+}
