@@ -27,3 +27,6 @@ research/runs/*
 
 # Compiled output of local Quartz plugins (rebuilt by site/install-plugins.mjs)
 site/quartz-plugins/*/dist/
+
+# Quartz build cache
+site/quartz/.quartz-cache/

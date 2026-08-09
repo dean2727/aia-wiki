@@ -71,7 +71,7 @@ export const timelineStyles = `
 .topic-timeline .tt-ticks {
   display: flex;
   gap: 1px;
-  height: 6px;
+  height: 9px;
   margin-bottom: 0.75rem;
 }
 
@@ -82,7 +82,12 @@ export const timelineStyles = `
 }
 
 .topic-timeline .tt-tick[data-populated="true"] {
-  background: var(--tertiary);
+  background: var(--secondary);
+}
+
+/* A month past the slider position reads as "not yet reached" rather than empty. */
+.topic-timeline .tt-tick[data-reached="false"] {
+  opacity: 0.35;
 }
 
 .topic-timeline ol {
@@ -110,7 +115,13 @@ export const timelineStyles = `
 
 .topic-timeline li[data-state="current"] {
   background: var(--highlight);
-  border-left-color: var(--secondary);
+  border-left: 3px solid var(--secondary);
+  box-shadow: inset 0 0 0 1px var(--lightgray);
+}
+
+.topic-timeline li[data-state="current"] .tt-when {
+  color: var(--secondary);
+  font-weight: 600;
 }
 
 .topic-timeline .tt-when {
