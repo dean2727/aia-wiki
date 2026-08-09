@@ -47,7 +47,7 @@ The pipeline is powered by [Claude Code GitHub Actions](https://code.claude.com/
 _Living tracker — updated by the nightly and weekly Claude runs after each ingestion pass. Canonical source list in [`sources.yml`](sources.yml). Staging filenames use `{feed-slug}-{YYYY-MM-DD}-{title}.md`; counts come from `private/sources/staging/` (read-only during wiki runs)._
 
 <!-- source-coverage:start -->
-_Last table update: 2026-08-09 (temporal wiki restructure)_
+_Last table update: 2026-08-09 (manual injection)_
 
 | Source | Type | Schedule | Last ingested | Staged (last run) | Coverage window | Last wiki-processed | Notes |
 |---|---|---|---:|---|---|---|---|
@@ -64,7 +64,7 @@ _Last table update: 2026-08-09 (temporal wiki restructure)_
 | YouTube channels | YouTube | Nightly | — | — | — | — | Ingest not enabled in nightly workflow |
 | ArXiv (cs.AI, cs.LG) | ArXiv | Weekly | — | — | — | — | Weekly workflow only |
 | queue.txt | URL queue | Nightly | — | — | — | — | Ingest not enabled in nightly workflow |
-| Manual injection | URL (on demand) | On demand | — | — | — | — | `inject-article` skill; no links injected yet |
+| Manual injection | URL (on demand) | On demand | 2026-08-09 | 2 | manual | 2026-08-09 | GPT-Live launch + realtime-systems post → `realtime-voice-agent-architecture`; bodies via archive capture (openai.com 403s the fetcher) |
 | Deep research backfill | Wiki self-research | On demand | 2026-08-09 | 1 | 1989–2024 | 2026-08-09 | `model-compression` backfilled: 10 events, 21 sources |
 | Cursor logs | Local sync | Weekly review | — | — | — | — | Synced locally; reviewed on weekly pass |
 | Claude exports | Monthly ZIP | Monthly | — | — | — | — | Monthly workflow |

@@ -1,5 +1,49 @@
 # Changelog
 
+## [2026-08-09] Manual Injection
+
+Dean injected two OpenAI links on GPT-Live via the `inject-article` skill. Both cover the same topic from
+two angles — the launch and the engineering story behind it — so per the grouping rule they became one
+strong page rather than two thin ones, with the launch as the *what* and the systems post as the *how*.
+
+Provenance note: `openai.com` returns HTTP 403 to the fetcher (`robots.txt` returns 200, every HTML page
+403s, and a browser user-agent does not help), and OpenAI's RSS entries carry only a one-line
+description. Bodies came from Wayback captures of OpenAI's own pages (archived 2026-07-25 and 2026-08-06)
+via `--from-file`, with the canonical URLs recorded in frontmatter. Nothing was written from headlines.
+
+### Created
+- **Created**: `wiki/technical/engineering-approaches/realtime-voice-agent-architecture.md` — full-duplex
+  voice as a latency architecture: removing the turn detector from the audio path, decoupling talking from
+  thinking via async delegation, stateful streaming inference with warm instance handoff, reconstructing
+  turns from a continuous stream with speculative and authoritative views, WARP collapsing WebRTC startup
+  from six round trips to one, and what shadow-testing real traffic caught that load tests could not.
+  **Score 8.** Sources: `injected-2026-08-09-introducing-gpt-live.md` (2026-07-08),
+  `injected-2026-08-09-how-we-built-a-realtime-system-for-responsive-voice-ai-in-si.md` (2026-08-03).
+
+### Updated
+- **Updated**: `wiki/technical/algorithms/llm-inference-serving-internals.md` — added section (e) on
+  stateful streaming inference: sessions outliving instances, compaction as a KV-cache problem solved on a
+  warm parallel instance, and capacity measured in concurrent sessions rather than requests per GPU.
+- **Updated**: `wiki/technical/engineering-approaches/context-engineering.md` — compaction carries a
+  latency cost too; the fix is to compact onto a warm parallel instance instead of in place.
+- **Updated**: `wiki/timeline.md` — regenerated (96 events across 64 pages) after four new events on the
+  new page and three across the enriched ones.
+
+### Pipeline fixes found while running this
+- `ingest_url.py`'s junk-class filter matched substrings inside utility-CSS tokens, so Tailwind's
+  `toc-visible:md:grid-cols-10` matched `toc` and decomposed the div holding an entire OpenAI article
+  (11k chars down to 81). Class tokens are now matched individually, variant-prefixed tokens are ignored,
+  and no element holding more than a quarter of the root's text is ever pruned.
+- `--from-file` bypassed the `--min-chars` gate, so a 15-word JavaScript shell reported `ok`. It now goes
+  through the same floor, with `--allow-thin` as the override.
+
+### Skipped
+- Nothing — both injected items cleared the manual-injection floor of 6.
+
+- **Relevance**: not written. This run had no `dean-wiki-private` checkout, so the owed entry is a
+  `private/relevance/summer-2026.md` section for `realtime-voice-agent-architecture`.
+- **Profile**: No changes
+
 ## [2026-08-09] Temporal Wiki Restructure
 
 Restructured the wiki around a temporal layer. Every page keeps its present-tense prose and gains a `## Timeline` section of dated, sourced events, which the site renders as a month slider — the page reads as the current state of affairs, and scrubbing walks the topic's history. This supersedes the earlier plan for a separate lineage folder: history now decomposes into per-page events, and the deep-research pipeline already produces exactly that data. Plan and open decisions in `specs/temporal-wiki.plan.md`.
