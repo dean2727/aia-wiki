@@ -78,6 +78,9 @@ JUNK_PATTERN = re.compile(
     r"|cookie|consent|banner|promo|related-|breadcrumb|pagination|toc|advert)",
     re.IGNORECASE,
 )
+# Short junk words collide with utility-CSS class names (Tailwind's `toc-visible:md:grid-cols-10`
+# contains "toc"), so never prune an element holding this share of the root's text.
+MAX_JUNK_TEXT_SHARE = 0.25
 BLOCK_TAGS = ("h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "pre", "blockquote")
 CONTENT_SELECTORS = (
     "article",
@@ -400,17 +403,36 @@ def _prune(root: Tag) -> None:
     Args:
         root: Container element to clean.
     """
-    junk = root(["script", "style", "noscript", "svg", "form", "iframe", "nav", "aside", "footer"])
-    junk += [
-        tag
-        for attr in ("class", "id")
-        for tag in root.find_all(attrs={attr: JUNK_PATTERN})
-        if isinstance(tag, Tag) and tag.name in {"div", "section", "ul", "ol", "header", "span"}
-    ]
-
-    for tag in junk:
+    for tag in root(["script", "style", "noscript", "svg", "form", "iframe", "nav", "aside", "footer"]):
         if not tag.decomposed:
             tag.decompose()
+
+    root_size = len(root.get_text(strip=True))
+    for tag in root.find_all(["div", "section", "ul", "ol", "header", "span"]):
+        if tag.decomposed or not _names_junk(tag):
+            continue
+        if root_size and len(tag.get_text(strip=True)) / root_size > MAX_JUNK_TEXT_SHARE:
+            continue
+        tag.decompose()
+
+
+def _names_junk(tag: Tag) -> bool:
+    """Report whether a tag's class or id names it as page chrome rather than content.
+
+    Args:
+        tag: Element to test.
+
+    Returns:
+        True when a class token or the id matches the junk pattern. Utility-CSS tokens carrying a
+        variant prefix (any token containing `:`) are ignored, since those are never semantic names.
+    """
+    class_value = tag.get("class") or []
+    tokens = class_value if isinstance(class_value, list) else str(class_value).split()
+    if any(":" not in token and JUNK_PATTERN.search(token) for token in tokens):
+        return True
+
+    tag_id = tag.get("id")
+    return bool(tag_id and JUNK_PATTERN.search(str(tag_id)))
 
 
 def _block_to_markdown(node: Tag) -> str:
@@ -813,6 +835,12 @@ def process_url(url: str, staging_dir: Path, seen_urls: set[str], args: argparse
             report.remediation = REMEDIATION[Status.THIN]
             return report
         report.notes.append(f"Body taken from local file {args.from_file} (network skipped).")
+        if len(article.body) < args.min_chars and not args.allow_thin:
+            report.status = Status.THIN
+            report.reason = f"only {len(article.body)} chars in {args.from_file} (floor is {args.min_chars})"
+            report.remediation = REMEDIATION[Status.THIN]
+            report.title, report.word_count, report.extraction = article.title, article.word_count, article.extraction
+            return report
         return _finalize(report, article, normalized, staging_dir, args)
 
     host = urlparse(normalized).netloc.lower()
