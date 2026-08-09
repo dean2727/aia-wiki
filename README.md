@@ -40,6 +40,7 @@ The pipeline is powered by [Claude Code GitHub Actions](https://code.claude.com/
 | **Claude Exports** | Monthly conversation export from Claude.ai (Anthropic data export ZIP), processed into markdown | My longer strategic thinking, design decisions, research sessions, and ideas developed conversationally — context that doesn't appear in code | Monthly: ZIP is processed into individual conversation files and surfaced during the monthly manual workflow run |
 | **Notion** | Personal notes I've written myself — original observations, reactions, half-formed ideas, personal context | The one source the pipeline can't generate on its own: my perspective, not the internet's | Nightly: only pages I've personally written are pulled via the Notion API |
 | **Manual injection** | A link I hand to the agent directly via the `inject-article` skill | The thing I found *now* and want in the wiki *now* — articles, papers, repos, release notes I don't want to wait a night for | On demand: the URL is fetched and extraction is verified before anything is written, then triaged and synthesized like a nightly item (write floor 6 instead of 7, since I picked it) |
+| **Deep research backfill** | The wiki researching its own gaps, via the `deep-research` skill | The background a new page assumes and never explains — prior art, the limitation each step removed, and how the current design came to look this way | On demand: a multi-perspective run builds a sourced timeline and narrative, stages it as `type: research`, and a *separate* run ingests it like any other source |
 
 ## Source coverage
 
@@ -64,6 +65,7 @@ _Last table update: 2026-06-28 (nightly run)_
 | ArXiv (cs.AI, cs.LG) | ArXiv | Weekly | — | — | — | — | Weekly workflow only |
 | queue.txt | URL queue | Nightly | — | — | — | — | Ingest not enabled in nightly workflow |
 | Manual injection | URL (on demand) | On demand | — | — | — | — | `inject-article` skill; no links injected yet |
+| Deep research backfill | Wiki self-research | On demand | — | — | — | — | `deep-research` skill; no backfills run yet |
 | Cursor logs | Local sync | Weekly review | — | — | — | — | Synced locally; reviewed on weekly pass |
 | Claude exports | Monthly ZIP | Monthly | — | — | — | — | Monthly workflow |
 <!-- source-coverage:end -->
@@ -137,6 +139,42 @@ Expected output is one verdict block per URL — `ok` plus the staged path and w
 status with a one-line `fix:` hint. Exit code `0` means every URL is clean, `2` means at least one needs a
 decision. Staged files land in `private/sources/staging/` as `injected-YYYY-MM-DD-<title-slug>.md`.
 
+## Backfilling the background of a topic
+
+Pages tend to arrive describing what something *is*, in the present tense, assuming a decade of
+background nobody wrote down. The [`deep-research`](.cursor/skills/deep-research/SKILL.md) skill
+fills that in: it measures what the wiki cannot explain, researches backward from several angles,
+builds a timeline of the major improvements with a source behind every date, and stages a report.
+
+A separate wiki run ingests that report — research and synthesis stay apart on purpose, so the
+report is evidence and the wiki run decides what the wiki should say about it.
+
+```bash
+# 1. Is a backfill warranted? Look for SHALLOW HISTORY — a page naming one year has no past.
+uv run python research/scripts/detect_gaps.py --page text-diffusion-llms
+
+# 2. Scaffold the run and the "what the wiki already knows" brief
+uv run python research/scripts/start_run.py --seed-page text-diffusion-llms
+
+# 3. (agent works research/prompts/ 01→04, writing findings and events.jsonl)
+
+# 4. Build the verified chronology the narrative gets written from
+uv run python research/scripts/build_timeline.py research/runs/2026-08-08-text-diffusion-llms
+
+# 5. (agent works research/prompts/ 05→06, writing outline.md and narrative.md)
+
+# 6. Assemble, verify, and stage for the next wiki run
+uv run python research/scripts/compile_report.py research/runs/2026-08-08-text-diffusion-llms --stage
+```
+
+`detect_gaps.py` is worth running on its own with no arguments — it ranks every gap it can prove
+across the whole wiki, including concepts many pages lean on that no page defines.
+
+Exit code `0` means clean, `2` means a decision is needed (the verdict names the fix), `1` is an
+internal failure. Staged reports land in `private/sources/staging/` as
+`research-YYYY-MM-DD-<slug>.md`. Run artifacts stay in `research/runs/`, which is gitignored. Full
+detail in [`research/README.md`](research/README.md).
+
 ## Repository structure
 
 ```
@@ -152,7 +190,8 @@ aia-wiki/                           ← public repo (this one)
 ├── .cursor/
 │   ├── rules/                      ← pipeline coding rules
 │   └── skills/
-│       └── inject-article/         ← on-demand: verify a link, then triage + write
+│       ├── inject-article/         ← on-demand: verify a link, then triage + write
+│       └── deep-research/          ← on-demand: backfill the background behind a topic
 │
 ├── pipeline/
 │   └── scripts/                    ← data fetching only (no LLM calls)
@@ -163,6 +202,16 @@ aia-wiki/                           ← public repo (this one)
 │       ├── ingest_notion.py
 │       ├── ingest_queue.py
 │       └── ingest_claude.py
+│
+├── research/                       ← deep-research backfill (no LLM calls in the scripts)
+│   ├── scripts/
+│   │   ├── wiki_graph.py           ← index wiki/ as a link graph
+│   │   ├── detect_gaps.py          ← rank the background the wiki is missing
+│   │   ├── start_run.py            ← scaffold a run + its wiki-context brief
+│   │   ├── build_timeline.py       ← validate, merge, and sort events into a chronology
+│   │   └── compile_report.py       ← assemble, verify, and stage the report
+│   ├── prompts/                    ← the six stage prompts (gap analysis → narrative)
+│   └── runs/                       ← per-run working artifacts (gitignored)
 │
 ├── wiki/
 │   ├── technical/
