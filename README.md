@@ -139,6 +139,33 @@ Expected output is one verdict block per URL — `ok` plus the staged path and w
 status with a one-line `fix:` hint. Exit code `0` means every URL is clean, `2` means at least one needs a
 decision. Staged files land in `private/sources/staging/` as `injected-YYYY-MM-DD-<title-slug>.md`.
 
+## The timeline layer
+
+Every page reads as the current state of affairs and carries a `## Timeline` section of dated,
+sourced events. The site renders that as a month slider: at rest it sits at the latest month, and
+scrubbing it walks the topic's history — later events dim, the selected month highlights.
+[`wiki/timeline.md`](wiki/timeline.md) is the same thing across the whole wiki, on one axis.
+
+Prose stays present-tense. History lives in the events, never in a `## Background` section. Only
+[`merge_timeline.py`](research/scripts/merge_timeline.py) writes those sections, so they stay sorted,
+deduplicated, and parseable:
+
+```bash
+# Validate a page's Timeline section without changing it
+uv run python research/scripts/merge_timeline.py model-compression --check
+
+# Add one event by hand
+uv run python research/scripts/merge_timeline.py model-compression \
+  --event '2026-08|release|Some model shipped|https://example.com/post'
+
+# Regenerate the wiki-wide timeline page after any change
+uv run python research/scripts/build_global_timeline.py
+```
+
+The slider is a local Quartz plugin in [`site/quartz-plugins/topic-timeline`](site/quartz-plugins/topic-timeline).
+The event list is server-rendered, so with JavaScript off the page still shows the full timeline —
+the script only adds scrubbing. Design notes and open decisions: [`specs/temporal-wiki.plan.md`](specs/temporal-wiki.plan.md).
+
 ## Backfilling the background of a topic
 
 Pages tend to arrive describing what something *is*, in the present tense, assuming a decade of
@@ -165,6 +192,10 @@ uv run python research/scripts/build_timeline.py research/runs/2026-08-08-text-d
 
 # 6. Assemble, verify, and stage for the next wiki run
 uv run python research/scripts/compile_report.py research/runs/2026-08-08-text-diffusion-llms --stage
+
+# 7. Ingest: merge the run's events onto the page, then refresh the wiki-wide timeline
+uv run python research/scripts/merge_timeline.py text-diffusion-llms --from-run research/runs/2026-08-08-text-diffusion-llms
+uv run python research/scripts/build_global_timeline.py
 ```
 
 `detect_gaps.py` is worth running on its own with no arguments — it ranks every gap it can prove

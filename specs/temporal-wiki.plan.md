@@ -4,22 +4,22 @@ overview: "Refactor the wiki around a temporal layer: every page shows the curre
 todos:
   - id: phase-0-naming-fixes
     content: "Prereq: fix [[self-improving-ai-agents]] broken links (8 pages) by renaming technical/synthesis.md to match its H1; disambiguate the two synthesis.md files; reconcile Status vocabulary in CLAUDE.md with actual usage (baseline, reference)"
-    status: pending
+    status: completed
   - id: phase-1-conventions
     content: "Page skeleton v2 (add ## Timeline), the event-line format spec, and CLAUDE.md updates: nightly appends dated events, deep-research ingest merges events instead of writing a Background section"
-    status: pending
+    status: completed
   - id: phase-2-tooling
     content: "merge_timeline.py (deterministic event merge into a page's Timeline section); teach wiki_graph.py to parse Timeline sections; re-base detect_gaps.py shallow-history on timeline coverage"
-    status: pending
+    status: completed
   - id: phase-3-migration
     content: "Add a seeded ## Timeline section to all 62 pages: dated claims already in prose + CHANGELOG coverage dates; sparse is acceptable"
-    status: pending
+    status: completed
   - id: phase-4-ui
     content: "Quartz: transformer that parses Timeline sections into page data + TopicTimeline slider component (Preact, isolated from vendored framework code); optional global timeline page"
-    status: pending
+    status: completed
   - id: phase-5-backfill-campaign
-    content: "Run deep-research on the top-ranked gap pages (llm-agent-evaluation, model-compression, agentic-patterns, ...) to populate past months"
-    status: pending
+    content: "Run deep-research on the top-ranked gap pages. model-compression done (10 events, 1989-2024); llm-agent-evaluation, agentic-patterns, building-agents-best-practices, context-engineering outstanding"
+    status: in_progress
 isProject: true
 ---
 
