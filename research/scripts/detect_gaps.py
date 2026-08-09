@@ -21,9 +21,11 @@ from enum import StrEnum
 from pathlib import Path
 
 try:
+    from events import EventKind
     from wiki_graph import WikiGraph, WikiGraphError, load_wiki_graph, strip_code
 except ModuleNotFoundError:  # Imported from outside research/scripts/.
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from events import EventKind
     from wiki_graph import WikiGraph, WikiGraphError, load_wiki_graph, strip_code
 
 logging.basicConfig(
@@ -39,6 +41,7 @@ DEFAULT_FOUNDATIONAL_REFERENCES = 3
 DEFAULT_STALE_DAYS = 90
 DEFAULT_MIN_LINES = 30
 DEFAULT_MIN_YEARS = 3
+DEFAULT_MIN_EVENTS = 4
 DEFAULT_TOP = 15
 DEFAULT_HOPS = 1
 # Short titles ("Synthesis", "Agents") match too much prose to be evidence of a missing link.
@@ -71,8 +74,9 @@ REMEDIATION: dict[GapKind, str] = {
         "start_run.py on the highest-scoring ones."
     ),
     GapKind.SHALLOW_HISTORY: (
-        "The page describes a present-tense state with almost no dated prior art, so a reader "
-        "learns what it is but not what it replaced. This is the core backfill case."
+        "The page's Timeline has too few dated events to place the topic in time, so a reader "
+        "learns what it is but not what it replaced. This is the core backfill case — run the "
+        "deep-research skill and merge the result with merge_timeline.py."
     ),
     GapKind.UNLINKED_MENTION: "A page names a topic the wiki already covers without linking it. Add the [[wikilink]].",
     GapKind.ORPHAN_PAGE: "Nothing links here, so the page is unreachable by browsing. Link it from a related page.",
@@ -124,6 +128,50 @@ def distinct_years(body: str) -> set[str]:
     return set(YEAR_PATTERN.findall(prose))
 
 
+def find_shallow_timelines(graph: WikiGraph, scope: set[str] | None, min_events: int, min_years: int) -> list[Gap]:
+    """Find pages whose timeline is too thin to place the topic in time.
+
+    Coverage is measured on the page's `## Timeline` section rather than on years mentioned in
+    prose. Prose is present-tense by convention, so counting years there penalized pages for
+    following the house style; the timeline is where history is supposed to live.
+
+    Args:
+        graph: Indexed wiki graph.
+        scope: Optional set of page keys to restrict the scan to.
+        min_events: Fewest events a page needs to count as historically grounded.
+        min_years: Fewest distinct years those events must span.
+
+    Returns:
+        Gaps ordered by score, highest first.
+    """
+    gaps: list[Gap] = []
+    for key, page in graph.pages.items():
+        if page.is_hub or (scope is not None and key not in scope):
+            continue
+
+        substantive = [event for event in page.timeline if event.kind is not EventKind.WIKI]
+        years = {event.date.year for event in substantive}
+        if len(substantive) >= min_events and len(years) >= min_years:
+            continue
+
+        inbound = graph.inbound(key)
+        if substantive:
+            detail = f"{len(substantive)} event(s) across {len(years)} year(s)"
+        else:
+            detail = "no dated events at all"
+        gaps.append(
+            Gap(
+                kind=GapKind.SHALLOW_HISTORY,
+                subject=key,
+                detail=f"{detail}; {len(inbound)} page(s) link here",
+                score=SHALLOW_HISTORY_WEIGHT * len(inbound) + (min_events - len(substantive)),
+                referenced_by=tuple(sorted(inbound)),
+                path=page.path,
+            )
+        )
+    return sorted(gaps, key=lambda gap: (-gap.score, gap.subject))
+
+
 def find_dangling_links(graph: WikiGraph, scope: set[str] | None) -> list[Gap]:
     """Rank link targets that no page defines.
 
@@ -148,39 +196,6 @@ def find_dangling_links(graph: WikiGraph, scope: set[str] | None) -> list[Gap]:
                 detail=f"linked by {len(referenced_by)} page(s), named in {mentions} page(s){foundational}",
                 score=DANGLING_LINK_WEIGHT * len(referenced_by) + mentions,
                 referenced_by=referenced_by,
-            )
-        )
-    return sorted(gaps, key=lambda gap: (-gap.score, gap.subject))
-
-
-def find_shallow_history(graph: WikiGraph, scope: set[str] | None, min_years: int) -> list[Gap]:
-    """Find pages that explain a topic without placing it in time.
-
-    Args:
-        graph: Indexed wiki graph.
-        scope: Optional set of page slugs to restrict the scan to.
-        min_years: Fewest distinct years a page must name to count as historically grounded.
-
-    Returns:
-        Gaps ordered by score, highest first.
-    """
-    gaps: list[Gap] = []
-    for slug, page in graph.pages.items():
-        if page.is_hub or (scope is not None and slug not in scope):
-            continue
-        years = distinct_years(page.body)
-        if len(years) >= min_years:
-            continue
-        inbound = graph.inbound(slug)
-        span = ", ".join(sorted(years)) if years else "no years at all"
-        gaps.append(
-            Gap(
-                kind=GapKind.SHALLOW_HISTORY,
-                subject=slug,
-                detail=f"names {span}; {len(inbound)} page(s) link here",
-                score=SHALLOW_HISTORY_WEIGHT * len(inbound) + (min_years - len(years)),
-                referenced_by=tuple(sorted(inbound)),
-                path=page.path,
             )
         )
     return sorted(gaps, key=lambda gap: (-gap.score, gap.subject))
@@ -308,7 +323,7 @@ def collect_gaps(graph: WikiGraph, scope: set[str] | None, args: argparse.Namesp
     found: dict[GapKind, list[Gap]] = {kind: [] for kind in GapKind}
     detected = [
         *find_dangling_links(graph, scope),
-        *find_shallow_history(graph, scope, args.min_years),
+        *find_shallow_timelines(graph, scope, args.min_events, args.min_years),
         *find_unlinked_mentions(graph, scope),
         *find_page_health(graph, scope, args.stale_days, args.min_lines),
     ]
@@ -329,10 +344,13 @@ def print_gaps(graph: WikiGraph, seed: str | None, found: dict[GapKind, list[Gap
     if seed is not None:
         page = graph.pages[seed]
         resolved = len(graph.outbound(seed))
+        months = page.timeline_months
+        coverage = f"{len(page.timeline)} event(s), {months[0]} → {months[-1]}" if months else "no timeline yet"
         lines += [
             f"SEED  {page.path} — {page.title}",
             f"  links out to {resolved} page(s), linked from {len(graph.inbound(seed))} page(s)",
-            f"  names years: {', '.join(sorted(distinct_years(page.body))) or 'none'}",
+            f"  timeline: {coverage}",
+            f"  prose names years: {', '.join(sorted(distinct_years(page.body))) or 'none'}",
             "",
         ]
 
@@ -380,10 +398,16 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help=f"Line count below which a page is thin (default {DEFAULT_MIN_LINES}).",
     )
     parser.add_argument(
+        "--min-events",
+        type=int,
+        default=DEFAULT_MIN_EVENTS,
+        help=f"Timeline events a page needs to count as historically grounded (default {DEFAULT_MIN_EVENTS}).",
+    )
+    parser.add_argument(
         "--min-years",
         type=int,
         default=DEFAULT_MIN_YEARS,
-        help=f"Distinct years a page must name to count as historically grounded (default {DEFAULT_MIN_YEARS}).",
+        help=f"Distinct years those events must span (default {DEFAULT_MIN_YEARS}).",
     )
     parser.add_argument("--top", type=int, default=DEFAULT_TOP, help=f"Max gaps per kind (default {DEFAULT_TOP}).")
     parser.add_argument("--wiki-dir", help="Wiki root to index (default: the repo's wiki/).")
