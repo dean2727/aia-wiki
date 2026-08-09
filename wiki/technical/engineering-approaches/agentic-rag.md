@@ -34,6 +34,10 @@ Agentic-specific retrieval capabilities vs. vanilla RAG:
 
 Frameworks: LangChain/LangGraph, LlamaIndex, DSPy, Letta, CrewAI — see [[agent-frameworks]].
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — agent-driven retrieval loops
+
 ## Related
 - [[advanced-rag-techniques]]
 - [[pre-retrieval]]

@@ -3,7 +3,7 @@
 > Language models that generate text in parallel blocks via iterative denoising instead of one autoregressive token at a time — trading some quality for large local-inference speedups and bidirectional editing.
 
 **Category**: topics
-**Last updated**: 2026-06-28
+**Last updated**: 2026-08-09
 **Status**: active
 
 ## What it is
@@ -37,6 +37,20 @@ flowchart LR
 3. **Final polish** — the block converges to clean output and is returned all at once.
 
 Efficiency specifics: as a 26B MoE activating only 3.8B params, it fits in ~18GB VRAM when quantized (consumer high-end GPUs). DeepMind co-optimized it with NVIDIA's **NVFP4** (4-bit float) kernels for near-lossless accelerated compute on Hopper/Blackwell, and it serves via MLX, vLLM, and Transformers, with llama.cpp support arriving. Task-specific quality can be recovered through fine-tuning (Hackable Diffusion, Unsloth, NeMo).
+
+## Timeline
+
+- `2015-03` (paper) Sohl-Dickstein et al. introduce deep unsupervised learning using nonequilibrium thermodynamics, the first diffusion generative model. — Established iterative denoising as a generative recipe. [source](https://arxiv.org/abs/1503.03585)
+- `2020-06` (paper) Ho et al. publish Denoising Diffusion Probabilistic Models (DDPM). — Made image diffusion competitive with GANs. [source](https://arxiv.org/abs/2006.11239)
+- `2021-07` (paper) Austin et al. publish D3PM, structured denoising diffusion in discrete state spaces. — First serious attempt to move diffusion from continuous pixels to discrete tokens. [source](https://arxiv.org/abs/2107.03006)
+- `2022-05` (paper) Li et al. release Diffusion-LM, continuous diffusion over word embeddings with controllable generation. [source](https://arxiv.org/abs/2205.14217)
+- `2022-10` (method) Han et al. propose SSD-LM, semi-autoregressive simplex diffusion generating text block by block. — Introduced the block-wise decoding shape production text diffusion still uses. [source](https://arxiv.org/abs/2210.17432) [source](https://aclanthology.org/2023.acl-long.647/)
+- `~2025-02` (release) Inception Labs launches Mercury, a commercial diffusion LLM marketed on throughput. [source](https://www.inceptionlabs.ai/)
+- `2025-02` (release) LLaDA demonstrates an 8B masked diffusion language model trained from scratch that rivals autoregressive baselines. — First credible evidence that diffusion scales to LLM-grade quality. [source](https://arxiv.org/abs/2502.09992)
+- `2025-05` (release) Google DeepMind previews Gemini Diffusion at I/O. — Put a frontier lab behind parallel text decoding. [source](https://deepmind.google/models/gemini-diffusion/)
+- `2026-06` (release) DeepMind releases DiffusionGemma, a 26B MoE Apache-2.0 diffusion head on Gemma 4 drafting 256 tokens per pass. — First mainstream open diffusion LLM on a frontier-quality base. [source](https://developers.googleblog.com/en/introducing-diffusion-gemma/)
+- `2026-06` (wiki) Page created by a wiki run — DiffusionGemma: parallel-block text diffusion, why it's a *local/low-concurrency* speedup, bidirectional editing
+- `2026-08` (wiki) Backfilled the diffusion lineage from a deep-research run
 
 ## Related
 - [[gemma-4]]

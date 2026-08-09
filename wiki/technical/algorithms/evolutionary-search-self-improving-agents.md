@@ -67,6 +67,10 @@ An agent that runs the **full research cycle** in three phases — **idea genera
 - **v1 limitations**: restricted to a given domain, needs codebase templates, generates very similar ideas across runs/models, fails to implement a significant fraction of ideas, **hallucinates** details (hardware/library versions), sometimes **misinterprets results** (framed a KL-divergence increase as an improvement), struggles to cite relevant papers.
 - **v2** adds **tree-based experimentation** run by an **Experiment Manager Agent** (preliminary investigation → hyperparameter tuning → research-agenda execution → ablation studies) and a **parallelized agentic tree search**: each node generates a plan + code; errors → "buggy," successes → take notes, plot, and **verify with a VLM**; best-first search branches buggy nodes to debug and non-buggy nodes to improve; an LLM judges which nodes advance. (Papers still weren't accept-to-conference level.)
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — AlphaCode(2), AlphaEvolve, Darwin Gödel Machine, AI Scientist v1/v2; "director-not-operator" automation; OpenEvolve on-ramp (fit 8)
+
 ## Related
 - [[test-time-compute-scaling]]
 - [[verifiers-in-llm-reasoning]]

@@ -90,6 +90,10 @@ Results: **68.0 Macro-F1 on SA-Co vs 62.3 for SAM 3.** The gap *widens with prom
 
 **Falcon OCR (0.3B)**: the same early-fusion backbone trained *from scratch* (no distillation — glyph-level features differ too much from object-level ones) purely for OCR. Scores 80.3 on olmOCR (within 1.7 pts of the top system) and 88.64 on OmniDocBench (ahead of DeepSeek OCR v2, GPT 5.2, Mistral OCR 3), leading on multi-column and tables — at ~3× smaller than 0.9B-class OCR VLMs, with the highest open-source OCR throughput. Ships with a paged-inference engine (FlexAttention, paged KV cache, continuous batching, CUDA graph capture) plus a **vLLM Docker server and MLX integration for Apple Silicon**.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — catalog of four open releases
+
 ## Sources
 
 - Hugging Face / IBM Granite, *"Granite 4.1 LLMs: How They're Built"* (2026-04-29)

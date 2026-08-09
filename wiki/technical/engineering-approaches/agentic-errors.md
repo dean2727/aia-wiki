@@ -46,6 +46,10 @@ Causes compound: a planning error can drive repeated tool misuse; a memory lapse
 
 A robust agent runner distinguishes transient failures from terminal ones. **Retryable**: network/timeout classes (`httpx.TimeoutException`, `ConnectError`, `APIConnectionError`, `APITimeoutError`) and retryable HTTP statuses / rate limits — back off (`min(10, 2**attempt)`) and retry the same agent. **Non-retryable**: client/config errors (`BadRequestError` 400, `UnprocessableEntityError` 422, `AuthenticationError` 401, `PermissionDeniedError` 403, `NotFoundError` 404) — don't retry the same agent/model; move on. Always re-raise `asyncio.CancelledError`. Cap retries per agent (e.g. 3) and fall through to the next agent on exhaustion.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — debugging looping/stalled agents; retryable vs. non-retryable exceptions
+
 ## Related
 - [[agentic-patterns]]
 - [[building-agents-best-practices]]

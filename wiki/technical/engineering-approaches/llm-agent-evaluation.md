@@ -67,6 +67,10 @@ Conversational G-Eval, conversation efficiency (info-gathering), engagement (int
 
 See [[advanced-rag-techniques]] and [[agentic-rag]] for the pipelines these score.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — offline/online + agent/RAG evaluation metrics
+
 ## Related
 - [[building-agents-best-practices]]
 - [[agentic-errors]]

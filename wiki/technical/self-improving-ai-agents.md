@@ -155,6 +155,10 @@ Reading all 15 together, five threads run through everything:
 4. **Exploration is the unsolved frontier.** RL works now, but LLMs explore weakly (best-of-N); real discovery needs the deep-RL ideas (curriculum, meta-RL) ported over. → [[agentic-rl-exploration]]
 5. **Reward hacking and reliability are the persistent dangers.** From RLHF's reward hacking to AI Scientist misinterpreting its own results to DGM's safety guardrails — autonomy raises the stakes on the verifier being honest.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — the full course arc as one loop (generate → verify → train, human role shrinking); maps all 15 lectures + the four recap papers (Multiagent Finetuning, DeepSeekMath-V2, Absolute…
+
 ## Related
 - [[test-time-compute-scaling]]
 - [[train-time-rl-scaling]]

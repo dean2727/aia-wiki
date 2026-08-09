@@ -36,6 +36,10 @@ Purposeful, accountable, trustworthy, autonomous, discoverable, intelligent. Pur
 - **Agent plane** — how agents interact with each other.
 - **Operator plane** — operational concerns of running agents.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — agent ecosystem / marketplace / registry concept
+
 ## Related
 - [[mcp-and-a2a]]
 - [[agentic-patterns]]

@@ -45,6 +45,10 @@ Orchestrator routing strategies: LLM-based dynamic routing, rule-based, hierarch
 
 The Microsoft "primary patterns" naming maps onto the above: Sequential (chaining), Concurrent (parallelization), Magentic (dynamic specialization routing), Group Chat (shared-context collaboration), Handoff (explicit control transfer).
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — workflow & agent patterns hub
+
 ## Related
 - [[building-agents-best-practices]]
 - [[agentic-errors]]

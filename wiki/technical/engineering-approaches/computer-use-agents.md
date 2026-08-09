@@ -34,6 +34,10 @@ The loop is screenshot → reason → action, but the engineering lives in two p
 
 This is the [[ai-guardrails]] story applied to agents with hands: the more an agent can *do* in a real environment, the more its perception channel must be treated as untrusted input.
 
+## Timeline
+
+- `2026-06` (wiki) Page created by a wiki run — grouped: Gemini 3.5 Flash native computer use + Holo3.1 fast/local open CUAs; robustness-across-deployment + prompt-injection safeguards
+
 ## Related
 - [[agentic-mesh]]
 - [[ai-guardrails]]

@@ -45,6 +45,10 @@ A "speedrun" stacking the tricks that survived earlier ablations, under a hard 3
 
 Schedule: 512px for 100k steps, then sharpen at 1024px for 20k. Result is "clearly usable," with remaining flaws looking like undertraining, not structural — i.e. the recipe scales predictably. Code is open-sourced.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — diffusion tooling tracked for the composable-pipeline design pattern + training cost-compression
+
 ## Sources
 
 - Hugging Face, *"Introducing Modular Diffusers — Composable Building Blocks for Diffusion Pipelines"* (2026-03-05).

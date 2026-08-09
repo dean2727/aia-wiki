@@ -124,6 +124,10 @@ The defenses they applied generalize to *any* agent eval, including conversation
 
 The deeper point for Dean: an agent eval is a *measure under adversarial pressure*. The pressure can be a vendor gaming a leaderboard — or your own optimization loop quietly overfitting to your test conversations. Holding out unseen scenarios, refusing to expose per-slice scores you'd be tempted to tune to, and re-executing rather than trusting reported traces (the VAKRA move) are the same instinct: **protect the measure so it keeps telling the truth.**
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — agent failure taxonomy + voice-agent eval + eval integrity
+
 ## Sources
 
 - IBM Research, *"Inside VAKRA: Reasoning, Tool Use, and Failure Modes of Agents"*, Hugging Face Blog (2026-04-15).

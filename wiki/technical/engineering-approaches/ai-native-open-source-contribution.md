@@ -51,6 +51,10 @@ flowchart TD
 
 **The ownership rule.** The Skill won't open a PR until the contributor accepts the results, and the PR always discloses it was agent-assisted. The explicit norm: *own the code, be ready to iterate with reviewers, and never hand reviewer comments straight back to an agent* — LLMs double down, go on tangents, and don't push back effectively. Once review starts, it's a person-to-person conversation.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — the maintainer-bottleneck inversion when everyone has a coding agent; Skill-as-encoded-judgment + deliberately non-agentic test harness for trust (HF `transformers-to-mlx`)
+
 ## Related
 - [[skills-rules-subagents]]
 - [[harness-and-scaffolding]]

@@ -31,6 +31,10 @@ Without a spec: vague requirements, no validation reference, costly iteration cy
 
 Bootstrap via `/init` to generate a CLAUDE.md template (see [[repo-init-workflow]]), or have a model draft it from a project summary (often after a deep-research chat). Checklist: stack matches reality, principles appropriate, standards enforceable, phases session-aware, no assumptions of continuous context. Rules grow as the project does — distill recurring corrections into new standards.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — spec-first + project-constitution discipline
+
 ## Related
 - [[vibe-coding]]
 - [[skills-rules-subagents]]

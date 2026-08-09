@@ -54,6 +54,10 @@ Index the same document under multiple representations (summary embeddings + raw
 
 **Routing — vector vs. LLM classifier**: semantic routers (embedding similarity to synthetic queries) win on latency, cost, determinism, locality. LLM classifiers win on ambiguous/overlapping intents, novel phrasing, and explainability. Production verdict: hybrid — fast vector first pass (route if cosine > ~0.85), fall back to LLM classifier only for low-confidence cases.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — chunking, indexing, query optimization
+
 ## Related
 - [[advanced-rag-techniques]]
 - [[semantic-boundary-chunking]]

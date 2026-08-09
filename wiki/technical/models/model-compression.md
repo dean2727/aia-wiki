@@ -40,6 +40,10 @@ When to reach for distillation over (or with) other compression:
 
 The tradeoff is an extra training pass for cheap, durable inference. Prune/quantize for incremental wins on an existing architecture; distill when you need a fundamentally smaller model that keeps most of the accuracy. [[grok-4-20]] is the local MoE landmark here — sparse activation as a complementary "compression" lever (serve a fraction of params per token).
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — knowledge distillation vs. pruning/quantization
+
 ## Related
 - [[grok-4-20]]
 - [[synthetic-data]]

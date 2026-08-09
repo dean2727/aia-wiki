@@ -26,6 +26,10 @@ This is the connective tissue between "I have an idea" and a maintainable codeba
 | 4. Codify workflows | Compound the conventions | Every "do it like this" goes straight into `AGENTS.md`/`WORKFLOWS.md`/`RULES.md`; periodically have the model re-read the repo and propose refined workflows |
 | 5. Guardrails | Protect future speed | Minimal CI: lint/format + key integration tests + smoke test; rule: no merging waves without green smoke tests |
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — project kickoff: scaffold → waves → evals → guardrails
+
 ## Related
 - [[vibe-coding]]
 - [[spec-driven-development]]

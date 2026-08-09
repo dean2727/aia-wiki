@@ -18,6 +18,10 @@
 
 [Needs writing]
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — world-facing weekly synthesis placeholder
+
 ## Related
 
 - [[overview]]

@@ -54,6 +54,10 @@ flowchart TD
 
 The reframing in the post is worth keeping: increasingly the gains come less from any single layer (hardware, software, research) and more from **rethinking how the layers fit together** — Decoupled DiLoCo is a systems-level rather than a model-level win.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — resilient distributed training across distant data centers via async "islands"; self-healing under injected failures, 12B trained across 4 US regions on 2–5 Gbps >20× faster than…
+
 ## Related
 - [[gemma-4]]
 - [[deepseek-v4]]

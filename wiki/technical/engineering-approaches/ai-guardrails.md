@@ -43,6 +43,10 @@ flow bot express greeting
 
 As bots grow, control flow matters: `start_new_flow_instance` spins up a fresh instance even while another runs (handles overlapping/repeated user actions where plain `activate` would misbehave); `deactivate` stops a flow no longer needed (resource management, avoids unwanted responses); the `@override` decorator replaces or extends an existing flow without rewriting it — useful for customizing imported/standard-library flows.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — NeMo/Colang guardrail patterns
+
 ## Related
 - [[building-agents-best-practices]]
 - [[agentic-errors]]

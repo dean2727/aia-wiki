@@ -305,9 +305,20 @@ def merge_duplicates(events: list[Event], threshold: float = DEFAULT_SIMILARITY)
         for index, existing in enumerate(merged):
             if existing.date.year != event.date.year or existing.kind is not event.kind:
                 continue
-            score = similarity(existing.event, event.event)
-            if score < threshold:
-                continue
+
+            if event.kind is EventKind.WIKI:
+                # A page's own edit history is a sequence of distinct acts, never two reports of one
+                # fact, so only an exact repeat is a duplicate — that keeps re-runs idempotent
+                # without collapsing a May edit into a June one.
+                if existing.date.month_key != event.date.month_key or normalize(existing.event) != normalize(
+                    event.event
+                ):
+                    continue
+                score = 1.0
+            else:
+                score = similarity(existing.event, event.event)
+                if score < threshold:
+                    continue
 
             keeper, other = (event, existing) if event.precision > existing.precision else (existing, event)
             merged[index] = replace(

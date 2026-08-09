@@ -38,6 +38,11 @@ Memory has two distinct hard problems, and most systems pick a point on each axi
 
 A clean source of high-quality memory is the human-in-the-loop correction itself. In **ambient agent** setups, the user edits the agent's proposed tool calls in the loop; those edits get captured as memory. The correction *is* the lesson — no synthetic distillation needed, and it's grounded in what the user actually wanted. This pairs memory with oversight: the same interaction that keeps the agent safe also teaches it. See [[building-agents-best-practices]].
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — learned long-term memory / experience without fine-tuning (watch item)
+- `2026-06` (wiki) Page updated by a wiki run — Notion Track A: write-policy vs. retrieval split (Claude Code explicit vs. ChatGPT autonomous), memory-as-multi-step-RAG, human corrections as memory (ambient agents)
+
 ## Related
 - [[context-engineering]]
 - [[harness-and-scaffolding]]

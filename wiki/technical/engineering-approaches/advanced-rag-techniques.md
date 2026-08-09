@@ -35,6 +35,10 @@ Most RAG quality problems are retrieval problems, not generation problems. Distr
 
 **Evaluation — the RAG triad**: score query→context relevance, context→answer relevance, and answer groundedness. Build a small validation set (~10 queries to start, grow until conclusive) with ideal answers and a superset of expected source docs. Ragas / TruLens / MLflow.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — advanced retrieval/ranking hub (RAG cluster)
+
 ## Related
 - [[pre-retrieval]]
 - [[semantic-boundary-chunking]]

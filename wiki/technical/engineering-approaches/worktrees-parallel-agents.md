@@ -31,6 +31,10 @@ Naming: stage branches `stage/<name>`, features `feature/<name>`, dirs `.worktre
 
 **Parallel pattern:** "Piece A → worktree A; Piece B → worktree B" — agent runs them concurrently only if scopes are separated, else sequences. A tmux config (smart splits, Option+arrow pane nav) and a `tmux4.sh` four-pane launcher are kept in `~/` for driving several streams at once.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — git worktrees for parallel agents
+
 ## Related
 - [[starting-a-project-vibe-coding]]
 - [[vibe-coding]]

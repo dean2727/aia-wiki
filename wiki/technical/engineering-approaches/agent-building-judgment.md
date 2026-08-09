@@ -32,6 +32,10 @@ Most teams' bottleneck isn't capability, it's judgment: they over-engineer, post
 
 **Advice:** always have a way to measure results; never build in a vacuum. Design products that benefit *as models improve* rather than betting on current limitations.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — Ng/Anthropic heuristics: agent vs. workflow, evals early, over/under-hyped
+
 ## Related
 - [[agentic-patterns]]
 - [[building-agents-best-practices]]

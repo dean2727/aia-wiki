@@ -42,6 +42,10 @@ Broad vs. narrow usage matters: products like Claude Code and Codex call the *wh
 
 **Training-side terms** (relevant if you train, not just deploy): **RL environment** (stateful thing actions mutate), **trainer** (runs episodes, scores, updates weights — e.g. TRL's GRPOTrainer), **rollout / trajectory / trace** (one full run start to finish — the raw data RL learns from), **reward** (verifiable vs. learned; sparse vs. dense; rubrics break it into weighted dimensions). An **eval harness** is the same loop pattern but records metrics at a checkpoint instead of updating weights.
 
+## Timeline
+
+- `2026-05` (wiki) Page created by a wiki run — emerging harness/scaffold/agent/policy vocabulary (HF, 2026-05-25); layer-level reasoning for agent builders
+
 ## Related
 - [[context-engineering]]
 - [[skills-rules-subagents]]
