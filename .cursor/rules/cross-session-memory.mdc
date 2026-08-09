@@ -1,0 +1,52 @@
+---
+description: Recall prior Claude Code / Cursor sessions from cross-session memory (Chroma Cloud)
+alwaysApply: true
+---
+
+# Cross-session memory
+
+Work on this project from earlier Claude Code and Cursor sessions is compressed
+by claude-mem and indexed in Chroma Cloud. It is **not** in this repo, and it is
+not visible to you unless you query it.
+
+## How to query
+
+```bash
+uv run .cursor/scripts/memory_search.py "<your question>"
+```
+
+Useful flags:
+
+- `--kind session_summary` — what a past session set out to do and concluded
+  (best for intent and decisions)
+- `--kind observation` — a single discovery, fix, or decision (best for specifics)
+- `--all-projects` — search beyond this project
+- `--project <name>` — target a specific project; repeatable
+- `-n <count>` — number of results (default 8)
+
+By default it searches this directory's name, its git root, and its parent,
+because work here has been recorded under both `aia-wiki` and `wiki-project`.
+
+Ask in natural language — it is semantic search, not keyword matching. Prefer
+several short, distinct queries over one long one.
+
+## When to use it
+
+- Before proposing infrastructure, deployment, or config changes
+- Before refactoring something that looks deliberate — check whether it was
+- When the user refers to a past decision ("like we discussed", "as before")
+- When you are about to guess at a project-specific convention
+
+## Interpreting results
+
+- These are **AI-compressed summaries, not source of truth**. Verify anything
+  load-bearing against the actual code before acting on it.
+- Results may be stale: the index only contains work synced from the local
+  machine, so very recent sessions may be missing.
+- If the script fails (no `CHROMA_API_KEY`, no network), say so plainly and
+  continue without memory. **Never invent prior context.**
+
+## Requirements
+
+`CHROMA_API_KEY` must be present in the environment. For cloud agents, set it as
+a secret in the agent's environment configuration — never commit it.
