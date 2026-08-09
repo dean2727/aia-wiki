@@ -33,6 +33,7 @@ uv run python pipeline/scripts/ingest_url.py --from-file ~/Downloads/article.md 
 | arXiv | thin abstract only | The abstract alone is often enough for triage. For the full paper, pass the `/pdf/` URL once `pdftotext` is installed, or use the HTML version (`arxiv.org/html/<id>`) when it exists |
 | GitHub | want more than the README | Point at a specific raw file (`raw.githubusercontent.com/<owner>/<repo>/HEAD/docs/design.md`) rather than the repo root |
 | Docs sites (Mintlify, Docusaurus, GitBook) | `js_required` | Many serve a markdown twin: append `.md` to the page URL, or try `/llms.txt` and `/llms-full.txt` at the site root |
+| OpenAI (`openai.com/index/*`) | `blocked` — 403 on every HTML page | The edge refuses non-browser clients: `robots.txt` returns 200 while every article 403s, and a browser user-agent does not help. OpenAI's RSS carries only a one-line description, so it is no substitute. Fetch a Wayback capture of the page (`https://web.archive.org/web/2026/<url>`), save the HTML, and pass it with `--from-file` plus the canonical `url` — the prose is server-rendered in the capture. Record the snapshot date in `--note` |
 | Cloudflare-protected blogs | `blocked` with a challenge page | No programmatic path from here. Use `--from-file` |
 | News sites with AMP | `paywalled` | Try the AMP variant (`/amp/`, `?outputType=amp`) — it is frequently server-rendered and ungated |
 

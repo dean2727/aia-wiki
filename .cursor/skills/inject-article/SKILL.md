@@ -41,7 +41,7 @@ and wait**. Do not stage, and do not synthesize from a thin body.
 | `thin` | Page was reachable but yielded almost no text | Stage anyway with `--allow-thin`; or he pastes the text and you use `--from-file`; or lower `--min-chars` if the piece really is short |
 | `js_required` | Body is client-rendered or behind a bot challenge | He pastes the article into a file for `--from-file`; or supply a plain-text equivalent (docs `.md`, GitHub raw, RSS entry) |
 | `paywalled` | Short body plus paywall or sign-in markers | `--from-file` with the text he can see; or an archive/AMP mirror URL |
-| `blocked` | Host refused the request (401/403/451) | Try a first-party mirror; else `--from-file` |
+| `blocked` | Host refused the request (401/403/451) | Try a first-party mirror, then an archive capture of the publisher's own page saved as `.html` for `--from-file`; else he pastes it |
 | `not_found` | Link is 404/410 | Confirm the URL, or find the canonical or archived copy |
 | `rate_limited` / `server_error` | Host is throttling or down | Retry shortly; or `--from-file` |
 | `unreachable` | DNS/TLS/timeout, or restricted network egress | Confirm the URL; if egress is the problem, `--from-file` is the reliable path |
@@ -82,6 +82,24 @@ Follow `CLAUDE.md` exactly, with the one deviation below. In order:
    AI-native workflows or innovative engineering stories, `tools/` only for software tool evaluations,
    `algorithms/` for research-origin findings, `models/` for architectures and releases, `world/` for
    product, culture, and society. No Dean-Relevance section in a public page.
+
+## Phase 4b — Update the timeline
+
+A page write is not finished until its `## Timeline` reflects it, and injection runs are explicitly
+covered by that rule. Never hand-write or hand-sort the section:
+
+```bash
+uv run python research/scripts/merge_timeline.py <page> \
+  --event '2026-07|release|Actor shipped the thing — what became possible.|https://source.url' \
+  --event '2026-08|wiki|Page created from the <source> post.'
+```
+
+- Month-stamp events from the **source's publication date**, not today's. Check it against the body and
+  the feed: extracted `published_at` frontmatter is sometimes wrong.
+- Never introduce a date the source does not contain.
+- One `wiki` event per page per run, and only when the update materially changed what the page says.
+- After merging, regenerate the wiki-wide slider: `uv run python research/scripts/build_global_timeline.py`.
+- Sanity-check links with `uv run python research/scripts/wiki_graph.py` — dangling targets should be 0.
 
 ## Phase 5 — Bookkeeping
 
